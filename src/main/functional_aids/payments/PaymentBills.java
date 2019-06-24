@@ -2,7 +2,7 @@ package main.functional_aids.payments;
 
 import java.util.GregorianCalendar;
 
-public class PaymentBills implements  IPayments{
+public class PaymentBills implements IPayments {
     private int day;
     private int weekInterval;
     private int monthInterval;
@@ -21,11 +21,10 @@ public class PaymentBills implements  IPayments{
     public PaymentBills(GregorianCalendar lastPayment, int day, int interval) {
         this.day = day;
 
-        if(day == -1) {
+        if (day == -1) {
             this.weekInterval = 0;
             this.monthInterval = interval;
-        }
-        else {
+        } else {
             this.weekInterval = interval;
             this.monthInterval = 0;
         }
@@ -40,25 +39,23 @@ public class PaymentBills implements  IPayments{
         nextDayPayment.add(GregorianCalendar.MONTH, monthInterval);
         nextDayPayment.add(GregorianCalendar.WEEK_OF_YEAR, weekInterval);
 
-        if(day == -1) {
+        if (day == -1) {
             nextDayPayment.set(GregorianCalendar.DAY_OF_MONTH,
                     nextDayPayment.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
             int day_of_week = nextDayPayment.get(GregorianCalendar.DAY_OF_WEEK);
-            if(day_of_week == 1)  {
+            if (day_of_week == 1) {
                 nextDayPayment.add(GregorianCalendar.DAY_OF_MONTH, 1);
-            }
-            else if(day_of_week == 7) {
+            } else if (day_of_week == 7) {
                 nextDayPayment.add(GregorianCalendar.DAY_OF_MONTH, 2);
             }
-        }
-        else {
+        } else {
             nextDayPayment.set(GregorianCalendar.DAY_OF_WEEK, day);
         }
     }
 
     @Override
     public IPayments clone() {
-        IPayments item = null;
+        IPayments item;
         try {
             item = (IPayments) super.clone();
         } catch (CloneNotSupportedException e) {
@@ -71,11 +68,10 @@ public class PaymentBills implements  IPayments{
 
     @Override
     public boolean checkItsDay(GregorianCalendar calendar) {
-        if(calendar.equals(nextDayPayment)) {
+        if (calendar.equals(nextDayPayment)) {
             att();
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

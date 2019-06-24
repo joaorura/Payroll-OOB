@@ -22,14 +22,12 @@ public class Employee {
         this.personalSyndicate = personalSyndicate;
         this.typePayment = typePayment;
         this.personalIPayment = personalIPayment;
-        this. worker = worker;
+        this.worker = worker;
     }
 
     public Employee clone() {
-        Employee new_object= new Employee(adress, name, personal_id, personalSyndicate.clone(), typePayment.clone(),
+        return new Employee(adress, name, personal_id, personalSyndicate.clone(), typePayment.clone(),
                 personalIPayment.clone(), worker.clone());
-
-        return new_object;
     }
 
     public boolean changeEmployeesDetails() {

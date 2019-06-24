@@ -1,6 +1,6 @@
 package main.functional_aids.transactions;
 
-public class Deposit extends BankTransaction implements IMethodsPayments{
+public class Deposit extends BankTransaction implements IMethodsPayments {
     private String acountSend;
 
     public Deposit(String source, Double value, String send) {
@@ -9,10 +9,13 @@ public class Deposit extends BankTransaction implements IMethodsPayments{
 
     public String getInfo() {
         String[] str = super.getInfo().split("\n\t");
-        String new_str = str[0] + "Depoisit\n\tFor acount: " + acountSend + "\n\t";
+        StringBuilder new_str = new StringBuilder();
+        new_str.append(str[0])
+                .append("Depoisit\n\tFor acount: ")
+                .append(acountSend).append("\n\t");
 
-        for(int i = 1; i < str.length; i ++) new_str += str[i];
-        return  new_str;
+        for (int i = 1; i < str.length; i++) new_str.append(str[i]).append("\n\t");
+        return new_str.toString();
     }
 
     @Override

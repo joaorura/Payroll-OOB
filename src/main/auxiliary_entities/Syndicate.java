@@ -1,6 +1,6 @@
 package main.auxiliary_entities;
 
-public class Syndicate implements ISyndicates{
+public class Syndicate implements ISyndicates {
     private String indetificationSyndicate;
     private double monthlyFee;
 

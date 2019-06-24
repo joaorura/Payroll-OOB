@@ -4,7 +4,7 @@ import main.Employee;
 
 import java.util.Stack;
 
-public class Restore implements IMemento{
+public class Restore implements IMemento {
     private Stack<Employee> restoreUndo;
     private Stack<Employee> restoreRedo;
 
@@ -25,10 +25,9 @@ public class Restore implements IMemento{
     public boolean backup(Object rest, boolean type) {
         Employee item = (Employee) rest;
 
-        if(type) {
+        if (type) {
             restoreRedo.push(item.clone());
-        }
-        else {
+        } else {
             restoreUndo.push(item.clone());
         }
 

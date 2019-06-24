@@ -1,6 +1,6 @@
 package main.functional_aids.transactions;
 
-public class Check extends BankTransaction{
+public class Check extends BankTransaction {
     private String name;
 
     public Check(String source, double value, String name) {
@@ -10,10 +10,13 @@ public class Check extends BankTransaction{
 
     public String getInfo() {
         String[] str = super.getInfo().split("\n\t");
-        String new_str = str[0] + "Check\n\tFor name: " + name + "\n\t";
+        StringBuilder new_str = new StringBuilder();
+        new_str.append(str[0])
+                .append("Check\n\tFor name: ")
+                .append(name).append("\n\t");
 
-        for(int i = 1; i < str.length; i ++) new_str += str[i];
-        return  new_str;
+        for (int i = 1; i < str.length; i++) new_str.append(str[i]).append("\n\t");
+        return new_str.toString();
     }
 
 }

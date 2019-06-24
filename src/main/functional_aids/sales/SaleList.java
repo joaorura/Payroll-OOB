@@ -3,30 +3,27 @@ package main.functional_aids.sales;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaleList implements ISalesList{
-    private HashMap<String, Double> list;
+public class SaleList implements ISalesList {
+    private HashMap<String, Double> list = new HashMap<>();
 
 
     public SaleList(String[] ids, double[] values) {
         int size = ids.length;
-        if(size == values.length) {
+        if (size == values.length) {
             throw new RuntimeException("alguma coisa");
-        }
-        else {
-            list = new HashMap<String, Double>();
-            for(int i = 0; i < size; i++) {
+        } else {
+            for (int i = 0; i < size; i++) {
                 list.put(ids[i], values[i]);
             }
         }
     }
 
     public SaleList(Map<String, Double> map) {
-            if (map != null) {
-                 list.putAll(map);
-            }
-            else {
-                System.out.println("Null element in SaleListConstructor");
-            }
+        if (map != null) {
+            list.putAll(map);
+        } else {
+            System.out.println("Null element in SaleListConstructor");
+        }
     }
 
     public void addProduct(Object identificator, Object price) {
@@ -42,10 +39,8 @@ public class SaleList implements ISalesList{
     }
 
     public HashMap getList() {
-        HashMap<String, Double> new_item = new HashMap<String, Double>();
-        new_item.putAll(list);
 
-        return new_item;
+        return new HashMap<>(list);
     }
 
     public ISalesList clone() {
