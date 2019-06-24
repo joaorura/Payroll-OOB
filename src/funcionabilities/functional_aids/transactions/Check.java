@@ -1,4 +1,4 @@
-package main.functional_aids.transactions;
+package funcionabilities.functional_aids.transactions;
 
 public class Check extends BankTransaction {
     private String name;

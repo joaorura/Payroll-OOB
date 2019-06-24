@@ -1,4 +1,4 @@
-package main.functional_aids.transactions;
+package funcionabilities.functional_aids.transactions;
 
 public class CheckPostOffices extends Check implements IMethodsPayments {
     private String adress;
@@ -24,7 +24,7 @@ public class CheckPostOffices extends Check implements IMethodsPayments {
         return super.value;
     }
 
-    public IMethodsPayments clone() {
-        return null;
+    public IMethodsPayments clone() throws CloneNotSupportedException{
+        return (CheckPostOffices) super.clone();
     }
 }

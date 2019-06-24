@@ -1,9 +1,9 @@
-package main.functional_aids.transactions;
+package funcionabilities.functional_aids.transactions;
 
 public abstract class BankAcount {
     private String sourceAcount;
 
-    private BankAcount(String sourceAcount) {
+    public BankAcount(String sourceAcount) {
         this.sourceAcount = sourceAcount;
     }
 

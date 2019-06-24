@@ -1,4 +1,4 @@
-package main.functional_aids.transactions;
+package funcionabilities.functional_aids.transactions;
 
 public class Deposit extends BankTransaction implements IMethodsPayments {
     private String acountSend;
@@ -25,7 +25,7 @@ public class Deposit extends BankTransaction implements IMethodsPayments {
     }
 
     @Override
-    public IMethodsPayments clone() {
-        return null;
+    public IMethodsPayments clone() throws CloneNotSupportedException {
+        return (Deposit) super.clone();
     }
 }

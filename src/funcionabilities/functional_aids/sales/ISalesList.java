@@ -1,4 +1,4 @@
-package main.functional_aids.sales;
+package funcionabilities.functional_aids.sales;
 
 import java.util.Map;
 
@@ -9,5 +9,5 @@ public interface ISalesList<T, H> {
 
     Map<T, H> getList();
 
-    ISalesList clone();
+    ISalesList clone() throws CloneNotSupportedException;
 }

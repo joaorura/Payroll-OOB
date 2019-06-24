@@ -1,34 +1,54 @@
 package memento;
 
-import main.Employee;
+
+import funcionabilities.Payroll;
 
 import java.util.Stack;
 
 public class Restore implements IMemento {
-    private Stack<Employee> restoreUndo;
-    private Stack<Employee> restoreRedo;
+    private Stack<Payroll> restoreUndo;
+    private Stack<Payroll> restoreRedo;
 
-    public Employee undo() {
-        Employee item = restoreUndo.pop();
-        restoreRedo.push(item.clone());
+
+    public Restore() {
+        restoreRedo = new Stack<>();
+        restoreRedo = new Stack<>();
+    }
+
+    public Payroll undo() {
+        Payroll item = restoreUndo.pop();
+        try {
+            restoreRedo.push((Payroll) item.clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
 
         return item;
     }
 
-    public Employee redo() {
-        Employee item = restoreRedo.pop();
-        restoreUndo.push(item.clone());
+    public Payroll redo() {
+        Payroll item = restoreRedo.pop();
+        try {
+            restoreUndo.push((Payroll) item.clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
 
         return item;
     }
 
     public boolean backup(Object rest, boolean type) {
-        Employee item = (Employee) rest;
+        Payroll item = (Payroll) rest;
+        try {
+            item = (Payroll) item.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
 
         if (type) {
-            restoreRedo.push(item.clone());
+            restoreRedo.push(item);
         } else {
-            restoreUndo.push(item.clone());
+            restoreUndo.push(item);
         }
 
         return true;

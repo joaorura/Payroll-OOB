@@ -1,8 +1,8 @@
-package main.functional_aids.payments;
+package funcionabilities.functional_aids.payments;
 
 import java.util.GregorianCalendar;
 
-public class PaymentBills implements IPayments {
+public class PaymentBills implements ITypePayments {
     private int day;
     private int weekInterval;
     private int monthInterval;
@@ -10,29 +10,40 @@ public class PaymentBills implements IPayments {
     private GregorianCalendar nextDayPayment;
 
     public PaymentBills(GregorianCalendar lastPayment, int day, int weekInterval, int monthInterval) {
-        this.day = day;
-        this.weekInterval = weekInterval;
-        this.monthInterval = monthInterval;
-        this.lastPayment = (GregorianCalendar) lastPayment.clone();
+        if(day > 0 && weekInterval >= 0 && monthInterval >= 0) {
+            this.day = day;
+            this.weekInterval = weekInterval;
+            this.monthInterval = monthInterval;
 
-        att();
-    }
-
-    public PaymentBills(GregorianCalendar lastPayment, int day, int interval) {
-        this.day = day;
-
-        if (day == -1) {
-            this.weekInterval = 0;
-            this.monthInterval = interval;
-        } else {
-            this.weekInterval = interval;
-            this.monthInterval = 0;
+            if(lastPayment != null) {
+                this.lastPayment = (GregorianCalendar) lastPayment.clone();
+                att();
+            }
+            else {
+                this.lastPayment = null;
+            }
         }
-
-        this.lastPayment = (GregorianCalendar) lastPayment.clone();
+        else {
+            throw new Error("Todos os parametros devem ser positovos");
+        }
     }
 
+    public PaymentBills(int day, int weekInterval, int monthInterval) {
+        this(null, day, weekInterval, monthInterval);
+    }
+
+    public PaymentBills(GregorianCalendar lastPayment, int day, int monthInterval) {
+        this(lastPayment, day, 0, monthInterval);
+    }
+
+    private void checkLastPaymet() {
+        if(lastPayment == null) {
+            throw new Error("The last payments cant be a null please call setLastPayment()");
+        }
+    }
     private void att() {
+        checkLastPaymet();
+
         this.lastPayment = nextDayPayment;
         this.nextDayPayment = (GregorianCalendar) lastPayment.clone();
 
@@ -54,20 +65,14 @@ public class PaymentBills implements IPayments {
     }
 
     @Override
-    public IPayments clone() {
-        IPayments item;
-        try {
-            item = (IPayments) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        return item;
+    public ITypePayments clone() throws CloneNotSupportedException{
+        return (ITypePayments) super.clone();
     }
 
     @Override
     public boolean checkItsDay(GregorianCalendar calendar) {
+        checkLastPaymet();
+
         if (calendar.equals(nextDayPayment)) {
             att();
             return true;

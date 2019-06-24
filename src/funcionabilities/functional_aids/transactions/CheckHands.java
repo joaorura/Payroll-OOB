@@ -1,4 +1,4 @@
-package main.functional_aids.transactions;
+package funcionabilities.functional_aids.transactions;
 
 public class CheckHands extends Check implements IMethodsPayments {
     private int id_to_send;
@@ -26,7 +26,7 @@ public class CheckHands extends Check implements IMethodsPayments {
         return super.value;
     }
 
-    public IMethodsPayments clone() {
-        return null;
+    public IMethodsPayments clone() throws CloneNotSupportedException{
+        return (CheckHands) super.clone();
     }
 }
