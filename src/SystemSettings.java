@@ -1,5 +1,6 @@
-package funcionabilities;
-
+import funcionabilities.Employee;
+import funcionabilities.auxiliary_entities.ISyndicates;
+import funcionabilities.auxiliary_entities.Syndicate;
 import funcionabilities.functional_aids.payments.ITypePayments;
 import funcionabilities.functional_aids.payments.PaymentBills;
 import funcionabilities.functional_aids.transactions.Check;
@@ -13,6 +14,7 @@ public class SystemSettings {
 
     private static final Class[] TYPES_METHODS = new Class[] {Deposit.class, CheckHands.class, Check.class};
     private static final Class[] TYPES_TYPESPAYMENTS = new Class[] {PaymentBills.class};
+    private static final Class[] TYPES_SYNDICATE = new Class[] {Syndicate.class};
     private static final Class[] EMPLOYEE_STANDARDS =  new Class[] {Employee.class};
 
     private static final ITypePayments[] DEFAULT_TYPESPAYMENTS = new ITypePayments[] {

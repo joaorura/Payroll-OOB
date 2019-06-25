@@ -1,16 +1,13 @@
-package memento;
-
-
-import funcionabilities.Payroll;
+import memento.IMemento;
 
 import java.util.Stack;
 
-public class Restore implements IMemento {
+public class Restore implements IMemento<Payroll> {
     private Stack<Payroll> restoreUndo;
     private Stack<Payroll> restoreRedo;
 
 
-    public Restore() {
+    Restore() {
         restoreRedo = new Stack<>();
         restoreRedo = new Stack<>();
     }
@@ -18,7 +15,7 @@ public class Restore implements IMemento {
     public Payroll undo() {
         Payroll item = restoreUndo.pop();
         try {
-            restoreRedo.push((Payroll) item.clone());
+            restoreRedo.push(item.clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -29,7 +26,7 @@ public class Restore implements IMemento {
     public Payroll redo() {
         Payroll item = restoreRedo.pop();
         try {
-            restoreUndo.push((Payroll) item.clone());
+            restoreUndo.push(item.clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -37,10 +34,10 @@ public class Restore implements IMemento {
         return item;
     }
 
-    public boolean backup(Object rest, boolean type) {
-        Payroll item = (Payroll) rest;
+    public boolean backup(Payroll rest, boolean type) {
+        Payroll item = rest;
         try {
-            item = (Payroll) item.clone();
+            item = item.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

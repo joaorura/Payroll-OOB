@@ -6,16 +6,16 @@ import funcionabilities.functional_aids.payments.ITypePayments;
 import funcionabilities.functional_aids.transactions.IMethodsPayments;
 
 public class Employee implements Cloneable{
-    protected String adress;
-    protected String name;
-    protected long personal_id;
-    protected ISyndicates personalSyndicate;
-    protected IMethodsPayments typePayment;
-    protected ITypePayments personalIPayment;
-    protected IPointCalendar worker;
+    private String adress;
+    private String name;
+    private long personal_id;
+    private ISyndicates personalSyndicate;
+    private IMethodsPayments typePayment;
+    private ITypePayments personalIPayment;
+    IPointCalendar worker;
 
-    public Employee(String adress, String name, long personal_id, ISyndicates personalSyndicate,
-                    IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker) {
+    Employee(String adress, String name, long personal_id, ISyndicates personalSyndicate,
+             IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker) {
         this.adress = adress;
         this.name = name;
         this.personal_id = personal_id;
