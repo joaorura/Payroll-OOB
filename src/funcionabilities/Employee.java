@@ -1,7 +1,6 @@
 package funcionabilities;
 
 import funcionabilities.auxiliary_entities.ISyndicates;
-import funcionabilities.auxiliary_entities.Syndicate;
 import funcionabilities.functional_aids.calendar.IPointCalendar;
 import funcionabilities.functional_aids.payments.ITypePayments;
 import funcionabilities.functional_aids.transactions.IMethodsPayments;
@@ -10,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Employee implements Cloneable{
-    private boolean Name;
     private String adress;
     private String name;
     private int personal_id;
@@ -37,20 +35,8 @@ public class Employee implements Cloneable{
         debit.put(service, value);
     }
 
-    public void removeDebit(String service) {
-        debit.remove(service);
-    }
-
     public void removeDebit(String service, double value) {
         debit.remove(service, value);
-    }
-
-    public boolean changeEmployeesDetails() {
-        return false;
-    }
-
-    public boolean checkItsDay() {
-        return false;
     }
 
     public String toString() {
@@ -75,6 +61,18 @@ public class Employee implements Cloneable{
         item.worker = this.worker.clone();
 
         return item;
+    }
+
+    public void setPersonalIPayment(ITypePayments personalIPayment) {
+        this.personalIPayment = personalIPayment;
+    }
+
+    public ITypePayments getPersonalIPayment() {
+        return personalIPayment;
+    }
+
+    public IMethodsPayments getMethodPayment() {
+        return methodPayment;
     }
 
     public String getName() {

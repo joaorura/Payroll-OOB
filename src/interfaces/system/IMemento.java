@@ -1,3 +1,5 @@
+package interfaces.system;
+
 public interface IMemento<T> {
     T undo();
 
