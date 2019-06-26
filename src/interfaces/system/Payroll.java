@@ -13,10 +13,10 @@ import interfaces.SystemSettings;
 import java.util.*;
 
 public class Payroll implements Cloneable{
-    private ArrayList<Employee> employees;
-    private IMemento<Payroll> backup;
-    private ArrayList<IMethodsPayments> methodsPayments;
-    private ArrayList<ITypePayments> typesPayments;
+    private final ArrayList<Employee> employees;
+    private final IMemento<Payroll> backup;
+    private final ArrayList<IMethodsPayments> methodsPayments;
+    private final ArrayList<ITypePayments> typesPayments;
     private GregorianCalendar actualCalendar;
 
     private static Payroll pay_default = new Payroll();
@@ -213,10 +213,6 @@ public class Payroll implements Cloneable{
         processServiceChange(type, search(name), name_product, value);
     }
 
-    public boolean processEmployeeDetail() {
-        return false;
-    }
-
     public void runPayrollToday() {
         Employee emp_aux;
         for(Employee employee : employees) {
@@ -232,8 +228,8 @@ public class Payroll implements Cloneable{
         return false;
     }
 
-    public boolean backup(boolean type) {
-        return backup.backup(this, true);
+    public void backup(boolean type) {
+        backup.backup(this, true);
     }
 
     public GregorianCalendar getActualCalendar() {

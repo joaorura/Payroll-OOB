@@ -1,7 +1,7 @@
 package funcionabilities.functional_aids.transactions;
 
 public class CheckHands extends Check implements IMethodsPayments {
-    private int id_to_send;
+    private final int id_to_send;
 
     public CheckHands(BankAcount bank, double value, String name, int ids) {
         super(bank , value, name);

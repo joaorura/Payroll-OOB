@@ -6,7 +6,7 @@ import funcionabilities.functional_aids.payments.ITypePayments;
 import funcionabilities.functional_aids.transactions.IMethodsPayments;
 
 public class Salaried extends Employee {
-    private  Double salary;
+    private final Double salary;
 
     public Salaried(String adress, String name, int personal_id, ISyndicates personalSyndicate,
                     IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker, Double salary) {

@@ -8,9 +8,9 @@ import funcionabilities.functional_aids.transactions.IMethodsPayments;
 import java.util.GregorianCalendar;
 
 public class Hourly extends Employee{
-    private int max_work_hours;
-    private double tax_over_work;
-    private double ratioHour;
+    private final int max_work_hours;
+    private final double tax_over_work;
+    private final double ratioHour;
 
     public Hourly(String adress, String name, int personal_id, ISyndicates personalSyndicate,
                   IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker, int max_work_hours,

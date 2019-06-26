@@ -1,8 +1,8 @@
 package funcionabilities.auxiliary_entities;
 
 public class Syndicate implements ISyndicates {
-    private String indetificationSyndicate;
-    private double monthlyFee;
+    private final String indetificationSyndicate;
+    private final double monthlyFee;
 
     public Syndicate(String indetificationSyndicate, double monthlyFee) {
         this.indetificationSyndicate = indetificationSyndicate;

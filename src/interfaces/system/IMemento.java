@@ -1,9 +1,9 @@
 package interfaces.system;
 
-public interface IMemento<T> {
+interface IMemento<T> {
     T undo();
 
     T redo();
 
-    boolean backup(T rest, boolean type);
+    void backup(T rest, boolean type);
 }

@@ -6,18 +6,18 @@ import java.util.Scanner;
 class UtilsMain {
     private final static String start = "\n\nNova interação!"
             + "\n\nQual função você deseja realizar\n"
-            + "\t0: Adição de um empregado\n"
-            + "\t1: Remoção de um empregado\n"
-            + "\t2: Lançar um Cartão de Ponto\n"
-            + "\t3: Lançar um Resultado Venda\n"
-            + "\t4: Lançar uma taxa de serviço\n"
-            + "\t5: Alterar detalhes de um empregado\n"
-            + "\t6: Rodar a folha de pagamento para hoje\n"
-            + "\t7: Undo ou redo\n"
-            + "\t8: Alterar agenda de pagamento de um empregado\n"
-            + "\t9: Criação de Novas Agendas de Pagamento\n"
-            + "\t9: Listar estado\n"
-            + "\t10: Sair do programa";
+            + "\t1: Adição de um empregado\n"
+            + "\t2: Remoção de um empregado\n"
+            + "\t3: Lançar um Cartão de Ponto\n"
+            + "\t4: Lançar um Resultado Venda\n"
+            + "\t5: Lançar uma taxa de serviço\n"
+            + "\t6: Alterar detalhes de um empregado\n"
+            + "\t7: Rodar a folha de pagamento para hoje\n"
+            + "\t8: Undo ou redo\n"
+            + "\t9: Alterar agenda de pagamento de um empregado\n"
+            + "\t10: Criação de Novas Agendas de Pagamento\n"
+            + "\t11: Listar estado\n"
+            + "\t12: Sair do programa";
 
     private final static String identificaton = "\t0: ID\n"
             + "\t1: Name\n"
@@ -95,8 +95,8 @@ class UtilsMain {
         System.out.println(identificaton);
     }
 
-    static String takeString(int pass) {
-        for(int i = 0; i < pass; i++) scan.nextLine();
+    static String takeString() {
+        for(int i = 0; i < 0; i++) scan.nextLine();
         return scan.nextLine();
     }
 }

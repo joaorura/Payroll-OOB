@@ -1,14 +1,14 @@
 package funcionabilities.functional_aids.transactions;
 
-public class BankTransaction extends BankAcount {
-    protected double value;
+class BankTransaction extends BankAcount {
+    final double value;
 
-    public BankTransaction(BankAcount bank, double value) {
+    BankTransaction(BankAcount bank, double value) {
         super(bank);
         this.value = value;
     }
 
-    public String getInfo() {
+    String getInfo() {
         return "Bank Transaction: \n\t" + super.getInfo() + "\tValue: " + value + "\n";
     }
 }

@@ -7,11 +7,9 @@ import funcionabilities.functional_aids.sales.ISalesList;
 import funcionabilities.functional_aids.sales.SaleList;
 import funcionabilities.functional_aids.transactions.IMethodsPayments;
 
-import java.util.Map;
-
 public class Commisioned extends Salaried {
-    private ISalesList sales;
-    private double ratioSales;
+    private final ISalesList sales;
+    private final double ratioSales;
 
     public Commisioned(String adress, String name, int personal_id, ISyndicates personalSyndicate,
                        IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker,

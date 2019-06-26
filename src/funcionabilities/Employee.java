@@ -9,14 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Employee implements Cloneable{
-    private String adress;
-    private String name;
-    private int personal_id;
+    private final String adress;
+    private final String name;
+    private final int personal_id;
     private ISyndicates personalSyndicate;
     private IMethodsPayments methodPayment;
     private ITypePayments personalIPayment;
     IPointCalendar worker;
-    private Map<String, Double> debit;
+    private final Map<String, Double> debit;
 
 
     Employee(String adress, String name, int personal_id, ISyndicates personalSyndicate,

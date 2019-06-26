@@ -67,7 +67,7 @@ public class PaymentBills implements ITypePayments {
 
 
     @Override
-    public ITypePayments clone() throws CloneNotSupportedException{
+    public ITypePayments clone() {
         PaymentBills type = new PaymentBills(lastPayment, day, weekInterval, monthInterval);
         if(type.nextDayPayment != null)
             type.nextDayPayment = (GregorianCalendar) this.nextDayPayment.clone();

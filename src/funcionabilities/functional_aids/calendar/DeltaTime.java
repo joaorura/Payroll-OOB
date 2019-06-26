@@ -3,16 +3,16 @@ package funcionabilities.functional_aids.calendar;
 import java.security.InvalidParameterException;
 import java.util.GregorianCalendar;
 
-public class DeltaTime {
+class DeltaTime {
     private GregorianCalendar start;
     private GregorianCalendar end;
 
-    public static final char SECOND = 'S';
-    public static final char MINUTE = 'M';
-    public static final char HOUR = 'H';
-    public static final char DAY = 'D';
+    static final char SECOND = 'S';
+    static final char MINUTE = 'M';
+    static final char HOUR = 'H';
+    static final char DAY = 'D';
 
-    public DeltaTime(GregorianCalendar start, GregorianCalendar end) throws Error{
+    DeltaTime(GregorianCalendar start, GregorianCalendar end) throws Error{
         if(start == null) {
             throw new NullPointerException("In Delta Time constructor, \"start\" can be not be null\n");
         }
@@ -21,7 +21,7 @@ public class DeltaTime {
         this.end = (GregorianCalendar) end.clone();
     }
 
-    public double getDelta(char type) {
+    double getDelta(char type) {
         double value = (end.get(GregorianCalendar.MILLISECOND) - start.get(GregorianCalendar.MILLISECOND));
 
         switch (type) {

@@ -34,7 +34,7 @@ public class Restore implements IMemento<Payroll> {
         return item;
     }
 
-    public boolean backup(Payroll rest, boolean type) {
+    public void backup(Payroll rest, boolean type) {
         Payroll item = rest;
         try {
             item = item.clone();
@@ -48,6 +48,5 @@ public class Restore implements IMemento<Payroll> {
             restoreUndo.push(item);
         }
 
-        return true;
     }
 }

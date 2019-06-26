@@ -35,7 +35,7 @@ class CreateElements {
         throw new Error();
     }
 
-    static void syndicateProcess(Map<Class, Integer[]> aMap, List<Object> param) {
+    static void syndicateProcess(List<Object> param) {
         System.out.println("\nSyndicate: \n" +
                 "\tIt has: \n" +
                 "\t\t0: No\n" +
@@ -48,25 +48,25 @@ class CreateElements {
             param.add(Class.class);
         }
         else {
-            param.add(apresentType(aMap));
+            param.add(apresentType(SystemSettings.TYPE_SYNDICATES));
 
-            if (aMap.get(param.get(0))[0] == 0) {
+            if (SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0] == 0) {
                 System.out.print("\nIndentification of syndicate: ");
-                UtilsMain.takeString(0);
-                param.add(UtilsMain.takeString(0));
+                UtilsMain.takeString();
+                param.add(UtilsMain.takeString());
 
                 System.out.print("Monthly fee of syndicate: ");
                 param.add(UtilsMain.readEntries(Double.class));
             }
             else {
-                throw new IllegalStateException("Unexpected value: " + aMap.get(param.get(0))[0]);
+                throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0]);
             }
         }
     }
 
-    static void methodProcess(String name, String adress, Map<Class, Integer[]> aMap, List<Object> param) {
+    static void methodProcess(String name, String adress, List<Object> param) {
         System.out.println("\nMethods Payment: ");
-        param.add(apresentType(aMap));
+        param.add(apresentType(SystemSettings.TYPE_METHODS_PAYMENTS));
 
         System.out.println("\nBank of source:\n" +
                 "\t0: Bank of Company\n" +
@@ -78,20 +78,20 @@ class CreateElements {
         }
         else {
             System.out.println("\tSource acount:");
-            String acount = UtilsMain.takeString(0);
+            String acount = UtilsMain.takeString();
 
             System.out.println("\tIdentification (CPF or CNPJ): ");
-            String identification = UtilsMain.takeString(0);
+            String identification = UtilsMain.takeString();
 
             assert name != null;
             param.add(new BankAcount(name.concat(""), acount, identification));
         }
 
         param.add((double) -1);
-        switch (aMap.get(param.get(0))[0]) {
+        switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]) {
             case 0:
                 System.out.print("Acount number to transactions: ");
-                param.add(UtilsMain.takeString(0));
+                param.add(UtilsMain.takeString());
 
                 break;
             case 1:
@@ -105,12 +105,12 @@ class CreateElements {
                 param.add(adress.concat(""));
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + aMap.get(param.get(0))[0]);
+                throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]);
         }
     }
 
 
-    static void typeProcess(Map<Class, Integer[]> aMap, List<Object> param) {
+    static void typeProcess(List<Object> param) {
         System.out.println("Type Payment: \n" +
                 "\tYou want use predefintion: \n" +
                 "\t\t0: No\n" +
@@ -118,9 +118,9 @@ class CreateElements {
         int aux = UtilsMain.readEntries(0,1);
 
         if(aux == 0){
-            param.add(apresentType(aMap));
+            param.add(apresentType(SystemSettings.TYPE_PAYMENTS));
 
-            if (aMap.get(param.get(0))[0] == 0) {
+            if (SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0] == 0) {
                 param.add(Payroll.getDefault().getActualCalendar().clone());
                 System.out.print("Day of week to payment [1 to 7 and -1, this represent a day of finaly of month: ");
                 param.add(UtilsMain.readEntries(-1,7));
@@ -134,7 +134,7 @@ class CreateElements {
                 System.out.println("Amount of months of interval: ");
                 param.add(UtilsMain.readEntries(0, Integer.MAX_VALUE));
             } else {
-                throw new IllegalStateException("Unexpected value: " + aMap.get(param.get(0))[0]);
+                throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0]);
             }
         }
         else {
@@ -147,42 +147,37 @@ class CreateElements {
 
             aux = UtilsMain.readEntries(0, aux - 1);
             param.add(ITypePayments.class);
-            try {
-                param.add(SystemSettings.DEFAULT_TYPESPAYMENTS[aux].clone());
-
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+            param.add(SystemSettings.DEFAULT_TYPESPAYMENTS[aux].clone());
 
             ((ITypePayments) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
         }
 
     }
 
-    static void pointsProcess(Map<Class, Integer[]> aMap, List<Object> param) {
+    static void pointsProcess(List<Object> param) {
         System.out.println("Points: ");
-        param.add(apresentType(aMap));
+        param.add(apresentType(SystemSettings.TYPE_POINTS));
 
-        if (aMap.get(param.get(0))[0] == 0) {
+        if (SystemSettings.TYPE_POINTS.get(param.get(0))[0] == 0) {
             System.out.println("Entre com um caractere que escolherá a administração do tempo" +
                     "\n\t(0: Hourly | 1: Month | 2: Daily\n\t");
             param.add(UtilsMain.readEntries(Integer.class));
         } else {
-            throw new IllegalStateException("Unexpected value: " + aMap.get(param.get(0))[0]);
+            throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_POINTS.get(param.get(0))[0]);
         }
     }
 
-    static void identificatonProcess(Map<Class, Integer[]> aMap, ArrayList<Object> param) {
+    static void identificatonProcess(ArrayList<Object> param) {
         /* param[0] são os atributos primitivos das possiveis classes de empregados*/
 
         param.add(null);
 
         System.out.print("\tName: ");
-        String name = UtilsMain.takeString(0);
+        String name = UtilsMain.takeString();
         param.add(name);
 
         System.out.print("\tAdress: ");
-        String adress = UtilsMain.takeString(0);
+        String adress = UtilsMain.takeString();
         param.add(adress);
 
         param.add(Payroll.getDefault().nextId());

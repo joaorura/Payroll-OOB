@@ -17,13 +17,13 @@ public class Main{
         if(input != 11) {
             pay.backup(true);
 
-            if(input != 0 && input != 6 && input != 7 && input != 9) {
+            if(input != 1 && input != 7 && input != 8 && input != 10) {
                 UtilsMain.printIdentification();
                 type_id = readEntries(0,1);
             }
 
             if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
-            else name = UtilsMain.takeString(0);
+            else name = UtilsMain.takeString();
         }
 
         FuncionabilitiesInter.att(type_id, id, name);
@@ -36,7 +36,7 @@ public class Main{
 
         if(ret != null) {
             if(ret instanceof Boolean) return (boolean) ret;
-            else throw new RuntimeException("Error in FuncionabilitesInter Class");
+            else return false;
         }
         else return  true;
 

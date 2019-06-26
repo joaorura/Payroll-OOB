@@ -2,7 +2,6 @@ package interfaces.user;
 
 import funcionabilities.Employee;
 import funcionabilities.functional_aids.payments.ITypePayments;
-import interfaces.SystemSettings;
 import interfaces.system.Payroll;
 
 import java.lang.reflect.Method;
@@ -13,8 +12,8 @@ import java.util.Map;
 
 import static interfaces.user.UtilsMain.readEntries;
 
-public  class FuncionabilitiesInter {
-    public static Map<Integer, Method> funcionabilities = new HashMap<>();
+class FuncionabilitiesInter {
+    public static final Map<Integer, Method> funcionabilities = new HashMap<>();
     static {
         Method[] methods = FuncionabilitiesInter.class.getDeclaredMethods();
         for(int i = 0; i < methods.length; i++) funcionabilities.put(i, methods[i]);
@@ -39,12 +38,12 @@ public  class FuncionabilitiesInter {
 
         Map<Class, Integer[]> aMap = null;
 
-        CreateElements.identificatonProcess(SystemSettings.TYPE_EMPLOYEES, param.get(0));
-        CreateElements.syndicateProcess(SystemSettings.TYPE_SYNDICATES, param.get(1));
+        CreateElements.identificatonProcess(param.get(0));
+        CreateElements.syndicateProcess(param.get(1));
         CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2),
-                SystemSettings.TYPE_METHODS_PAYMENTS, param.get(2));
-        CreateElements.typeProcess(SystemSettings.TYPE_PAYMENTS, param.get(3));
-        CreateElements.pointsProcess(SystemSettings.TYPE_POINTS, param.get(4));
+                param.get(2));
+        CreateElements.typeProcess(param.get(3));
+        CreateElements.pointsProcess(param.get(4));
 
         return pay.addEmployee(param);
     }
@@ -78,7 +77,7 @@ public  class FuncionabilitiesInter {
     static void processSale() {
         System.out.println("\nProcess Sale Result\n");
         System.out.println("\n\tName of product: ");
-        String name_product = UtilsMain.takeString(0);
+        String name_product = UtilsMain.takeString();
 
         Double value_product;
         System.out.println("\n\tValue of product: ");
@@ -108,7 +107,7 @@ public  class FuncionabilitiesInter {
         int aux = UtilsMain.readEntries(0,1);
         boolean type = (aux == 0);
 
-        String name_product = UtilsMain.takeString(0);
+        String name_product = UtilsMain.takeString();
         Double value_product = (Double) UtilsMain.readEntries(Double.class);
         assert(value_product != null);
         if(type_id == 0) pay.processServiceChange(type, id, name_product, value_product);
@@ -118,7 +117,6 @@ public  class FuncionabilitiesInter {
     static void processEmployeeDetail(){
         System.out.println("Changes of employee: ");
         Employee emp_aux = addEmployee();
-        pay.processEmployeeDetail();
         if(type_id == 0) pay.changeEmployee(id, emp_aux);
         else pay.changeEmployee(name, emp_aux);
     }
@@ -133,14 +131,13 @@ public  class FuncionabilitiesInter {
 
     static void setPersonalPaymet() {
         Employee emp_aux = addEmployee();
-        pay.processEmployeeDetail();
 
         if(type_id == 0) pay.changeEmployee(id, emp_aux);
         else pay.changeEmployee(name, emp_aux);
 
         System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule");
         ArrayList<Object> param = new ArrayList<>();
-        CreateElements.typeProcess(SystemSettings.TYPE_PAYMENTS, param);
+        CreateElements.typeProcess(param);
         ITypePayments type_aux = pay.createTypePayment(param);
 
         emp_aux.setPersonalIPayment(type_aux);

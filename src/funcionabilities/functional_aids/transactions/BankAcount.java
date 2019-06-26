@@ -1,11 +1,11 @@
 package funcionabilities.functional_aids.transactions;
 
 public  class BankAcount {
-    protected String name;
-    protected String sourceAcount;
-    protected String identification;
+    final String name;
+    private final String sourceAcount;
+    private final String identification;
 
-    public BankAcount(BankAcount bank) {
+    BankAcount(BankAcount bank) {
         this.name = bank.name;
         this.sourceAcount = bank.sourceAcount;
         this.identification = bank.identification;
@@ -17,7 +17,7 @@ public  class BankAcount {
         this.identification = identification;
     }
 
-    public String getInfo() {
+    String getInfo() {
         return "Source Acount: " + sourceAcount + "\n";
     }
 }
