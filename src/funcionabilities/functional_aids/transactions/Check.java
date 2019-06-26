@@ -1,11 +1,11 @@
 package funcionabilities.functional_aids.transactions;
 
 public class Check extends BankTransaction {
-    private String name;
+    private String name_destiny;
 
-    public Check(String source, double value, String name) {
-        super(source, value);
-        this.name = name;
+    public Check(BankAcount bank,  double value, String name_destiny) {
+        super(bank, value);
+        this.name_destiny = name_destiny;
     }
 
     public String getInfo() {

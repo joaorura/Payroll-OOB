@@ -1,5 +1,6 @@
 package funcionabilities.functional_aids.payments;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class PaymentBills implements ITypePayments {
@@ -10,7 +11,7 @@ public class PaymentBills implements ITypePayments {
     private GregorianCalendar nextDayPayment;
 
     public PaymentBills(GregorianCalendar lastPayment, int day, int weekInterval, int monthInterval) {
-        if(day > 0 && weekInterval >= 0 && monthInterval >= 0) {
+        if((day == -1 || day > 0) && weekInterval >= 0 && monthInterval >= 0) {
             this.day = day;
             this.weekInterval = weekInterval;
             this.monthInterval = monthInterval;
@@ -24,7 +25,7 @@ public class PaymentBills implements ITypePayments {
             }
         }
         else {
-            throw new Error("Todos os parametros devem ser positovos");
+            throw new Error("Todos os parametros devem ser positivos");
         }
     }
 
@@ -64,9 +65,20 @@ public class PaymentBills implements ITypePayments {
         }
     }
 
+
     @Override
     public ITypePayments clone() throws CloneNotSupportedException{
-        return (ITypePayments) super.clone();
+        PaymentBills type = new PaymentBills(lastPayment, day, weekInterval, monthInterval);
+        if(type.nextDayPayment != null)
+            type.nextDayPayment = (GregorianCalendar) this.nextDayPayment.clone();
+
+        return type;
+    }
+
+    @Override
+    public void setLastPayment(Object item) {
+        assert item instanceof Calendar;
+        this.lastPayment = (GregorianCalendar) item;
     }
 
     @Override

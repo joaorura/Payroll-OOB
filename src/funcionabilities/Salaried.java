@@ -8,7 +8,7 @@ import funcionabilities.functional_aids.transactions.IMethodsPayments;
 public class Salaried extends Employee {
     private  Double salary;
 
-    public Salaried(String adress, String name, long personal_id, ISyndicates personalSyndicate,
+    public Salaried(String adress, String name, int personal_id, ISyndicates personalSyndicate,
                     IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker, Double salary) {
         super(adress, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker);
         this.salary = salary;

@@ -3,8 +3,8 @@ package funcionabilities.functional_aids.transactions;
 public class CheckPostOffices extends Check implements IMethodsPayments {
     private String adress;
 
-    public CheckPostOffices(String source, double value, String name, String adress) {
-        super(source, value, name);
+    public CheckPostOffices(BankAcount bank,  double value, String name, String adress) {
+        super(bank, value, name);
         this.adress = adress;
     }
 

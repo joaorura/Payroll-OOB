@@ -3,8 +3,8 @@ package funcionabilities.functional_aids.transactions;
 public class BankTransaction extends BankAcount {
     protected double value;
 
-    public BankTransaction(String source, double value) {
-        super(source);
+    public BankTransaction(BankAcount bank, double value) {
+        super(bank);
         this.value = value;
     }
 

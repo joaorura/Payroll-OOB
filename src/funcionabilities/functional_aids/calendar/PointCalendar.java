@@ -5,14 +5,14 @@ import java.util.GregorianCalendar;
 
 public class PointCalendar implements IPointCalendar {
     private ArrayList<DeltaTime> pcalendar = new ArrayList<>();
-    private char type;
+    private int type;
 
-    private static final char HOURLY = 'H';
-    private static final char DAILY = 'D';
-    private static final char MONTHLY = 'M';
+    private static final int HOURLY = 0;
+    private static final int DAILY = 1;
+    private static final int MONTHLY = 2;
 
-    public PointCalendar(char type) {
-        if(type != 'H' && type != 'D') {
+    public PointCalendar(int type) {
+        if(type != HOURLY && type != DAILY & type != MONTHLY) {
             throw new RuntimeException("Type in PointCalendar Constructor, it's wrong, this is can be 'H' or 'D'\n");
         }
 

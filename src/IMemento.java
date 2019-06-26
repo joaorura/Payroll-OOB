@@ -1,5 +1,3 @@
-package memento;
-
 public interface IMemento<T> {
     T undo();
 

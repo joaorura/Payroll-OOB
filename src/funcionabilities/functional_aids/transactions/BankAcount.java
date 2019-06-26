@@ -1,10 +1,20 @@
 package funcionabilities.functional_aids.transactions;
 
-public abstract class BankAcount {
-    private String sourceAcount;
+public  class BankAcount {
+    protected String name;
+    protected String sourceAcount;
+    protected String identification;
 
-    public BankAcount(String sourceAcount) {
+    public BankAcount(BankAcount bank) {
+        this.name = bank.name;
+        this.sourceAcount = bank.sourceAcount;
+        this.identification = bank.identification;
+    }
+
+    public BankAcount(String name, String sourceAcount, String identification) {
+        this.name = name;
         this.sourceAcount = sourceAcount;
+        this.identification = identification;
     }
 
     public String getInfo() {

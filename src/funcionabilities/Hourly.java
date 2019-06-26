@@ -12,7 +12,7 @@ public class Hourly extends Employee{
     private double tax_over_work;
     private double ratioHour;
 
-    public Hourly(String adress, String name, long personal_id, ISyndicates personalSyndicate,
+    public Hourly(String adress, String name, int personal_id, ISyndicates personalSyndicate,
                   IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker, int max_work_hours,
                   double tax_over_work, double ratioHour) {
         super(adress, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker);

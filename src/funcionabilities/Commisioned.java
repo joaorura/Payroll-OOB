@@ -13,7 +13,7 @@ public class Commisioned extends Salaried {
     private ISalesList sales;
     private double ratioSales;
 
-    public Commisioned(String adress, String name, long personal_id, ISyndicates personalSyndicate,
+    public Commisioned(String adress, String name, int personal_id, ISyndicates personalSyndicate,
                        IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker,
                        Double salary, Double ratioSales) {
         super(adress, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker, salary);
@@ -21,7 +21,7 @@ public class Commisioned extends Salaried {
         this.ratioSales = ratioSales;
     }
 
-    public Map getSaleList() {
-        return sales.getList();
+    public ISalesList<String, Double> getSales() {
+        return sales;
     }
 }
