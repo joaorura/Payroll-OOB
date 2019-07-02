@@ -14,8 +14,9 @@ public class Main{
         int id = -1;
         String name = null;
 
-        if(input != 2 && input != 10) {
-            pay.backup(true);
+        if(input != 9) {
+            if(input!= 5)
+                pay.backup(true);
 
             if(input != 0 && input != 1) {
                 UtilsMain.printIdentification();
@@ -49,8 +50,8 @@ public class Main{
         int input;
         while (true) {
             UtilsMain.printIntro();
-            input = readEntries(0,11);
-                if(input == 11) return;
+            input = readEntries(0,10);
+                if(input == 10) return;
                 else if (!processEntries(input)) {
                     System.out.println("A sua operação falhou, o sistema não conlcluiu a sua ação. Por favor " +
                             "realize-a novamente!");

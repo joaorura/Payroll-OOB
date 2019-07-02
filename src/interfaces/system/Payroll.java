@@ -32,7 +32,7 @@ public class Payroll implements Cloneable{
         return pay_default;
     }
 
-    private int search(String name) {
+    public int searchEmployee(String name) {
         Iterator<Employee> iterable = employees.iterator();
 
         int i = 0;
@@ -46,16 +46,16 @@ public class Payroll implements Cloneable{
         else return i;
     }
 
+    public Employee searchEmployee(int id) {
+        return employees.get(id);
+    }
+
     public void configurations(GregorianCalendar day) {
         this.actualCalendar = day;
     }
 
     public int nextId() {
         return employees.size() + 1;
-    }
-
-    private Employee searchEmployee(int id) {
-        return employees.get(id);
     }
 
     public ITypePayments createTypePayment(ArrayList<Object> paramater) {
@@ -148,7 +148,7 @@ public class Payroll implements Cloneable{
     }
 
     public Employee removeEmployee(String name) {
-        return removeEmployee(search(name));
+        return removeEmployee(searchEmployee(name));
     }
 
     public void processPointCard(int id, GregorianCalendar start, GregorianCalendar end) {
@@ -157,7 +157,7 @@ public class Payroll implements Cloneable{
     }
 
     public void processPointCard(String name, GregorianCalendar start, GregorianCalendar end) {
-        processPointCard(search(name), start, end);
+        processPointCard(searchEmployee(name), start, end);
     }
 
     public boolean undo() {
@@ -204,7 +204,7 @@ public class Payroll implements Cloneable{
     }
 
     public void processSaleResult(String func_name, String name, double value) throws Exception {
-        processSaleResult(search(func_name), name, value);
+        processSaleResult(searchEmployee(func_name), name, value);
     }
 
     public void processServiceChange(boolean type, int id, String name_product, double value) {
@@ -220,7 +220,7 @@ public class Payroll implements Cloneable{
     }
 
     public void processServiceChange(boolean type, String name, String name_product, double value) {
-        processServiceChange(type, search(name), name_product, value);
+        processServiceChange(type, searchEmployee(name), name_product, value);
     }
 
     public void runPayrollToday() {
@@ -259,6 +259,6 @@ public class Payroll implements Cloneable{
     }
 
     public void changeEmployee(String name, Employee change) {
-        changeEmployee(search(name), change);
+        changeEmployee(searchEmployee(name), change);
     }
 }

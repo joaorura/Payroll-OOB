@@ -2,6 +2,7 @@ package interfaces.user;
 
 import funcionabilities.Employee;
 import funcionabilities.functional_aids.payments.ITypePayments;
+import interfaces.SystemSettings;
 import interfaces.system.Payroll;
 
 import java.lang.reflect.Array;
@@ -108,7 +109,7 @@ class FuncionabilitiesInter {
         }
     }
 
-    static void processServiceChage() {
+    static void processServiceChange() {
         System.out.println("You desire retire or add services: \n" +
                 "\t0: Add\n" +
                 "\t1: Remove");
@@ -139,19 +140,27 @@ class FuncionabilitiesInter {
     }
 
     static void setPersonalPayment() {
-        Employee emp_aux = addEmployee();
+        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule\n" +
+                "\t0: Create\n" +
+                "\t1: Set\n");
 
-        if(type_id == 0) pay.changeEmployee(id, emp_aux);
-        else pay.changeEmployee(name, emp_aux);
+        int aux = UtilsMain.readEntries(0,1);
 
-        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule");
-        ArrayList<Class> p_class = new ArrayList<>();
-        ArrayList<Object> param = new ArrayList<>();
-        CreateElements.typeProcess(param);
-        ITypePayments type_aux = null;
-        type_aux = pay.createTypePayment(param);
+        if(aux == 0) {
+            ArrayList<Object> param = new ArrayList<>();
+            CreateElements.typeProcess(param);
+            ITypePayments type_aux = pay.createTypePayment(param);
+            SystemSettings.DEFAULT_TYPESPAYMENTS.add(type_aux);
+        }
+        else {
+            Employee emp_aux;
+            if(type_id == 0) emp_aux = pay.searchEmployee(id);
+            else emp_aux = pay.searchEmployee(pay.searchEmployee(name));
 
-        emp_aux.setPersonalIPayment(type_aux);
+            aux = CreateElements.showTypeElements();
+            emp_aux.setPersonalIPayment(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
+        }
+
     }
 
     static void printState() {
@@ -159,10 +168,6 @@ class FuncionabilitiesInter {
     }
 
     static void runPayroll() {
-
-    }
-
-    static void createPersonalPayment (){
 
     }
 }

@@ -109,6 +109,18 @@ class CreateElements {
         }
     }
 
+    static int showTypeElements() {
+        System.out.println("\n\t\tPredefinitions: \n");
+        int aux;
+        aux = SystemSettings.DEFAULT_TYPESPAYMENTS.size();
+        for(int i = 0; i < aux; i ++) {
+            System.out.println("\t\t" + i + ": " + SystemSettings.DEFAULT_TYPESPAYMENTS.get(i).toString());
+        }
+
+        aux = UtilsMain.readEntries(0, aux - 1);
+
+        return aux;
+    }
 
     static void typeProcess(List<Object> param) {
         System.out.println("\n\nType Payment: \n" +
@@ -138,16 +150,9 @@ class CreateElements {
             }
         }
         else {
-            System.out.println("\n\t\tPredefinitions: \n");
-
-            aux = SystemSettings.DEFAULT_TYPESPAYMENTS.length;
-            for(int i = 0; i < aux; i ++) {
-                System.out.println("\t\t" + i + ": " + SystemSettings.DEFAULT_TYPESPAYMENTS[i].toString());
-            }
-
-            aux = UtilsMain.readEntries(0, aux - 1);
+            aux = showTypeElements();
             param.add(ITypePayments.class);
-            param.add(SystemSettings.DEFAULT_TYPESPAYMENTS[aux].clone());
+            param.add(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
 
             ((ITypePayments) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
         }
@@ -161,7 +166,7 @@ class CreateElements {
         if (SystemSettings.TYPE_POINTS.get(param.get(0))[0] == 0) {
             System.out.println("Entre com um caractere que escolherá a administração do tempo" +
                     "\n\t(0: Hourly | 1: Month | 2: Daily\n\t");
-            param.add(UtilsMain.readEntries(Integer.class));
+            param.add(UtilsMain.readEntries(0, 2));
         } else {
             throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_POINTS.get(param.get(0))[0]);
         }
