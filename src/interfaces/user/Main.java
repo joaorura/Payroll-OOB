@@ -14,17 +14,15 @@ public class Main{
         int id = -1;
         String name = null;
 
-        if(input != 11) {
-            pay.backup(true);
+        pay.backup(true);
 
-            if(input != 1 && input != 7 && input != 8 && input != 10) {
-                UtilsMain.printIdentification();
-                type_id = readEntries(0,1);
-            }
-
-            if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
-            else name = UtilsMain.takeString();
+        if(input != 0 && input != 1 && input != 2 && input != 10) {
+            UtilsMain.printIdentification();
+            type_id = readEntries(0,1);
         }
+
+        if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
+        else name = UtilsMain.takeString();
 
         FuncionabilitiesInter.att(type_id, id, name);
         Object ret = null;
@@ -36,9 +34,9 @@ public class Main{
 
         if(ret != null) {
             if(ret instanceof Boolean) return (boolean) ret;
-            else return false;
+            else return true;
         }
-        else return  true;
+        else return true;
 
     }
 
@@ -50,8 +48,8 @@ public class Main{
         int input;
         while (true) {
             UtilsMain.printIntro();
-            input = readEntries(1,12);
-                if(input == 12) return;
+            input = readEntries(0,11);
+                if(input == 11) return;
                 else if (!processEntries(input)) {
                     System.out.println("A sua operação falhou, o sistema não conlcluiu a sua ação. Por favor " +
                             "realize-a novamente!");

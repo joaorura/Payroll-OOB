@@ -4,11 +4,10 @@ import funcionabilities.Employee;
 import funcionabilities.functional_aids.payments.ITypePayments;
 import interfaces.system.Payroll;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static interfaces.user.UtilsMain.readEntries;
 
@@ -16,7 +15,19 @@ class FuncionabilitiesInter {
     public static final Map<Integer, Method> funcionabilities = new HashMap<>();
     static {
         Method[] methods = FuncionabilitiesInter.class.getDeclaredMethods();
-        for(int i = 0; i < methods.length; i++) funcionabilities.put(i, methods[i]);
+        Arrays.sort(methods, new Comparator<Method>() {
+            @Override
+            public int compare(Method o1, Method o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+
+        int j = 0;
+        for(int i = 0; i < methods.length; i++) {
+            if(methods[i].getName().equals("att")) continue;
+            funcionabilities.put(j, methods[i]);
+            j++;
+        }
     }
 
     private static Payroll pay = null;
@@ -34,14 +45,12 @@ class FuncionabilitiesInter {
     static Employee addEmployee() {
         System.out.println("Add employee!\n");
         ArrayList<ArrayList<Object>> param = new ArrayList<>();
-        for(int i = 0; i < 5; i ++) param.add(new ArrayList<>());
 
-        Map<Class, Integer[]> aMap = null;
+        for(int i = 0; i < 5; i ++) {param.add(new ArrayList<>());}
 
         CreateElements.identificatonProcess(param.get(0));
         CreateElements.syndicateProcess(param.get(1));
-        CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2),
-                param.get(2));
+        CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
         CreateElements.typeProcess(param.get(3));
         CreateElements.pointsProcess(param.get(4));
 
@@ -129,16 +138,18 @@ class FuncionabilitiesInter {
         else return pay.redo();
     }
 
-    static void setPersonalPaymet() {
+    static void setPersonalPayment() {
         Employee emp_aux = addEmployee();
 
         if(type_id == 0) pay.changeEmployee(id, emp_aux);
         else pay.changeEmployee(name, emp_aux);
 
         System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule");
+        ArrayList<Class> p_class = new ArrayList<>();
         ArrayList<Object> param = new ArrayList<>();
         CreateElements.typeProcess(param);
-        ITypePayments type_aux = pay.createTypePayment(param);
+        ITypePayments type_aux = null;
+        type_aux = pay.createTypePayment(param);
 
         emp_aux.setPersonalIPayment(type_aux);
     }
@@ -146,5 +157,13 @@ class FuncionabilitiesInter {
     static void printState() {
         System.out.println("State: \n\t" + pay.toString());
         System.out.println("\n\n" + pay.toString());
+    }
+
+    static void runPayroll() {
+
+    }
+
+    static void createPersonalPayment (){
+
     }
 }

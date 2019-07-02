@@ -169,7 +169,6 @@ class CreateElements {
 
     static void identificatonProcess(ArrayList<Object> param) {
         /* param[0] são os atributos primitivos das possiveis classes de empregados*/
-
         param.add(null);
 
         System.out.print("\tName: ");

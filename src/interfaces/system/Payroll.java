@@ -145,7 +145,7 @@ public class Payroll implements Cloneable{
         if(id > employees.size() || id < 0)
             return null;
         else
-            return employees.remove(id);
+            return employees.set(id, null);
     }
 
     public Employee removeEmployee(String name) {
@@ -193,6 +193,16 @@ public class Payroll implements Cloneable{
         }
     }
 
+    public String toString() {
+        StringBuilder str =  new StringBuilder();
+        for(int i = 0; i < employees.size(); i++) {
+            if(employees.get(i) != null)
+                str.append(i).append(": ").append(employees.get(i));
+        }
+
+        return str.toString();
+    }
+
     public void processSaleResult(String func_name, String name, double value) throws Exception {
         processSaleResult(search(func_name), name, value);
     }
@@ -221,7 +231,6 @@ public class Payroll implements Cloneable{
                 System.out.println(emp_aux.getMethodPayment().doPayment());
             }
         }
-
     }
 
     boolean createEmployeePaymentSchedule() {

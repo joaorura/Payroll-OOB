@@ -4,20 +4,19 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 class UtilsMain {
-    private final static String start = "\n\nNova interação!"
-            + "\n\nQual função você deseja realizar\n"
-            + "\t1: Adição de um empregado\n"
-            + "\t2: Remoção de um empregado\n"
-            + "\t3: Lançar um Cartão de Ponto\n"
-            + "\t4: Lançar um Resultado Venda\n"
-            + "\t5: Lançar uma taxa de serviço\n"
-            + "\t6: Alterar detalhes de um empregado\n"
-            + "\t7: Rodar a folha de pagamento para hoje\n"
-            + "\t8: Undo ou redo\n"
-            + "\t9: Alterar agenda de pagamento de um empregado\n"
-            + "\t10: Criação de Novas Agendas de Pagamento\n"
-            + "\t11: Listar estado\n"
-            + "\t12: Sair do programa";
+    private final static String start = "\n\nNew interation!\n" +
+            "\t0: addEmployee\n"+
+            "\t1: createPersonalPayment\n"+
+            "\t2: printState\n"+
+            "\t3: processEmployeeDetail\n"+
+            "\t4: processPointCard\n"+
+            "\t5: processSale\n"+
+            "\t6: processServiceChage\n"+
+            "\t7: removeEmployee\n"+
+            "\t8: runPayroll\n"+
+            "\t9: setPersonalPayment\n"+
+            "\t10: undoRedo\n" +
+            "\t11: exit\n";
 
     private final static String identificaton = "\t0: ID\n"
             + "\t1: Name\n"
