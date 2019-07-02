@@ -7,5 +7,7 @@ public interface ITypePayments {
 
     void setLastPayment(Object item);
 
+    String toString();
+
     boolean checkItsDay(GregorianCalendar calendar);
 }

@@ -14,15 +14,16 @@ public class Main{
         int id = -1;
         String name = null;
 
-        pay.backup(true);
+        if(input != 2 && input != 10) {
+            pay.backup(true);
 
-        if(input != 0 && input != 1 && input != 2 && input != 10) {
-            UtilsMain.printIdentification();
-            type_id = readEntries(0,1);
+            if(input != 0 && input != 1) {
+                UtilsMain.printIdentification();
+                type_id = readEntries(0,1);
+                if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
+                else name = UtilsMain.takeString();
+            }
         }
-
-        if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
-        else name = UtilsMain.takeString();
 
         FuncionabilitiesInter.att(type_id, id, name);
         Object ret = null;

@@ -17,7 +17,7 @@ public  class BankAcount {
         this.identification = identification;
     }
 
-    String getInfo() {
+    public String toString() {
         return "Source Acount: " + sourceAcount + "\n";
     }
 }

@@ -1,35 +1,44 @@
 package interfaces.system;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class Restore implements IMemento<Payroll> {
     private Stack<Payroll> restoreUndo;
     private Stack<Payroll> restoreRedo;
 
-
     Restore() {
         restoreRedo = new Stack<>();
-        restoreRedo = new Stack<>();
+        restoreUndo = new Stack<>();
     }
 
     public Payroll undo() {
-        Payroll item = restoreUndo.pop();
         try {
-            restoreRedo.push(item.clone());
+            restoreRedo.push(Payroll.getDefault().clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
+        }
+
+        Payroll item;
+        try {
+            item = restoreUndo.pop();
+        }catch (EmptyStackException e) {
+            System.out.println("It's not possible, stack it's empty");
+            return null;
         }
 
         return item;
     }
 
     public Payroll redo() {
-        Payroll item = restoreRedo.pop();
         try {
-            restoreUndo.push(item.clone());
+            restoreUndo.push(Payroll.getDefault().clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
+
+        Payroll item = restoreRedo.pop();
+        if(item == null) throw new Error("It's not possible, stack it's empty");
 
         return item;
     }
@@ -43,9 +52,9 @@ public class Restore implements IMemento<Payroll> {
         }
 
         if (type) {
-            restoreRedo.push(item);
-        } else {
             restoreUndo.push(item);
+        } else {
+            restoreRedo.push(item);
         }
 
     }

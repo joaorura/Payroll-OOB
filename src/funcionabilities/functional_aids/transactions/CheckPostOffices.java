@@ -8,15 +8,8 @@ public class CheckPostOffices extends Check implements IMethodsPayments {
         this.adress = adress;
     }
 
-    public String getInfo() {
-        String[] str = super.getInfo().split("\n\t");
-        StringBuilder new_str = new StringBuilder();
-
-        new_str.append(str[0]);
-        new_str.append("\n\tthrough the post office, to: \n\t\tAdress: ");
-        new_str.append(adress).append("\n");
-        for (int i = 1; i < str.length; i++) new_str.append(str[i]).append("\n\t");
-        return new_str.toString();
+    public String toString() {
+        return super.toString() + "\n\tSend to adress: " + adress + "\n";
     }
 
     public double doPayment() {

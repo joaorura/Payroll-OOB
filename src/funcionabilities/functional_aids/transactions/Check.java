@@ -9,14 +9,7 @@ public class Check extends BankTransaction {
     }
 
     public String getInfo() {
-        String[] str = super.getInfo().split("\n\t");
-        StringBuilder new_str = new StringBuilder();
-        new_str.append(str[0])
-                .append("Check\n\tFor name: ")
-                .append(name).append("\n\t");
-
-        for (int i = 1; i < str.length; i++) new_str.append(str[i]).append("\n\t");
-        return new_str.toString();
+        return super.toString() + "\nName of destiny: " + name_destiny + "\t\n";
     }
 
 }

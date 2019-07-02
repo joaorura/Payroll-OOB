@@ -156,7 +156,6 @@ class FuncionabilitiesInter {
 
     static void printState() {
         System.out.println("State: \n\t" + pay.toString());
-        System.out.println("\n\n" + pay.toString());
     }
 
     static void runPayroll() {

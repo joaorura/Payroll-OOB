@@ -56,6 +56,9 @@ public class PointCalendar implements IPointCalendar {
         }
     }
 
+    public String toString() {
+      return  "\n\tThis employeer work: " + amountWork(-1) + "hours" + "\n";
+    }
     public void markPoint(GregorianCalendar start, GregorianCalendar end) {
         pcalendar.add(new DeltaTime(start, end));
     }

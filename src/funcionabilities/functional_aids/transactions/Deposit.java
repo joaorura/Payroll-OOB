@@ -8,20 +8,14 @@ public class Deposit extends BankTransaction implements IMethodsPayments {
         this.acountSend = send;
     }
 
-    public String getInfo() {
-        String[] str = super.getInfo().split("\n\t");
-        StringBuilder new_str = new StringBuilder();
-        new_str.append(str[0])
-                .append("Depoisit\n\tFor acount: ")
-                .append(acountSend).append("\n\t");
-
-        for (int i = 1; i < str.length; i++) new_str.append(str[i]).append("\n\t");
-        return new_str.toString();
+    @Override
+    public String toString() {
+        return super.toString() + "Acount destiny: " + acountSend;
     }
 
     @Override
     public double doPayment() {
-        System.out.println(getInfo());
+        System.out.println(toString());
         return super.value;
     }
 

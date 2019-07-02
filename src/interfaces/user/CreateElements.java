@@ -111,7 +111,7 @@ class CreateElements {
 
 
     static void typeProcess(List<Object> param) {
-        System.out.println("Type Payment: \n" +
+        System.out.println("\n\nType Payment: \n" +
                 "\tYou want use predefintion: \n" +
                 "\t\t0: No\n" +
                 "\t\t1: Yes\n");
@@ -172,6 +172,7 @@ class CreateElements {
         param.add(null);
 
         System.out.print("\tName: ");
+        UtilsMain.takeString();
         String name = UtilsMain.takeString();
         param.add(name);
 

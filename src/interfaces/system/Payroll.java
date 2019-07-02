@@ -13,17 +13,16 @@ import interfaces.SystemSettings;
 import java.util.*;
 
 public class Payroll implements Cloneable{
-    private final ArrayList<Employee> employees;
-    private final IMemento<Payroll> backup;
-    private final ArrayList<IMethodsPayments> methodsPayments;
-    private final ArrayList<ITypePayments> typesPayments;
+    private ArrayList<Employee> employees;
+    private static final IMemento<Payroll> backup = new Restore();
+    private ArrayList<IMethodsPayments> methodsPayments;
+    private ArrayList<ITypePayments> typesPayments;
     private GregorianCalendar actualCalendar;
 
     private static Payroll pay_default = new Payroll();
 
     private Payroll() {
         this.employees = new ArrayList<>();
-        this.backup = new Restore();
         this.methodsPayments = new ArrayList<>();
         this.typesPayments = new ArrayList<>();
         this.actualCalendar = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -168,6 +167,7 @@ public class Payroll implements Cloneable{
         }
 
         Payroll.pay_default = pay;
+
         return true;
     }
 
@@ -197,7 +197,7 @@ public class Payroll implements Cloneable{
         StringBuilder str =  new StringBuilder();
         for(int i = 0; i < employees.size(); i++) {
             if(employees.get(i) != null)
-                str.append(i).append(": ").append(employees.get(i));
+                str.append(i).append(": ").append(employees.get(i)).append("\n");
         }
 
         return str.toString();
@@ -246,7 +246,12 @@ public class Payroll implements Cloneable{
     }
 
     public Payroll clone() throws CloneNotSupportedException {
-        return (Payroll) super.clone();
+        Payroll p = (Payroll) super.clone();
+        p.employees = (ArrayList<Employee>) employees.clone();
+        p.methodsPayments = (ArrayList<IMethodsPayments>) methodsPayments.clone();
+        p.typesPayments = (ArrayList<ITypePayments>) typesPayments.clone();
+        p.actualCalendar = (GregorianCalendar) actualCalendar.clone();
+        return p;
     }
 
     public void changeEmployee(int id, Employee change) {

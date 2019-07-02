@@ -8,7 +8,7 @@ class BankTransaction extends BankAcount {
         this.value = value;
     }
 
-    String getInfo() {
-        return "Bank Transaction: \n\t" + super.getInfo() + "\tValue: " + value + "\n";
+    public String toString() {
+        return super.toString() + "\nBank Transaction: \n\t" + "\tValue: " + value + "\n";
     }
 }

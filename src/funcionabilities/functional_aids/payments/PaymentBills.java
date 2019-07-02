@@ -65,6 +65,10 @@ public class PaymentBills implements ITypePayments {
         }
     }
 
+    public String toString() {
+        return "\tDay of week: " + day + "  |  Week Interval: " + weekInterval +
+                "  |  Month Interval: " + monthInterval + "\n";
+    }
 
     @Override
     public ITypePayments clone() {
