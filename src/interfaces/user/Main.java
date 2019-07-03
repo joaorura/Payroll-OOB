@@ -18,13 +18,27 @@ public class Main{
             if(input!= 5)
                 pay.backup(true);
 
-            if(input != 0 && input != 1) {
+            if(input != 0 && input != 1 && input != 7) {
                 UtilsMain.printIdentification();
                 type_id = readEntries(0,1);
-                if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
-                else name = UtilsMain.takeString();
+                if(type_id == 0) {
+                    System.out.print("Id of employee: ");
+                    id = readEntries(0, Integer.MAX_VALUE);
+                }
+                else {
+                    System.out.print("Name of employee: ");
+                    name = UtilsMain.takeString();
+                }
+
+                if((type_id == 0 && Payroll.getDefault().searchEmployee(id) == null) ||
+                        (type_id == 1 && Payroll.getDefault().searchEmployee(Payroll.getDefault().searchEmployee(name)) == null)) {
+                    System.out.println("Employee not found, please try again\n");
+                    return false;
+                }
             }
         }
+
+
 
         FuncionabilitiesInter.att(type_id, id, name);
         Object ret = null;

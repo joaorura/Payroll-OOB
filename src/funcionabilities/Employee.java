@@ -8,7 +8,7 @@ import funcionabilities.functional_aids.transactions.IMethodsPayments;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Employee implements Cloneable{
+public abstract class Employee implements Cloneable{
     private final String adress;
     private final String name;
     private final int personal_id;
@@ -17,7 +17,6 @@ public class Employee implements Cloneable{
     private ITypePayments personalIPayment;
     IPointCalendar worker;
     private final Map<String, Double> debit;
-
 
     Employee(String adress, String name, int personal_id, ISyndicates personalSyndicate,
              IMethodsPayments methodPayment, ITypePayments personalIPayment, IPointCalendar worker) {
@@ -39,6 +38,16 @@ public class Employee implements Cloneable{
         debit.remove(service, value);
     }
 
+    public void clearDebit() {
+        debit.clear();
+    }
+
+    public double getDebitCost() {
+        double total = 0;
+        for(double e : debit.values()) total += e;
+        return total;
+    }
+
     public String toString() {
         StringBuilder str = new StringBuilder();
         str.append("Information of employee:" + "\n\tName: ").append(name).append("\n\tAdress:  ")
@@ -52,6 +61,8 @@ public class Employee implements Cloneable{
 
         return str.toString();
     }
+
+    public abstract double attMoney();
 
     public Employee clone() throws CloneNotSupportedException{
         Employee item = (Employee) super.clone();
@@ -81,5 +92,13 @@ public class Employee implements Cloneable{
 
     public IPointCalendar getWorker() {
         return  worker;
+    }
+
+    public int getId() {
+        return personal_id;
+    }
+
+    ISyndicates getSyndicate() {
+        return personalSyndicate;
     }
 }

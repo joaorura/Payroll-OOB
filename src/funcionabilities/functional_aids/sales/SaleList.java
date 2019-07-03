@@ -47,10 +47,20 @@ public class SaleList implements ISalesList {
         return new HashMap<>(list);
     }
 
+    public double getSales() {
+        double sales = 0;
+        for(double e : list.values()) sales += e;
+        return sales;
+    }
+
     public ISalesList clone() throws CloneNotSupportedException{
         SaleList item = (SaleList) super.clone();
         item.list = new HashMap<>();
         item.list.putAll(this.list);
         return item;
+    }
+
+    public void clearSales() {
+        list.clear();
     }
 }

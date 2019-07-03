@@ -9,6 +9,6 @@ class BankTransaction extends BankAcount {
     }
 
     public String toString() {
-        return super.toString() + "\nBank Transaction: \n\t" + "\tValue: " + value + "\n";
+        return super.toString() + "\n\tBank Transaction: \n\tValue: " + value + "\n";
     }
 }

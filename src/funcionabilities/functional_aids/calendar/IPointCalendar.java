@@ -9,5 +9,7 @@ public interface IPointCalendar {
 
     double amountWork(int day);
 
+    int countedDays();
+
     void markPoint(GregorianCalendar start, GregorianCalendar end);
 }

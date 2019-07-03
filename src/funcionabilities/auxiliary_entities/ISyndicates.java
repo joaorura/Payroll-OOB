@@ -4,4 +4,6 @@ public interface ISyndicates {
     ISyndicates clone() throws CloneNotSupportedException;
 
     double costSyndicate();
+
+    String toString();
 }

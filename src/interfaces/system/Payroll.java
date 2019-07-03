@@ -47,7 +47,8 @@ public class Payroll implements Cloneable{
     }
 
     public Employee searchEmployee(int id) {
-        return employees.get(id);
+        if(id > employees.size()) return null;
+        else return employees.get(id);
     }
 
     public void configurations(GregorianCalendar day) {
@@ -55,22 +56,7 @@ public class Payroll implements Cloneable{
     }
 
     public int nextId() {
-        return employees.size() + 1;
-    }
-
-    public ITypePayments createTypePayment(ArrayList<Object> paramater) {
-        ITypePayments type = null;
-        switch (SystemSettings.TYPE_PAYMENTS.get(paramater.get(0))[0]) {
-            case -1:
-                type = (ITypePayments) paramater.get(1);
-                break;
-
-            case 0: type = new PaymentBills((GregorianCalendar) paramater.get(1), (int) paramater.get(2),
-                    (int) paramater.get(3), (int) paramater.get(4));
-                break;
-        }
-
-        return type;
+        return employees.size();
     }
 
     public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) {
@@ -101,7 +87,8 @@ public class Payroll implements Cloneable{
 
         }
 
-        ITypePayments type = createTypePayment(paramater.get(3));
+        ITypePayments type = UtilsPayroll.createTypePayment(paramater.get(3));
+        type.setLastPayment(actualCalendar);
 
         IPointCalendar point = null;
         if (SystemSettings.TYPE_POINTS.get(paramater.get(4).get(0))[0] == 0) {
@@ -225,11 +212,28 @@ public class Payroll implements Cloneable{
 
     public void runPayrollToday() {
         Employee emp_aux;
-        for(Employee employee : employees) {
-            emp_aux = employee;
-            if (emp_aux.getPersonalIPayment().checkItsDay(actualCalendar)) {
-                System.out.println(emp_aux.getMethodPayment().doPayment());
+
+        System.out.println("\n\n Day of week: " + actualCalendar.get(GregorianCalendar.DAY_OF_WEEK) +
+                "| Day of month: " + actualCalendar.get(GregorianCalendar.DAY_OF_MONTH) +
+                "| Month: " + actualCalendar.get(GregorianCalendar.MONTH) +
+                "| Year: " + actualCalendar.get(GregorianCalendar.YEAR)
+                +"\n\t" + actualCalendar.get(GregorianCalendar.HOUR) + ":" + actualCalendar.get(GregorianCalendar.MINUTE)
+                +"\n");
+
+        for(int i = 0; i < 1440; i ++) {
+            for(Employee employee : employees) {
+                if(employee != null) {
+                    employee.attMoney();
+
+                    if (employee.getPersonalIPayment().checkItsDay(actualCalendar)) {
+                        System.out.println("\n\tThe employee of id " + employee.getId() + " recebeu o pagamanto de " +
+                                employee.getMethodPayment().doPayment() + " com a transação a baixo:\n" +
+                                employee.getMethodPayment().toString());
+                    }
+                }
             }
+
+            actualCalendar.add(GregorianCalendar.MINUTE, 1);
         }
     }
 

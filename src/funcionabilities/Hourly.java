@@ -26,4 +26,20 @@ public class Hourly extends Employee{
         super.worker.markPoint(start, end);
         return  super.worker.amountWork(-1);
     }
+
+    public double attMoney() {
+        double time = 0, aux, temp_salary = 0;
+        for(int i = 0; i < worker.countedDays(); i ++) {
+            aux = worker.amountWork(i);
+            if(aux > tax_over_work) temp_salary += aux * (1 + ratioHour) * (1 + tax_over_work);
+            else temp_salary += aux * (1 + ratioHour);
+            time += aux;
+        }
+
+        temp_salary -= (time * getSyndicate().costSyndicate()) / 43200;
+        temp_salary -= getDebitCost();
+        clearDebit();
+
+        return temp_salary;
+    }
 }

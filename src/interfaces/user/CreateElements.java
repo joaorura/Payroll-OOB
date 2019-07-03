@@ -43,7 +43,6 @@ class CreateElements {
 
         int aux= UtilsMain.readEntries(0,1);
 
-        /*param[1] é a lista que contem os parametros referidos ao Sindicato*/
         if(aux == 0) {
             param.add(Class.class);
         }
@@ -77,10 +76,11 @@ class CreateElements {
             param.add(SystemSettings.ACOUNT);
         }
         else {
+            UtilsMain.takeString();
             System.out.println("\tSource acount:");
             String acount = UtilsMain.takeString();
 
-            System.out.println("\tIdentification (CPF or CNPJ): ");
+            System.out.print("\tIdentification (CPF or CNPJ): ");
             String identification = UtilsMain.takeString();
 
             assert name != null;
@@ -91,6 +91,7 @@ class CreateElements {
         switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]) {
             case 0:
                 System.out.print("Acount number to transactions: ");
+                UtilsMain.takeString();
                 param.add(UtilsMain.takeString());
 
                 break;
@@ -154,7 +155,7 @@ class CreateElements {
             param.add(ITypePayments.class);
             param.add(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
 
-            ((ITypePayments) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
+//            ((ITypePayments) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
         }
 
     }
@@ -172,7 +173,7 @@ class CreateElements {
         }
     }
 
-    static void identificatonProcess(ArrayList<Object> param) {
+    static void identificatonProcess(int id, List<Object> param) {
         /* param[0] são os atributos primitivos das possiveis classes de empregados*/
         param.add(null);
 
@@ -185,7 +186,10 @@ class CreateElements {
         String adress = UtilsMain.takeString();
         param.add(adress);
 
-        param.add(Payroll.getDefault().nextId());
+        if(id > -1)
+            param.add(id);
+        else
+            param.add(Payroll.getDefault().nextId());
 
         System.out.println("\nType: \n" +
                 "\t0: Hourly\n" +
@@ -219,6 +223,9 @@ class CreateElements {
 
             case 2:
                 param.set(0, Commisioned.class);
+
+                System.out.println("\n\nSalary: ");
+                param.add(UtilsMain.readEntries(Double.class));
 
                 System.out.println("\n\nRatio sales");
                 param.add(UtilsMain.readEntries(Double.class));

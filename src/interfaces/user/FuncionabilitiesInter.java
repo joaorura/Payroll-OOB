@@ -4,6 +4,7 @@ import funcionabilities.Employee;
 import funcionabilities.functional_aids.payments.ITypePayments;
 import interfaces.SystemSettings;
 import interfaces.system.Payroll;
+import interfaces.system.UtilsPayroll;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -49,7 +50,7 @@ class FuncionabilitiesInter {
 
         for(int i = 0; i < 5; i ++) {param.add(new ArrayList<>());}
 
-        CreateElements.identificatonProcess(param.get(0));
+        CreateElements.identificatonProcess(id, param.get(0));
         CreateElements.syndicateProcess(param.get(1));
         CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
         CreateElements.typeProcess(param.get(3));
@@ -73,6 +74,9 @@ class FuncionabilitiesInter {
     }
 
     static void processPointCard() {
+        if(pay.searchEmployee(id) == null) {
+            System.out.println("Employee not found, try again\n");
+        }
         System.out.println("\nProcess Point Card!\n");
 
         System.out.print("Start of turn: ");
@@ -129,6 +133,9 @@ class FuncionabilitiesInter {
         Employee emp_aux = addEmployee();
         if(type_id == 0) pay.changeEmployee(id, emp_aux);
         else pay.changeEmployee(name, emp_aux);
+
+        att(0,Payroll.getDefault().nextId() - 1, name);
+        removeEmployee();
     }
 
     static boolean undoRedo() {
@@ -149,18 +156,14 @@ class FuncionabilitiesInter {
         if(aux == 0) {
             ArrayList<Object> param = new ArrayList<>();
             CreateElements.typeProcess(param);
-            ITypePayments type_aux = pay.createTypePayment(param);
-            SystemSettings.DEFAULT_TYPESPAYMENTS.add(type_aux);
+            UtilsPayroll.createPaymentSchedule(param);
         }
         else {
-            Employee emp_aux;
-            if(type_id == 0) emp_aux = pay.searchEmployee(id);
-            else emp_aux = pay.searchEmployee(pay.searchEmployee(name));
-
             aux = CreateElements.showTypeElements();
-            emp_aux.setPersonalIPayment(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
-        }
 
+            if(type_id == 0) UtilsPayroll.setPaymentSchedule(id, aux);
+            else UtilsPayroll.setPaymentSchedule(name, aux);
+        }
     }
 
     static void printState() {
@@ -168,6 +171,10 @@ class FuncionabilitiesInter {
     }
 
     static void runPayroll() {
-
+        System.out.println("Number of days that will be passed: ");
+        int aux = readEntries(0, Integer.MAX_VALUE);
+        for(int i = 0; i < aux; i++) {
+            pay.runPayrollToday();
+        }
     }
 }

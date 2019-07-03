@@ -22,7 +22,12 @@ class DeltaTime {
     }
 
     double getDelta(char type) {
-        double value = (end.get(GregorianCalendar.MILLISECOND) - start.get(GregorianCalendar.MILLISECOND));
+        double value = ((((((((( end.get(GregorianCalendar.YEAR) * 12 + end.get(GregorianCalendar.MONTH)) * 30) +
+                end.get(GregorianCalendar.MONTH)) * 24) + end.get(GregorianCalendar.HOUR)) * 60) +
+                end.get(GregorianCalendar.MINUTE)) * 60)
+                - ((((((((( start.get(GregorianCalendar.YEAR) * 12 + start.get(GregorianCalendar.MONTH)) * 30) +
+                start.get(GregorianCalendar.MONTH)) * 24) + start.get(GregorianCalendar.HOUR)) * 60) +
+                start.get(GregorianCalendar.MINUTE)) * 60)));
 
         switch (type) {
             case SECOND:

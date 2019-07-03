@@ -20,4 +20,9 @@ public class Syndicate implements ISyndicates {
     public String getIndetificationSyndicate() {
         return indetificationSyndicate;
     }
+
+    public String toString() {
+        return "\n\tIdentification of employee in Syndicate it's: " + indetificationSyndicate +
+                "\n\tThe monthly free of syndicate it's: " + monthlyFee + "\n";
+    }
 }
