@@ -20,4 +20,8 @@ public class Syndicate implements Cloneable {
     public Syndicate clone() throws CloneNotSupportedException {
         return (Syndicate) super.clone();
     }
+
+    public String toString() {
+        return "\n\tIdentification of Syndicate: " + indetificationSyndicate  + "\n\tMonthly fee: " + monthlyFee + "\n";
+    }
 }

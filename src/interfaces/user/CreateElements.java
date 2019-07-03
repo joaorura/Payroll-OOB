@@ -54,7 +54,6 @@ public class CreateElements {
 
         if (canChange(check, "name")) {
             System.out.print("\tName: ");
-            UtilsMain.takeString();
             param.add(UtilsMain.takeString());
         } else {
             param.add(emp.getName());
@@ -62,7 +61,14 @@ public class CreateElements {
 
         if (canChange(check, "adress")) {
             System.out.print("\tAdress:");
-            param.add(UtilsMain.takeString());
+            String str = UtilsMain.takeString();
+
+            while (str.equals("\n")) {
+                System.out.print("Digite novamente: ");
+                str = UtilsMain.takeString();
+            }
+
+            param.add(str);
         }
 
         int aux;
@@ -170,7 +176,6 @@ public class CreateElements {
 
             if (SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0] == 0) {
                 System.out.print("\nIdentification of syndicate: ");
-                UtilsMain.takeString();
                 param.add(UtilsMain.takeString());
                 System.out.print("Monthly fee of syndicate: ");
                 param.add(UtilsMain.readEntries(Double.class));

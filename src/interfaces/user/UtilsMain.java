@@ -178,6 +178,13 @@ public class UtilsMain {
     }
 
     static String takeString() {
-        return scan.nextLine();
+        String str = scan.nextLine();
+
+        while(str.equals("") || str.equals("\n")) {
+            System.out.print("\nEnter again: ");
+            str = scan.nextLine();
+        }
+
+        return str;
     }
 }

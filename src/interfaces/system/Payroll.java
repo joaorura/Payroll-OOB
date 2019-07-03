@@ -109,14 +109,14 @@ public class Payroll implements Cloneable {
         return true;
     }
 
-    public void processSaleResult(int id, String name, double value) throws Exception {
+    public void processSaleResult(int id, String name, double value) throws Error {
         Employee item = employees.get(id);
 
-        if (item == null) throw new Exception("Employee can't find");
+        if (item == null) throw new Error("Employee can't find");
         else if (item instanceof Commisioned) {
             ((Commisioned) item).getSales().addProduct(name, value);
         } else {
-            throw new Exception("The eploye must a be a Comissioned");
+            throw new Error("The eploye must a be a Comissioned");
         }
     }
 
@@ -144,12 +144,20 @@ public class Payroll implements Cloneable {
         System.out.println(getActualCalendar().toString());
 
         for (int i = 0; i < 1440; i++) {
-            for (Employee employee : employees) {
-                if (employee.getPersonalIPayment().checkItsDay(actualCalendar)) {
-                    employee.attMoney();
-                    System.out.println(employee.getName() + "\n" + employee.getMethodPayment().toString());
+
+            try {
+                for (Employee employee : employees) {
+                    if (employee.getPersonalIPayment().checkItsDay(actualCalendar)) {
+                        employee.attMoney();
+                        System.out.println(employee.getName() + "\n" + employee.getMethodPayment().toString());
+                    }
                 }
             }
+            catch (NullPointerException e) {
+                System.out.println("Without employees\n");
+                return;
+            }
+
 
             actualCalendar.add(Calendar.MINUTE, 1);
         }
@@ -204,9 +212,15 @@ public class Payroll implements Cloneable {
         Payroll p = (Payroll) super.clone();
         p.employees = new ArrayList<>();
 
-        for (Employee employee : employees) {
-            p.employees.add(employee.clone());
+        try {
+            for (Employee employee : employees) {
+                p.employees.add(employee.clone());
+            }
         }
+        catch (NullPointerException e) {
+            p.employees = new ArrayList<>();
+        }
+
 
         p.actualCalendar = actualCalendar.clone();
         return p;
