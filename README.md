@@ -12,7 +12,7 @@ Some considerations were taken in the creation of the project, are listed below:
  - Commissioners can receive their bandages normally.
  - All debts of the employee will be debited in the next sheet, with the proviso that they can not receive "negative" wages; so if you keep this debit will be placed on the next sheet.
 
-####University info:
+#### University info:
  - Name: João Messias Lima Pereira
  - Course: Computer Science
  - Registration number: 18110470
