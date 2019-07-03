@@ -1,29 +1,44 @@
 package funcionabilities;
 
-import funcionabilities.auxiliary_entities.ISyndicates;
-import funcionabilities.functional_aids.calendar.IPointCalendar;
-import funcionabilities.functional_aids.payments.ITypePayments;
-import funcionabilities.functional_aids.sales.ISalesList;
-import funcionabilities.functional_aids.sales.SaleList;
+import funcionabilities.auxiliary_entities.Syndicate;
+import funcionabilities.functional_aids.PaymentBills;
+import funcionabilities.functional_aids.SaleList;
+import funcionabilities.functional_aids.calendar.PointCalendar;
 import funcionabilities.functional_aids.transactions.IMethodsPayments;
 
 public class Commisioned extends Salaried {
-    private final ISalesList sales;
+    private final SaleList sales;
     private final double ratioSales;
 
-    public Commisioned(String adress, String name, int personal_id, ISyndicates personalSyndicate,
-                       IMethodsPayments typePayment, ITypePayments personalIPayment, IPointCalendar worker,
+    public Commisioned(String adress, String name, int personal_id, Syndicate personalSyndicate,
+                       IMethodsPayments typePayment, PaymentBills personalIPayment, PointCalendar worker,
                        Double salary, Double ratioSales) {
         super(adress, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker, salary);
         this.sales = new SaleList();
         this.ratioSales = ratioSales;
     }
 
-    public ISalesList<String, Double> getSales() {
+    public SaleList getSales() {
         return sales;
     }
 
     public double getRatioSales() {
         return ratioSales;
+    }
+
+    public double attMoney() {
+        double tempSalary = super.attMoney();
+        tempSalary += sales.getAllValues();
+        sales.clearList();
+        return tempSalary;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Ratio Sales: " + ratioSales + "\nValues of Sales: " + sales.getAllValues() + "\n";
+    }
+
+    public Commisioned clone() throws CloneNotSupportedException {
+        return (Commisioned) super.clone();
     }
 }

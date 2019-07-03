@@ -3,7 +3,7 @@ package funcionabilities.functional_aids.transactions;
 public class CheckPostOffices extends Check implements IMethodsPayments {
     private final String adress;
 
-    public CheckPostOffices(BankAcount bank,  double value, String name, String adress) {
+    public CheckPostOffices(BankAcount bank, double value, String name, String adress) {
         super(bank, value, name);
         this.adress = adress;
     }
@@ -17,7 +17,12 @@ public class CheckPostOffices extends Check implements IMethodsPayments {
         return super.value;
     }
 
-    public IMethodsPayments clone() throws CloneNotSupportedException{
+    public IMethodsPayments clone() throws CloneNotSupportedException {
         return (CheckPostOffices) super.clone();
+    }
+
+    @Override
+    public void setValue(double value) {
+        super.value = value;
     }
 }

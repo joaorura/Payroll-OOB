@@ -4,23 +4,24 @@ import funcionabilities.Commisioned;
 import funcionabilities.Employee;
 import funcionabilities.Hourly;
 import funcionabilities.Salaried;
-import funcionabilities.functional_aids.payments.ITypePayments;
+import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.transactions.BankAcount;
-import interfaces.system.Payroll;
 import interfaces.SystemSettings;
+import interfaces.system.Payroll;
 
+import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-class CreateElements {
+public class CreateElements {
     private static Object apresentType(Map<Class, Integer[]> aMap) {
         System.out.println("\n\tChose the type: \n");
         for (Map.Entry<Class, Integer[]> entry : aMap.entrySet()) {
             Class key = entry.getKey();
             Integer[] value = entry.getValue();
 
-            if(value[0] < 0) continue;
+            if (value[0] < 0) continue;
             System.out.println("\t\t" + value[0] + ": " + key.descriptorString() + " ; " + value[1] + "\n");
         }
 
@@ -36,140 +37,144 @@ class CreateElements {
         throw new Error();
     }
 
-    static boolean readEvery(String camp) {
-        System.out.println("\nYou want to change the field " + camp + ": " +
-                "\n\t0: No" +
-                "\n\t1: Yes");
-        return UtilsMain.readEntries(0,1) == 1;
+    static boolean canChange(boolean check, String camp) {
+        if (camp == null) throw new Error();
+        if (!check) return true;
+
+        System.out.println("You desire change the " + camp + ":\n" +
+                "\t0: No\n" +
+                "\t1: Yes");
+
+        return UtilsMain.readEntries(0, 1) == 1;
     }
 
     static void identificatonProcess(Employee emp, ArrayList<Object> param) {
-        /* param[0] são os atributos primitivos das possiveis classes de empregados*/
         boolean check = emp != null;
-
         param.add(null);
 
-        if(check && readEvery("name")) {
+        if (canChange(check, "name")) {
             System.out.print("\tName: ");
             UtilsMain.takeString();
             param.add(UtilsMain.takeString());
+        } else {
+            param.add(emp.getName());
         }
-        else param.add(emp.getName());
 
-        if(check && readEvery("adress")) {
-            System.out.print("\tAdress: ");
+        if (canChange(check, "adress")) {
+            System.out.print("\tAdress:");
             param.add(UtilsMain.takeString());
         }
-        else param.add(emp.getAdress());
 
-        if(check) param.add(Payroll.getDefault().nextId());
+        int aux;
+        if (!check) {
+            param.add(Payroll.getDefault().nextId());
 
-        if(check && readEvery("type of employee")) {
-            System.out.println("\nType: \n" +
+            System.out.println("\nType:\n" +
                     "\t0: Hourly\n" +
                     "\t1: Salaried\n" +
                     "\t2 : Commissioned\n");
 
-            int aux = UtilsMain.readEntries(0,2);
+            aux = UtilsMain.readEntries(0, 2);
+        } else {
+            param.add(emp.getId());
 
-            switch (aux) {
-                case 0:
-                    param.set(0, Hourly.class);
+            if (emp instanceof Hourly) aux = 0;
+            else if (emp instanceof Commisioned) aux = 2;
+            else aux = 1;
+        }
 
+
+        switch (aux) {
+            case 0:
+                Hourly hAux = null;
+                if (check) hAux = (Hourly) emp;
+
+                param.set(0, Hourly.class);
+
+                if (canChange(check, "Maximum hours to Work")) {
                     System.out.print("\nMaximun hours to work: ");
                     param.add(UtilsMain.readEntries(Integer.class));
+                } else {
+                    param.add(hAux.getMaxWorkHours());
+                }
 
+                if (canChange(check, "Tax to over work")) {
                     System.out.print("\nTax to over work: ");
                     param.add(UtilsMain.readEntries(Double.class));
+                } else {
+                    param.add(hAux.getTaxOverWork());
+                }
 
+                if (canChange(check, "Ratio Hour woked")) {
                     System.out.println("\nRatio Hour woked: ");
                     param.add(UtilsMain.readEntries(Double.class));
+                } else {
+                    param.add((hAux.getRatioWork()));
+                }
 
-                    break;
+                break;
 
-                case 1:
-                    param.set(0, Salaried.class);
+            case 1:
+                Salaried sAux = null;
+                if (check) sAux = (Salaried) emp;
 
+                param.set(0, Salaried.class);
+
+                if (canChange(check, "Salary")) {
                     System.out.println("\n\nSalary: ");
                     param.add(UtilsMain.readEntries(Double.class));
+                } else {
+                    param.add(sAux.getSalary());
+                }
 
-                    break;
+                break;
 
-                case 2:
-                    param.set(0, Commisioned.class);
+            case 2:
+                Commisioned cAux = null;
+                if (check) cAux = (Commisioned) emp;
 
+                param.set(0, Commisioned.class);
+
+                if (canChange(check, "Salary")) {
                     System.out.println("\n\nSalary: ");
                     param.add(UtilsMain.readEntries(Double.class));
+                } else {
+                    param.add(cAux.getSalary());
+                }
 
+                if (canChange(check, "Ratio sales")) {
                     System.out.println("\n\nRatio sales");
                     param.add(UtilsMain.readEntries(Double.class));
+                } else {
+                    param.add(cAux.getRatioSales());
+                }
 
-                    break;
-            }
+                break;
         }
-        else {
-            if(emp instanceof Hourly) {
-                param.set(0, Hourly.class);
-                Hourly h = (Hourly) emp;
-                param.add(h.getMaxWorkHours());
-                param.add(h.getOverWork());
-                param.add(h.geRatioWork());
-
-            } else if(emp instanceof Salaried) {
-                param.set(0, Salaried.class);
-                Salaried h = (Salaried) emp;
-                param.add(h.getSalary());
-            }
-            else {
-                param.set(0, Commisioned.class);
-                Commisioned c = (Commisioned) emp;
-                param.add(c.getRatioSales());
-            }
-        }
-
     }
 
-    static void syndicateProcess(Employee emp, List<Object> param) {
-        boolean check = emp != null;
+    static void syndicateProcess(List<Object> param) {
 
-        if(!(check && readEvery("Syndicate"))) {
-            System.out.println("\nSyndicate: \n" +
-                    "\tIt has: \n" +
-                    "\t\t0: No\n" +
-                    "\t\t1: Yes\n");
-        }
-        else {
-            System.out.println("Change");
-        }
+        System.out.println("\nSyndicate: \n" +
+                "\tIt has: \n" +
+                "\t\t0: No\n" +
+                "\t\t1: Yes\n");
 
-        int aux= UtilsMain.readEntries(0,1);
+        int aux = UtilsMain.readEntries(0, 1);
 
         /*param[1] é a lista que contem os parametros referidos ao Sindicato*/
-        if(aux == 0) {
+        if (aux == 0) {
             param.add(Class.class);
-        }
-        else {
+        } else {
             param.add(apresentType(SystemSettings.TYPE_SYNDICATES));
 
             if (SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0] == 0) {
-                if(check && readEvery("identification of syndicate")) {
-                    System.out.print("\nIdentification of syndicate: ");
-                    UtilsMain.takeString();
-                    param.add(UtilsMain.takeString());
-                }
-                else {
-                    param.add(emp.getSyndicate().getIndetification());
-                }
-
-                if(check && readEvery("month fee of syndicate")) {
-                    System.out.print("Monthly fee of syndicate: ");
-                    param.add(UtilsMain.readEntries(Double.class));
-                }
-                else {
-                    param.add(emp.getSyndicate().getMonthlyFee());
-                }
-            }
-            else {
+                System.out.print("\nIdentification of syndicate: ");
+                UtilsMain.takeString();
+                param.add(UtilsMain.takeString());
+                System.out.print("Monthly fee of syndicate: ");
+                param.add(UtilsMain.readEntries(Double.class));
+            } else {
                 throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0]);
             }
         }
@@ -183,13 +188,11 @@ class CreateElements {
         System.out.println("\nBank of source:\n" +
                 "\t0: Bank of Company\n" +
                 "\t1: New Bank");
-        int aux = UtilsMain.readEntries(0,1);
+        int aux = UtilsMain.readEntries(0, 1);
 
-        if(aux == 0) {
+        if (aux == 0) {
             param.add(SystemSettings.ACOUNT);
-        }
-        else {
-
+        } else {
             System.out.println("\tSource acount:");
             String acount = UtilsMain.takeString();
 
@@ -200,10 +203,11 @@ class CreateElements {
             param.add(new BankAcount(name.concat(""), acount, identification));
         }
 
-        param.add((double) -1);
+        param.add(0.0);
         switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]) {
             case 0:
-                System.out.print("Acount number to transactions: ");
+                System.out.print("\nAcount number to transactions: ");
+                UtilsMain.takeString();
                 param.add(UtilsMain.takeString());
 
                 break;
@@ -223,60 +227,54 @@ class CreateElements {
     }
 
 
-    static void typeProcess(List<Object> param) {
+    public static void typeProcess(boolean type, List<Object> param) throws InvalidAttributesException {
         System.out.println("\n\nType Payment: \n" +
                 "\tYou want use predefintion: \n" +
                 "\t\t0: No\n" +
                 "\t\t1: Yes\n");
-        int aux = UtilsMain.readEntries(0,1);
+        int aux = UtilsMain.readEntries(0, 1);
 
-        if(aux == 0){
+        if (type || aux == 0) {
             param.add(apresentType(SystemSettings.TYPE_PAYMENTS));
 
             if (SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0] == 0) {
-                param.add(Payroll.getDefault().getActualCalendar().clone());
-                System.out.print("Day of week to payment [1 to 7 and -1, this represent a day of finaly of month: ");
-                param.add(UtilsMain.readEntries(-1,7));
+                try {
+                    param.add(Payroll.getDefault().getActualCalendar().clone());
+                } catch (CloneNotSupportedException e) {
+                    throw new RuntimeException();
+                }
 
-                if((int) param.get(2) != -1) {
+                System.out.print("Day of week to payment [1 to 7 and -1, this represent a day of finaly of month: ");
+                param.add(UtilsMain.readEntries(-1, 7));
+
+                if ((int) param.get(2) != -1) {
                     System.out.print("Amount of weeks of interval: ");
                     param.add(UtilsMain.readEntries(0, Integer.MAX_VALUE));
-                }
-                else param.add(0);
+                } else param.add(0);
 
                 System.out.println("Amount of months of interval: ");
                 param.add(UtilsMain.readEntries(0, Integer.MAX_VALUE));
             } else {
                 throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0]);
             }
-        }
-        else {
+        } else {
             System.out.println("\n\t\tPredefinitions: \n");
 
-            aux = SystemSettings.DEFAULT_TYPESPAYMENTS.length;
-            for(int i = 0; i < aux; i ++) {
-                System.out.println("\t\t" + i + ": " + SystemSettings.DEFAULT_TYPESPAYMENTS[i].toString());
+            aux = SystemSettings.DEFAULT_TYPE_PAYMENTS.size();
+            for (int i = 0; i < aux; i++) {
+                System.out.println("\t\t" + i + ": " + SystemSettings.DEFAULT_TYPE_PAYMENTS.get(i).toString());
             }
 
             aux = UtilsMain.readEntries(0, aux - 1);
-            param.add(ITypePayments.class);
-            param.add(SystemSettings.DEFAULT_TYPESPAYMENTS[aux].clone());
-
-            ((ITypePayments) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
+            param.add(Class.class);
+            try {
+                PaymentBills paux = SystemSettings.DEFAULT_TYPE_PAYMENTS.get(aux).clone();
+                param.add(paux);
+                paux.setLastPayment(Payroll.getDefault().getActualCalendar().clone());
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException();
+            }
         }
 
-    }
-
-    static void pointsProcess(List<Object> param) {
-        System.out.println("Points: ");
-        param.add(apresentType(SystemSettings.TYPE_POINTS));
-
-        if (SystemSettings.TYPE_POINTS.get(param.get(0))[0] == 0) {
-            System.out.println("Entre com um caractere que escolherá a administração do tempo" +
-                    "\n\t(0: Hourly | 1: Month | 2: Daily\n\t");
-            param.add(UtilsMain.readEntries(Integer.class));
-        } else {
-            throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_POINTS.get(param.get(0))[0]);
-        }
     }
 }

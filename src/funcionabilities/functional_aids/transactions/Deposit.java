@@ -14,13 +14,12 @@ public class Deposit extends BankTransaction implements IMethodsPayments {
     }
 
     @Override
-    public double doPayment() {
-        System.out.println(toString());
-        return super.value;
+    public IMethodsPayments clone() throws CloneNotSupportedException {
+        return (Deposit) super.clone();
     }
 
     @Override
-    public IMethodsPayments clone() throws CloneNotSupportedException {
-        return (Deposit) super.clone();
+    public void setValue(double value) {
+        super.value = value;
     }
 }

@@ -1,11 +1,10 @@
 package interfaces.user;
 
 import funcionabilities.Employee;
-import funcionabilities.functional_aids.payments.ITypePayments;
+import funcionabilities.functional_aids.calendar.Calendar;
 import interfaces.system.Payroll;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
+import javax.naming.directory.InvalidAttributesException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -13,120 +12,165 @@ import static interfaces.user.UtilsMain.readEntries;
 
 class FuncionabilitiesInter {
     public static final Map<Integer, Method> funcionabilities = new HashMap<>();
+    private static Payroll pay = null;
+    private static int id = -1;
+
     static {
         Method[] methods = FuncionabilitiesInter.class.getDeclaredMethods();
-        Arrays.sort(methods, new Comparator<Method>() {
-            @Override
-            public int compare(Method o1, Method o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        Arrays.sort(methods, Comparator.comparing(Method::getName));
 
         int j = 0;
-        for(int i = 0; i < methods.length; i++) {
-            if(methods[i].getName().equals("att")) continue;
-            funcionabilities.put(j, methods[i]);
+        for (Method method : methods) {
+            if (method.getName().equals("att")) continue;
+            funcionabilities.put(j, method);
             j++;
         }
     }
 
-    private static Payroll pay = null;
-    private static int type_id = -1;
-    private static int id = -1;
-    private static String name = null;
-
-    static void att(int tp_id, int identifi, String nam) {
+    static void att(int ide) {
         pay = Payroll.getDefault();
-        type_id = tp_id;
-        id = identifi;
-        name = nam;
+        id = ide;
     }
 
-    static Employee addEmployee(Employee emp) {
+    static Employee addEmployee() {
         System.out.println("Add employee!\n");
-        ArrayList<ArrayList<Object>> param = new ArrayList<>();
-
-        for(int i = 0; i < 5; i ++) {param.add(new ArrayList<>());}
-
-        CreateElements.identificatonProcess(emp, param.get(0));
-        CreateElements.syndicateProcess(emp, param.get(1));
-        CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
-        CreateElements.typeProcess(param.get(3));
-        CreateElements.pointsProcess(param.get(4));
-
-        return pay.addEmployee(param);
-    }
-
-    static Employee removeEmployee() {
-        System.out.println("\nRemove Employee!\n");
-        Employee emp_aux;
-        if(type_id == 0) emp_aux = pay.removeEmployee(id);
-        else emp_aux = pay.removeEmployee(name);
-
-        if(emp_aux == null) return null;
-        else {
-            System.out.println("Removed: \n\t" + emp_aux.toString());
-            return emp_aux;
+        ArrayList<ArrayList<Object>> param = null;
+        try {
+            param = UtilsMain.getDatas(null);
+        } catch (InvalidAttributesException e) {
+            e.printStackTrace();
         }
 
+        try {
+            return pay.addEmployee(param);
+        } catch (InvalidAttributesException | CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    static void printState() {
+        System.out.println("State: \n\t" + pay.toString());
+    }
+
+    static void processEmployeeDetail() {
+        System.out.println("Changes of employee: ");
+        Employee emp = pay.searchEmployee(id);
+        ArrayList<ArrayList<Object>> param = null;
+        try {
+            param = UtilsMain.getDatas(emp);
+        } catch (InvalidAttributesException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            pay.changeEmployee(id, param);
+        } catch (CloneNotSupportedException | InvalidAttributesException e) {
+            e.printStackTrace();
+        }
     }
 
     static void processPointCard() {
         System.out.println("\nProcess Point Card!\n");
 
         System.out.print("Start of turn: ");
-        GregorianCalendar start = UtilsMain.getDate();
+        Calendar start = UtilsMain.getDate();
 
         System.out.println("End of turn: ");
-        GregorianCalendar end = UtilsMain.getDate();
-        if(type_id == 0)  pay.processPointCard(id, start, start);
-        else  pay.processPointCard(name, start, start);
+        Calendar end = UtilsMain.getDate();
+
+        pay.processPointCard(id, start, end);
     }
 
     static void processSale() {
-        System.out.println("\nProcess Sale Result\n");
-        System.out.println("\n\tName of product: ");
+        System.out.println("\nProcess Sale Result\ns");
+        System.out.print("\n\tName of product: ");
+        UtilsMain.takeString();
         String name_product = UtilsMain.takeString();
 
         Double value_product;
         System.out.println("\n\tValue of product: ");
         do value_product = (Double) UtilsMain.readEntries(Double.class); while (value_product == null);
 
-        if(type_id == 0) {
-            try {
-                pay.processSaleResult(id, name_product, value_product);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            try {
-                pay.processSaleResult(name, name_product, value_product);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            pay.processSaleResult(id, name_product, value_product);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    static void processServiceChage() {
+    static void processServiceChange() {
         System.out.println("You desire retire or add services: \n" +
                 "\t0: Add\n" +
                 "\t1: Remove");
 
-        int aux = UtilsMain.readEntries(0,1);
+        int aux = UtilsMain.readEntries(0, 1);
         boolean type = (aux == 0);
 
+        System.out.print("Name of product: ");
+        UtilsMain.takeString();
         String name_product = UtilsMain.takeString();
+
+        System.out.println("Value of product: ");
         Double value_product = (Double) UtilsMain.readEntries(Double.class);
-        assert(value_product != null);
-        if(type_id == 0) pay.processServiceChange(type, id, name_product, value_product);
-        else pay.processServiceChange(type, name, name_product, value_product);
+        if (value_product == null) {
+            throw new Error();
+        }
+
+        pay.processServiceChange(type, id, name_product, value_product);
     }
 
-    static void processEmployeeDetail(){
-        System.out.println("Changes of employee: ");
-        if(type_id == 0) pay.changeEmployee(id, addEmployee(pay.searchEmployee(id)));
-        else pay.changeEmployee(name, addEmployee(pay.searchEmployee(id)));
+    static Employee removeEmployee() {
+        System.out.println("\nRemove Employee!\n");
+        Employee emp_aux = pay.removeEmployee(id);
+
+        if (emp_aux == null) {
+            return null;
+        } else {
+            System.out.println("Removed: \n\t" + emp_aux.toString());
+            return emp_aux;
+        }
+
+    }
+
+    static void runPayroll() {
+        System.out.println("Enter the amount days will be processed: \n");
+        int amount = UtilsMain.readEntries(0, Integer.MAX_VALUE);
+
+        try {
+            for (int i = 0; i < amount; i++) pay.runPayrollToday();
+        } catch (InvalidAttributesException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void setPersonalPayment() {
+        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule\n" +
+                "\t0: Create a employee schedule\n" +
+                "\t1: Set a employee schedule\n");
+
+        if (UtilsMain.readEntries(0, 1) == 0) pay.createEmployeePaymentSchedule();
+        else {
+            try {
+                UtilsMain.printIdentification();
+
+                if (readEntries(0, 1) == 0) {
+                    id = (int) UtilsMain.readEntries(Integer.class);
+                } else {
+                    String name = UtilsMain.takeString();
+                    id = pay.searchEmployee(name);
+                }
+
+                if (pay.searchEmployee(id) == null) {
+                    throw new Error();
+                }
+
+                pay.setEmployeeSchedule(id);
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     static boolean undoRedo() {
@@ -135,28 +179,5 @@ class FuncionabilitiesInter {
         System.out.println("\t1: Refazer");
         if (readEntries(0, 1) == 0) return pay.undo();
         else return pay.redo();
-    }
-
-    static void setPersonalPayment() {
-        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule");
-        ArrayList<Class> p_class = new ArrayList<>();
-        ArrayList<Object> param = new ArrayList<>();
-        CreateElements.typeProcess(param);
-        ITypePayments type_aux = null;
-        type_aux = pay.createTypePayment(param);
-
-        pay.searchEmployee(id).setPersonalIPayment(type_aux);
-    }
-
-    static void printState() {
-        System.out.println("State: \n\t" + pay.toString());
-    }
-
-    static void runPayroll() {
-
-    }
-
-    static void createPersonalPayment (){
-
     }
 }
