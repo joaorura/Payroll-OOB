@@ -1,7 +1,5 @@
 package funcionabilities.functional_aids.payments;
 
-import interfaces.system.Payroll;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -35,6 +33,9 @@ public class PaymentBills implements ITypePayments {
         this(null, day, weekInterval, monthInterval);
     }
 
+    public PaymentBills(GregorianCalendar lastPayment, int day, int monthInterval) {
+        this(lastPayment, day, 0, monthInterval);
+    }
 
     private void checkLastPaymet() {
         if(lastPayment == null) {
@@ -44,8 +45,7 @@ public class PaymentBills implements ITypePayments {
     private void att() {
         checkLastPaymet();
 
-        if(nextDayPayment != null)
-            this.lastPayment = nextDayPayment;
+        this.lastPayment = nextDayPayment;
         this.nextDayPayment = (GregorianCalendar) lastPayment.clone();
 
         nextDayPayment.add(GregorianCalendar.MONTH, monthInterval);
@@ -83,26 +83,13 @@ public class PaymentBills implements ITypePayments {
     public void setLastPayment(Object item) {
         assert item instanceof Calendar;
         this.lastPayment = (GregorianCalendar) item;
-        att();
     }
 
     @Override
     public boolean checkItsDay(GregorianCalendar calendar) {
         checkLastPaymet();
 
-        /*
-        * calendar.get(GregorianCalendar.YEAR) == nextDayPayment.get(GregorianCalendar.DAY_OF_MONTH)
-            && calendar.get(GregorianCalendar.MONTH) == nextDayPayment.get(GregorianCalendar.MONTH)
-            && calendar.get(GregorianCalendar.DAY_OF_MONTH) == nextDayPayment.get(GregorianCalendar.DAY_OF_MONTH)
-            && calendar.get(GregorianCalendar.DAY_OF_WEEK) == nextDayPayment.get(GregorianCalendar.DAY_OF_WEEK)
-            && calendar.get(GregorianCalendar.HOUR) == nextDayPayment.get(GregorianCalendar.HOUR)
-            && calendar.get(GregorianCalendar.MINUTE) == nextDayPayment.get(GregorianCalendar.MINUTE)
-            * */
-
-        nextDayPayment.set(GregorianCalendar.SECOND, calendar.get(GregorianCalendar.SECOND));
-        nextDayPayment.set(GregorianCalendar.MILLISECOND, calendar.get(GregorianCalendar.MILLISECOND));
-
-        if (calendar.equals(nextDayPayment)){
+        if (calendar.equals(nextDayPayment)) {
             att();
             return true;
         } else {

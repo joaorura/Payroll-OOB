@@ -2,9 +2,7 @@ package interfaces.user;
 
 import funcionabilities.Employee;
 import funcionabilities.functional_aids.payments.ITypePayments;
-import interfaces.SystemSettings;
 import interfaces.system.Payroll;
-import interfaces.system.UtilsPayroll;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -44,14 +42,14 @@ class FuncionabilitiesInter {
         name = nam;
     }
 
-    static Employee addEmployee() {
+    static Employee addEmployee(Employee emp) {
         System.out.println("Add employee!\n");
         ArrayList<ArrayList<Object>> param = new ArrayList<>();
 
         for(int i = 0; i < 5; i ++) {param.add(new ArrayList<>());}
 
-        CreateElements.identificatonProcess(id, param.get(0));
-        CreateElements.syndicateProcess(param.get(1));
+        CreateElements.identificatonProcess(emp, param.get(0));
+        CreateElements.syndicateProcess(emp, param.get(1));
         CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
         CreateElements.typeProcess(param.get(3));
         CreateElements.pointsProcess(param.get(4));
@@ -74,9 +72,6 @@ class FuncionabilitiesInter {
     }
 
     static void processPointCard() {
-        if(pay.searchEmployee(id) == null) {
-            System.out.println("Employee not found, try again\n");
-        }
         System.out.println("\nProcess Point Card!\n");
 
         System.out.print("Start of turn: ");
@@ -113,7 +108,7 @@ class FuncionabilitiesInter {
         }
     }
 
-    static void processServiceChange() {
+    static void processServiceChage() {
         System.out.println("You desire retire or add services: \n" +
                 "\t0: Add\n" +
                 "\t1: Remove");
@@ -130,12 +125,8 @@ class FuncionabilitiesInter {
 
     static void processEmployeeDetail(){
         System.out.println("Changes of employee: ");
-        Employee emp_aux = addEmployee();
-        if(type_id == 0) pay.changeEmployee(id, emp_aux);
-        else pay.changeEmployee(name, emp_aux);
-
-        att(0,Payroll.getDefault().nextId() - 1, name);
-        removeEmployee();
+        if(type_id == 0) pay.changeEmployee(id, addEmployee(pay.searchEmployee(id)));
+        else pay.changeEmployee(name, addEmployee(pay.searchEmployee(id)));
     }
 
     static boolean undoRedo() {
@@ -147,23 +138,14 @@ class FuncionabilitiesInter {
     }
 
     static void setPersonalPayment() {
-        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule\n" +
-                "\t0: Create\n" +
-                "\t1: Set\n");
+        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule");
+        ArrayList<Class> p_class = new ArrayList<>();
+        ArrayList<Object> param = new ArrayList<>();
+        CreateElements.typeProcess(param);
+        ITypePayments type_aux = null;
+        type_aux = pay.createTypePayment(param);
 
-        int aux = UtilsMain.readEntries(0,1);
-
-        if(aux == 0) {
-            ArrayList<Object> param = new ArrayList<>();
-            CreateElements.typeProcess(param);
-            UtilsPayroll.createPaymentSchedule(param);
-        }
-        else {
-            aux = CreateElements.showTypeElements();
-
-            if(type_id == 0) UtilsPayroll.setPaymentSchedule(id, aux);
-            else UtilsPayroll.setPaymentSchedule(name, aux);
-        }
+        pay.searchEmployee(id).setPersonalIPayment(type_aux);
     }
 
     static void printState() {
@@ -171,10 +153,10 @@ class FuncionabilitiesInter {
     }
 
     static void runPayroll() {
-        System.out.println("Number of days that will be passed: ");
-        int aux = readEntries(0, Integer.MAX_VALUE);
-        for(int i = 0; i < aux; i++) {
-            pay.runPayrollToday();
-        }
+
+    }
+
+    static void createPersonalPayment (){
+
     }
 }

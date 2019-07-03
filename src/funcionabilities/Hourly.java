@@ -27,19 +27,15 @@ public class Hourly extends Employee{
         return  super.worker.amountWork(-1);
     }
 
-    public double attMoney() {
-        double time = 0, aux, temp_salary = 0;
-        for(int i = 0; i < worker.countedDays(); i ++) {
-            aux = worker.amountWork(i);
-            if(aux > tax_over_work) temp_salary += aux * (1 + ratioHour) * (1 + tax_over_work);
-            else temp_salary += aux * (1 + ratioHour);
-            time += aux;
-        }
+    public int getMaxWorkHours() {
+        return max_work_hours;
+    }
 
-        temp_salary -= (time * getSyndicate().costSyndicate()) / 43200;
-        temp_salary -= getDebitCost();
-        clearDebit();
+    public double getOverWork() {
+        return tax_over_work;
+    }
 
-        return temp_salary;
+    public double geRatioWork() {
+        return ratioHour;
     }
 }

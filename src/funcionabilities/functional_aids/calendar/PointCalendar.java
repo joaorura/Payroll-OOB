@@ -56,10 +56,6 @@ public class PointCalendar implements IPointCalendar {
         }
     }
 
-    public int countedDays() {
-        return pcalendar.size();
-    }
-
     public String toString() {
       return  "\n\tThis employeer work: " + amountWork(-1) + "hours" + "\n";
     }

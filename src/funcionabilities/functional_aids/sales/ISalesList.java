@@ -9,9 +9,5 @@ public interface ISalesList<T, H> {
 
     Map<T, H> getList();
 
-    double getSales();
-
     ISalesList clone() throws CloneNotSupportedException;
-
-    void clearSales();
 }

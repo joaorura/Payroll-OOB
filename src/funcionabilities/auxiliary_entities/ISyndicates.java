@@ -5,5 +5,7 @@ public interface ISyndicates {
 
     double costSyndicate();
 
-    String toString();
+    String getIndetification();
+
+    Double getMonthlyFee();
 }

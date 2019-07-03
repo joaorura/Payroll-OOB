@@ -14,20 +14,7 @@ public class Salaried extends Employee {
         this.salary = salary;
     }
 
-    public double attMoney() {
-        int checker = 0, i;
-        for(i = 0; i < super.worker.countedDays(); i++) {
-            if(super.worker.amountWork(i) != 0) checker ++;
-        }
-
-        double temp_salary = (checker * salary) / worker.countedDays();
-        if(super.getSyndicate() != null)
-            temp_salary -= checker * (super.getSyndicate().costSyndicate() / 30);
-
-        temp_salary -= checker * (super.getDebitCost() / 30);
-
-        super.clearDebit();
-
-        return temp_salary;
+    public double getSalary() {
+        return salary;
     }
 }

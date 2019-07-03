@@ -14,31 +14,16 @@ public class Main{
         int id = -1;
         String name = null;
 
-        if(input != 9) {
-            if(input!= 5)
-                pay.backup(true);
+        if(input != 2 && input != 10) {
+            pay.backup(true);
 
-            if(input != 0 && input != 1 && input != 7) {
+            if(input != 0 && input != 1) {
                 UtilsMain.printIdentification();
                 type_id = readEntries(0,1);
-                if(type_id == 0) {
-                    System.out.print("Id of employee: ");
-                    id = readEntries(0, Integer.MAX_VALUE);
-                }
-                else {
-                    System.out.print("Name of employee: ");
-                    name = UtilsMain.takeString();
-                }
-
-                if((type_id == 0 && Payroll.getDefault().searchEmployee(id) == null) ||
-                        (type_id == 1 && Payroll.getDefault().searchEmployee(Payroll.getDefault().searchEmployee(name)) == null)) {
-                    System.out.println("Employee not found, please try again\n");
-                    return false;
-                }
+                if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
+                else name = UtilsMain.takeString();
             }
         }
-
-
 
         FuncionabilitiesInter.att(type_id, id, name);
         Object ret = null;
@@ -64,8 +49,8 @@ public class Main{
         int input;
         while (true) {
             UtilsMain.printIntro();
-            input = readEntries(0,10);
-                if(input == 10) return;
+            input = readEntries(0,11);
+                if(input == 11) return;
                 else if (!processEntries(input)) {
                     System.out.println("A sua operação falhou, o sistema não conlcluiu a sua ação. Por favor " +
                             "realize-a novamente!");

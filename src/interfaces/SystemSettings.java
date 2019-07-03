@@ -32,10 +32,8 @@ public class SystemSettings {
 
 
 
-    public static final ArrayList<ITypePayments>DEFAULT_TYPESPAYMENTS = new ArrayList<>();
-    static {
-            DEFAULT_TYPESPAYMENTS.add(new PaymentBills(6, 1, 0));
-            DEFAULT_TYPESPAYMENTS.add(new PaymentBills(-1, 0, 0));
-            DEFAULT_TYPESPAYMENTS.add(new PaymentBills(6, 2, 0));
-    }
+    public static final ITypePayments[] DEFAULT_TYPESPAYMENTS = new ITypePayments[] {
+            new PaymentBills(5, 1, 0),
+            new PaymentBills(-1, 0, 0),
+            new PaymentBills(5, 2, 0)};
 }

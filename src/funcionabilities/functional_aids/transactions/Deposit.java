@@ -10,7 +10,7 @@ public class Deposit extends BankTransaction implements IMethodsPayments {
 
     @Override
     public String toString() {
-        return super.toString() + "\n\tAcount destiny: " + acountSend +  "\n";
+        return super.toString() + "Acount destiny: " + acountSend;
     }
 
     @Override

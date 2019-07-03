@@ -19,14 +19,11 @@ public class Commisioned extends Salaried {
         this.ratioSales = ratioSales;
     }
 
-    public double attMoney() {
-        double temp_salary = super.attMoney();
-        temp_salary += sales.getSales() * ratioSales;
-        sales.clearSales();
-        return temp_salary;
-    }
-
     public ISalesList<String, Double> getSales() {
         return sales;
+    }
+
+    public double getRatioSales() {
+        return ratioSales;
     }
 }
