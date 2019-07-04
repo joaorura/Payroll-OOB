@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class PointCalendar implements IPointCalendar {
-    private ArrayList<DeltaTime> pcalendar = new ArrayList<>();
+    private ArrayList<Double> pcalendar = new ArrayList<>();
     private int type;
 
     private static final int HOURLY = 0;
@@ -38,28 +38,14 @@ public class PointCalendar implements IPointCalendar {
             return value;
         }
         else {
-            DeltaTime delta = pcalendar.get(day);
-
-            switch (type) {
-                case HOURLY:
-                    return delta.getDelta(DeltaTime.HOUR);
-
-                case DAILY:
-                    return delta.getDelta(DeltaTime.DAY);
-
-                case MONTHLY:
-                    return delta.getDelta(DeltaTime.DAY) / 60;
-
-                default:
-                    return -1;
-            }
+            return pcalendar.get(day);
         }
     }
 
     public String toString() {
       return  "\n\tThis employeer work: " + amountWork(-1) + "hours" + "\n";
     }
-    public void markPoint(GregorianCalendar start, GregorianCalendar end) {
-        pcalendar.add(new DeltaTime(start, end));
+    public void markPoint(Calendar start, Calendar end) {
+        pcalendar.add(Calendar.getDeltaMinutes(start, end) / 24);
     }
 }

@@ -1,6 +1,5 @@
 package funcionabilities.functional_aids.calendar;
 
-import java.util.GregorianCalendar;
 
 public interface IPointCalendar {
     IPointCalendar clone() throws CloneNotSupportedException;
@@ -9,5 +8,5 @@ public interface IPointCalendar {
 
     double amountWork(int day);
 
-    void markPoint(GregorianCalendar start, GregorianCalendar end);
+    void markPoint(Calendar start, Calendar end);
 }

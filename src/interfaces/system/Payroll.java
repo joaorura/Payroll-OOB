@@ -3,6 +3,7 @@ package interfaces.system;
 import funcionabilities.*;
 import funcionabilities.auxiliary_entities.ISyndicates;
 import funcionabilities.auxiliary_entities.Syndicate;
+import funcionabilities.functional_aids.calendar.Calendar;
 import funcionabilities.functional_aids.calendar.IPointCalendar;
 import funcionabilities.functional_aids.calendar.PointCalendar;
 import funcionabilities.functional_aids.payments.ITypePayments;
@@ -10,6 +11,7 @@ import funcionabilities.functional_aids.payments.PaymentBills;
 import funcionabilities.functional_aids.transactions.*;
 import interfaces.SystemSettings;
 
+import javax.naming.directory.InvalidAttributesException;
 import java.util.*;
 
 public class Payroll implements Cloneable{
@@ -17,7 +19,7 @@ public class Payroll implements Cloneable{
     private static final IMemento<Payroll> backup = new Restore();
     private ArrayList<IMethodsPayments> methodsPayments;
     private ArrayList<ITypePayments> typesPayments;
-    private GregorianCalendar actualCalendar;
+    private Calendar actualCalendar;
 
     private static Payroll pay_default = new Payroll();
 
@@ -25,7 +27,7 @@ public class Payroll implements Cloneable{
         this.employees = new ArrayList<>();
         this.methodsPayments = new ArrayList<>();
         this.typesPayments = new ArrayList<>();
-        this.actualCalendar = (GregorianCalendar) GregorianCalendar.getInstance();
+        this.actualCalendar = null;
     }
 
     public static Payroll getDefault() {
@@ -46,7 +48,7 @@ public class Payroll implements Cloneable{
         else return i;
     }
 
-    public void configurations(GregorianCalendar day) {
+    public void configurations(Calendar day) {
         this.actualCalendar = day;
     }
 
@@ -58,14 +60,14 @@ public class Payroll implements Cloneable{
         return employees.get(id);
     }
 
-    public ITypePayments createTypePayment(ArrayList<Object> paramater) {
+    public ITypePayments createTypePayment(ArrayList<Object> paramater) throws CloneNotSupportedException, InvalidAttributesException {
         ITypePayments type = null;
         switch (SystemSettings.TYPE_PAYMENTS.get(paramater.get(0))[0]) {
             case -1:
                 type = (ITypePayments) paramater.get(1);
                 break;
 
-            case 0: type = new PaymentBills((GregorianCalendar) paramater.get(1), (int) paramater.get(2),
+            case 0: type = new PaymentBills((Calendar) paramater.get(1), (int) paramater.get(2),
                     (int) paramater.get(3), (int) paramater.get(4));
                 break;
         }
@@ -73,7 +75,7 @@ public class Payroll implements Cloneable{
         return type;
     }
 
-    public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) {
+    public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) throws InvalidAttributesException, CloneNotSupportedException {
         boolean aux = false;
         int id = employees.size() + 1;
 
@@ -151,12 +153,12 @@ public class Payroll implements Cloneable{
         return removeEmployee(search(name));
     }
 
-    public void processPointCard(int id, GregorianCalendar start, GregorianCalendar end) {
+    public void processPointCard(int id, Calendar start, Calendar end) {
         Employee emp = searchEmployee(id);
         emp.getWorker().markPoint(start, end);
     }
 
-    public void processPointCard(String name, GregorianCalendar start, GregorianCalendar end) {
+    public void processPointCard(String name, Calendar start, Calendar end) {
         processPointCard(search(name), start, end);
     }
 
@@ -241,16 +243,18 @@ public class Payroll implements Cloneable{
         backup.backup(this, true);
     }
 
-    public GregorianCalendar getActualCalendar() {
+    public Calendar getActualCalendar() {
         return actualCalendar;
     }
 
     public Payroll clone() throws CloneNotSupportedException {
         Payroll p = (Payroll) super.clone();
+        Object aux =  employees.clone();
+        
         p.employees = (ArrayList<Employee>) employees.clone();
         p.methodsPayments = (ArrayList<IMethodsPayments>) methodsPayments.clone();
         p.typesPayments = (ArrayList<ITypePayments>) typesPayments.clone();
-        p.actualCalendar = (GregorianCalendar) actualCalendar.clone();
+        p.actualCalendar = (Calendar) actualCalendar.clone();
         return p;
     }
 

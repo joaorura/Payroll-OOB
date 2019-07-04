@@ -1,6 +1,8 @@
 package interfaces.user;
 
-import java.util.GregorianCalendar;
+import funcionabilities.functional_aids.calendar.Calendar;
+
+import javax.naming.directory.InvalidAttributesException;
 import java.util.Scanner;
 
 class UtilsMain {
@@ -60,30 +62,34 @@ class UtilsMain {
         }
     }
 
-    static GregorianCalendar getDate() {
-        GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance().clone();
+    static Calendar getDate() {
 
         System.out.print("\nEnter with data(Only in numbers):");
 
         System.out.print("\t\tDay of Week (De 1 a 7): ");
-        calendar.set(GregorianCalendar.DAY_OF_WEEK, readEntries(1,7));
+        int day_of_week = readEntries(1,7);
 
         System.out.print("\t\tDay of Month: ");
-        calendar.set(GregorianCalendar.DAY_OF_MONTH, readEntries(1,31));
+        int day_of_month = readEntries(1,31);
 
         System.out.print("\t\tMonth: ");
-        calendar.set(GregorianCalendar.MONTH, readEntries(0,11));
+        int month = readEntries(1,11);
 
         System.out.print("\t\tYear: ");
-        calendar.set(GregorianCalendar.YEAR, readEntries(0, calendar.getActualMaximum(GregorianCalendar.YEAR)));
+        int year = readEntries(0, Integer.MAX_VALUE);
 
         System.out.print("\t\tHour of day: ");
-        calendar.set(GregorianCalendar.HOUR_OF_DAY, readEntries(0,23));
+        int hour = readEntries(0,24);
 
         System.out.print("\t\tMinute: ");
-        calendar.set(GregorianCalendar.MINUTE, readEntries(0,59));
+        int minute = readEntries(0,60);
 
-        return calendar;
+        try {
+            return new Calendar(year, month, day_of_month, day_of_week, hour, minute);
+        } catch (InvalidAttributesException e) {
+            System.out.println("Error in your date, please enter that again!\n");
+            return getDate();
+        }
     }
 
     static void printIntro() {
