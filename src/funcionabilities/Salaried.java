@@ -17,4 +17,11 @@ public class Salaried extends Employee {
     public double getSalary() {
         return salary;
     }
+
+    @Override
+    public void attMoney() {
+           double tempSalary = salary / 30;
+           tempSalary *= super.worker.workedDays();
+
+    }
 }

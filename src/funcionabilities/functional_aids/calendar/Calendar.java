@@ -153,8 +153,8 @@ public class Calendar implements Cloneable{
         }
     }
 
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
+    public Calendar clone() throws CloneNotSupportedException{
+        return (Calendar) super.clone();
     }
 
     public String toString() {

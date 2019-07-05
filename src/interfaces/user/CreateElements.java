@@ -152,7 +152,7 @@ public class CreateElements {
             param.add(new BankAcount(name.concat(""), acount, identification));
         }
 
-        param.add((double) -1);
+        param.add(0.0);
         switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]) {
             case 0:
                 System.out.print("Acount number to transactions: ");

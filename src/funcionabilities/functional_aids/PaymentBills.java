@@ -64,22 +64,13 @@ public class PaymentBills {
                 nextDayPayment.add(Calendar.DAY_OF_MONTH, 2);
             }
         } else {
-            nextDayPayment.add(Calendar.DAY_OF_MONTH, nextDayPayment.get(Calendar.DAY_OF_WEEK));
+            nextDayPayment.add(Calendar.DAY_OF_MONTH, day % nextDayPayment.get(Calendar.DAY_OF_WEEK));
         }
     }
 
     public String toString() {
         return "\tDay of week: " + day + "  |  Week Interval: " + weekInterval +
                 "  |  Month Interval: " + monthInterval + "\n";
-    }
-
-    @Override
-    public PaymentBills clone() throws CloneNotSupportedException{
-        PaymentBills type = (PaymentBills) super.clone();
-        type.lastPayment = (Calendar) lastPayment.clone();
-        type.nextDayPayment = (Calendar) nextDayPayment.clone();
-
-        return type;
     }
 
     public void setLastPayment(Object item) {
@@ -101,5 +92,14 @@ public class PaymentBills {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public PaymentBills clone() throws CloneNotSupportedException{
+        PaymentBills type = (PaymentBills) super.clone();
+        type.lastPayment = lastPayment.clone();
+        type.nextDayPayment = nextDayPayment.clone();
+
+        return type;
     }
 }

@@ -18,6 +18,15 @@ public class PointCalendar  {
         return new_item;
     }
 
+    public int workedDays() {
+        try {
+            return pcalendar.size();
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            return 0;
+        }
+    }
+
     public double amountWork(int day) {
         if(day == -1) {
             double value = 0;

@@ -16,7 +16,7 @@ public abstract class Employee implements Cloneable{
     private IMethodsPayments methodPayment;
     private PaymentBills personalIPayment;
     PointCalendar worker;
-    private final Map<String, Double> debit;
+
 
 
     Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
@@ -28,16 +28,11 @@ public abstract class Employee implements Cloneable{
         this.methodPayment = methodPayment;
         this.personalIPayment = personalIPayment;
         this.worker = worker;
-        this.debit = new HashMap<>();
     }
 
-    public void addDebit(String service, double value) {
-        debit.put(service, value);
-    }
+    public abstract void attMoney();
 
-    public void removeDebit(String service, double value) {
-        debit.remove(service, value);
-    }
+
 
     public String toString() {
         StringBuilder str = new StringBuilder();
