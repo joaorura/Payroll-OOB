@@ -5,18 +5,30 @@ import java.util.Map;
 
 public class Debts {
     private  Map<String, Double> debt;
+    double leftOvers;
 
     public Debts() {
         debt = new HashMap<>();
+    }
+
+    public double calculate(double tempSalary) {
+        double debts = getValueDebt();
+        clearDebts();
+
+        if(tempSalary - debts < 0) {
+            addDebt("Company Debit", debts % tempSalary);
+            tempSalary = 0;
+        }
+        else tempSalary -= debts;
+
+        return tempSalary;
     }
 
     public void addDebt(String service, double value) {
         debt.put(service, value);
     }
 
-    public void removeDebt(String service, double value) {
-        debt.remove(service, value);
-    }
+    public void removeDebt(String service) { debt.remove(service); }
 
     public void clearDebts () { debt.clear();}
 

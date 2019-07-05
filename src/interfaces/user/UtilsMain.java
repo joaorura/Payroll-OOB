@@ -10,17 +10,16 @@ import java.util.Scanner;
 public class UtilsMain {
     private final static String start = "\n\nNew interation!\n" +
             "\t0: addEmployee\n"+
-            "\t1: createPersonalPayment\n"+
-            "\t2: printState\n"+
-            "\t3: processEmployeeDetail\n"+
-            "\t4: processPointCard\n"+
-            "\t5: processSale\n"+
-            "\t6: processServiceChage\n"+
-            "\t7: removeEmployee\n"+
-            "\t8: runPayroll\n"+
-            "\t9: setPersonalPayment\n"+
-            "\t10: undoRedo\n" +
-            "\t11: exit\n";
+            "\t1: printState\n"+
+            "\t2: processEmployeeDetail\n"+
+            "\t3: processPointCard\n"+
+            "\t4: processSale\n"+
+            "\t5: processServiceChange\n"+
+            "\t6: removeEmployee\n"+
+            "\t7: runPayroll\n"+
+            "\t8: setPersonalPayment\n"+
+            "\t9: undoRedo\n" +
+            "\t10: exit\n";
 
     private final static String identificaton = "\t0: ID\n"
             + "\t1: Name\n"
@@ -33,20 +32,25 @@ public class UtilsMain {
         Payroll pay = Payroll.getDefault();
         int type_id = -1;
         int id = -1;
-        String name = null;
 
-        if(input != 2 && input != 10) {
+        if(input != 9) {
             pay.backup(true);
 
             if(input != 0 && input != 1) {
                 UtilsMain.printIdentification();
                 type_id = readEntries(0,1);
+
                 if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
-                else name = UtilsMain.takeString();
+                else id = pay.searchEmployee(UtilsMain.takeString());
+
+                if(pay.searchEmployee(id) == null) {
+                    System.out.println("Employee not founded");
+                    return false;
+                }
             }
         }
 
-        FuncionabilitiesInter.att(type_id, id, name);
+        FuncionabilitiesInter.att(type_id, id);
         Object ret = null;
         try {
             ret = FuncionabilitiesInter.funcionabilities.get(input).invoke(null);

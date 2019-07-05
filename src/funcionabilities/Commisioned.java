@@ -25,4 +25,11 @@ public class Commisioned extends Salaried {
     public double getRatioSales() {
         return ratioSales;
     }
+
+    public double attMoney() {
+        double tempSalary = super.attMoney();
+        tempSalary += sales.getAllValues();
+        sales.clearList();
+        return tempSalary;
+    }
 }

@@ -1,6 +1,7 @@
 package funcionabilities;
 
 import funcionabilities.auxiliary_entities.Syndicate;
+import funcionabilities.functional_aids.Debts;
 import funcionabilities.functional_aids.calendar.Calendar;
 import funcionabilities.functional_aids.calendar.PointCalendar;
 import funcionabilities.functional_aids.PaymentBills;
@@ -36,5 +37,19 @@ public class Hourly extends Employee{
 
     public double geRatioWork() {
         return ratioHour;
+    }
+
+    @Override
+    public double attMoney() {
+        double time = super.getWorker().amountWork(-1);
+        double tempSalary = ratioHour * (time % max_work_hours);
+        time -= time % max_work_hours;
+        tempSalary += tax_over_work * time;
+        time = super.getWorker().amountWork(-1);
+        tempSalary -= time * (super.getSyndicate().getMonthlyFee() / (time/24));
+        tempSalary = super.getDebts().calculate(tempSalary);
+
+        super.getMethodPayment().setValue(tempSalary);
+        return tempSalary;
     }
 }

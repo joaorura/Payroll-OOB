@@ -33,7 +33,11 @@ public class Payroll implements Cloneable{
         return pay_default;
     }
 
-    int searchEmployee(String name) {
+    public Employee searchEmployee(int id) {
+        return employees.get(id);
+    }
+
+    public int searchEmployee(String name) {
         Iterator<Employee> iterable = employees.iterator();
 
         int i = 0;
@@ -54,83 +58,15 @@ public class Payroll implements Cloneable{
         return employees.size() + 1;
     }
 
-    public Employee searchEmployee(int id) {
-        return employees.get(id);
-    }
-
-    public PaymentBills createTypePayment(ArrayList<Object> paramater) throws CloneNotSupportedException, InvalidAttributesException {
-        PaymentBills type = null;
-        switch (SystemSettings.TYPE_PAYMENTS.get(paramater.get(0))[0]) {
-            case -1:
-                type = (PaymentBills) paramater.get(1);
-                break;
-
-            case 0: type = new PaymentBills((Calendar) paramater.get(1), (int) paramater.get(2),
-                    (int) paramater.get(3), (int) paramater.get(4));
-                break;
-        }
-
-        return type;
-    }
-
     public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) throws InvalidAttributesException, CloneNotSupportedException {
-        Syndicate synd = null;
-        if (SystemSettings.TYPE_SYNDICATES.get(paramater.get(1).get(0))[0] == 0) {
-            synd = new Syndicate((String) paramater.get(1).get(1), (double) paramater.get(1).get(2));
-        }
+        if(paramater.size() > 5) throw new Error();
 
-        IMethodsPayments meth = null;
-        switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(paramater.get(2).get(0))[0]) {
-            case 0:
-                meth = new Deposit((BankAcount) paramater.get(2).get(1), (Double) paramater.get(2).get(2),
-                        (String) paramater.get(2).get(3));
-                break;
+        Syndicate synd = UtilsPayroll.crateSindicate(paramater.get(1));
+        IMethodsPayments meth = UtilsPayroll.createMethods(paramater.get(2));
+        PaymentBills type = UtilsPayroll.createTypePayment(paramater.get(3));
+        PointCalendar point = UtilsPayroll.createPoint(paramater.get(4));
 
-            case 1:
-                meth = new CheckHands((BankAcount) paramater.get(2).get(1), (Double) paramater.get(2).get(2),
-                        (String) paramater.get(2).get(3), (int) paramater.get(2).get(4));
-                break;
-
-            case 2:
-                meth = new CheckPostOffices((BankAcount) paramater.get(2).get(1),(Double) paramater.get(2).get(2),
-                        (String) paramater.get(2).get(3), (String) paramater.get(2).get(4));
-                break;
-
-        }
-
-        PaymentBills type = createTypePayment(paramater.get(3));
-
-        PointCalendar point = null;
-        if (SystemSettings.TYPE_POINTS.get(paramater.get(4).get(0))[0] == 0) {
-            point = new PointCalendar();
-        }
-
-        if(meth == null || type == null || point == null) {
-            throw new Error();
-        }
-
-        Employee item ;
-        switch (SystemSettings.TYPE_EMPLOYEES.get(paramater.get(0).get(0))[0]) {
-            case 0:
-                item = new Hourly((String) paramater.get(0).get(1), (String) paramater.get(0).get(2), (int) paramater.get(0).get(3),
-                        synd, meth, type, point, (int) paramater.get(0).get(4), (Double) paramater.get(0).get(5),
-                        (Double) paramater.get(0).get(6));
-                break;
-
-            case 1:
-                item = new Salaried((String) paramater.get(0).get(1), (String) paramater.get(0).get(2),
-                        (int) paramater.get(0).get(3), synd, meth, type, point, (Double) paramater.get(0).get(4));
-
-                break;
-
-            case 2:
-                item = new Commisioned((String) paramater.get(0).get(1), (String) paramater.get(0).get(2),
-                        (int) paramater.get(0).get(3), synd, meth, type, point, (Double) paramater.get(0).get(4), (Double) paramater.get(0).get(5));
-                break;
-
-            default:
-                throw new IllegalArgumentException();
-        }
+        Employee item = UtilsPayroll.createEmployee(paramater.get(0), synd, meth, type, point);
 
         employees.add(item);
 
@@ -144,17 +80,10 @@ public class Payroll implements Cloneable{
             return employees.set(id, null);
     }
 
-    public Employee removeEmployee(String name) {
-        return removeEmployee(searchEmployee(name));
-    }
 
     public void processPointCard(int id, Calendar start, Calendar end) {
         Employee emp = searchEmployee(id);
         emp.getWorker().markPoint(start, end);
-    }
-
-    public void processPointCard(String name, Calendar start, Calendar end) {
-        processPointCard(searchEmployee(name), start, end);
     }
 
     public boolean undo() {
@@ -200,32 +129,26 @@ public class Payroll implements Cloneable{
         return str.toString();
     }
 
-    public void processSaleResult(String func_name, String name, double value) throws Exception {
-        processSaleResult(searchEmployee(func_name), name, value);
-    }
-
     public void processServiceChange(boolean type, int id, String name_product, double value) {
         Employee emp = employees.get(id);
 
         if(type) {
-            emp.addDebit(name_product, value);
+            emp.getDebts().addDebt(name_product, value);
         }
         else {
-            emp.removeDebit(name_product, value);
+            emp.getDebts().removeDebt(name_product);
         }
-
-    }
-
-    public void processServiceChange(boolean type, String name, String name_product, double value) {
-        processServiceChange(type, searchEmployee(name), name_product, value);
     }
 
     public void runPayrollToday() {
-        Employee emp_aux;
-        for(Employee employee : employees) {
-            emp_aux = employee;
-            if (emp_aux.getPersonalIPayment().checkItsDay(actualCalendar)) {
-                System.out.println(emp_aux.getMethodPayment().doPayment());
+        System.out.println(getActualCalendar().toString());
+
+        for(int i = 0; i < 1440; i++) {
+            for(Employee employee : employees) {
+                if (employee.getPersonalIPayment().checkItsDay(actualCalendar)) {
+                    employee.attMoney();
+                    System.out.println(employee.getMethodPayment().doPayment());
+                }
             }
         }
     }
@@ -233,9 +156,8 @@ public class Payroll implements Cloneable{
     public void createEmployeePaymentSchedule() {
         ArrayList<Object> param = new ArrayList<>();
         CreateElements.typeProcess(param);
-        PaymentBills type_aux = null;
         try {
-            type_aux = createTypePayment(param);
+            UtilsPayroll.createTypePayment(param);
         } catch (CloneNotSupportedException | InvalidAttributesException e) {
             e.printStackTrace();
         }
@@ -252,22 +174,16 @@ public class Payroll implements Cloneable{
     @SuppressWarnings("unchecked")
     public Payroll clone() throws CloneNotSupportedException {
         Payroll p = (Payroll) super.clone();
-        Object aux =  employees.clone();
-        
         p.employees = (ArrayList<Employee>) employees.clone();
         p.methodsPayments = (ArrayList<IMethodsPayments>) methodsPayments.clone();
         p.typesPayments = (ArrayList<PaymentBills>) typesPayments.clone();
-        p.actualCalendar = (Calendar) actualCalendar.clone();
+        p.actualCalendar = actualCalendar.clone();
         return p;
     }
 
     public void changeEmployee(int id, Employee change) {
         change.setId(id);
         employees.set(id, change);
-    }
-
-    public void changeEmployee(String name, Employee change) {
-        changeEmployee(searchEmployee(name), change);
     }
 
     public void setEmployeeSchedule(int id) throws CloneNotSupportedException {

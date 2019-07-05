@@ -8,6 +8,8 @@ import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.transactions.BankAcount;
 import interfaces.system.Payroll;
 import interfaces.SystemSettings;
+import interfaces.system.UtilsPayroll;
+import jdk.jshell.execution.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +143,6 @@ public class CreateElements {
             param.add(SystemSettings.ACOUNT);
         }
         else {
-
             System.out.println("\tSource acount:");
             String acount = UtilsMain.takeString();
 
@@ -155,7 +156,8 @@ public class CreateElements {
         param.add(0.0);
         switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]) {
             case 0:
-                System.out.print("Acount number to transactions: ");
+                System.out.print("\nAcount number to transactions: ");
+                UtilsMain.takeString();
                 param.add(UtilsMain.takeString());
 
                 break;
@@ -218,8 +220,9 @@ public class CreateElements {
             aux = UtilsMain.readEntries(0, aux - 1);
             param.add(Class.class);
             try {
-                param.add(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
-                ((PaymentBills) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
+                PaymentBills paux = SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone();
+                param.add(paux);
+                paux.setLastPayment(Payroll.getDefault().getActualCalendar().clone());
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }

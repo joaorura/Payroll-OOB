@@ -97,8 +97,15 @@ public class PaymentBills {
     @Override
     public PaymentBills clone() throws CloneNotSupportedException{
         PaymentBills type = (PaymentBills) super.clone();
-        type.lastPayment = lastPayment.clone();
-        type.nextDayPayment = nextDayPayment.clone();
+        if(lastPayment != null)
+            type.lastPayment = lastPayment.clone();
+        else
+            lastPayment = null;
+
+        if(nextDayPayment != null)
+            type.nextDayPayment = nextDayPayment.clone();
+        else
+            type.nextDayPayment = null;
 
         return type;
     }

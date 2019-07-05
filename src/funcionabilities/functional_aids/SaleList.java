@@ -6,7 +6,6 @@ import java.util.Map;
 public class SaleList {
     private HashMap<String, Double> list = new HashMap<>();
 
-
     public SaleList(String[] ids, double[] values) {
         int size = ids.length;
         if (size == values.length) {
@@ -37,15 +36,16 @@ public class SaleList {
         list.put(id, value);
     }
 
-    public Double removeProduct(Object identificator) {
-        String id = (String) identificator;
-        return list.remove(id);
+    public double getAllValues() {
+        double aux = 0;
+        for (double d: list.values()) aux += d;
+        return aux;
     }
 
-    public HashMap getList() {
-
-        return new HashMap<>(list);
+    public void clearList() {
+        list.clear();
     }
+
 
     public SaleList clone() throws CloneNotSupportedException{
         SaleList item = (SaleList) super.clone();

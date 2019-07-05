@@ -19,9 +19,15 @@ public class Salaried extends Employee {
     }
 
     @Override
-    public void attMoney() {
-           double tempSalary = salary / 30;
-           tempSalary *= super.worker.workedDays();
+    public double attMoney() {
+        int days = super.worker.workedDays();
+        double tempSalary = salary / 30;
+        tempSalary *= days;
+        tempSalary -= super.debts.getValueDebt();
+        tempSalary -= days * (super.getSyndicate().getMonthlyFee() / 30);
+        tempSalary = super.getDebts().calculate(tempSalary);
 
+        super.getMethodPayment().setValue(tempSalary);
+        return tempSalary;
     }
 }

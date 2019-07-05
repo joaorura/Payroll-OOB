@@ -1,12 +1,11 @@
 package funcionabilities;
 
 import funcionabilities.auxiliary_entities.Syndicate;
+import funcionabilities.functional_aids.Debts;
+import funcionabilities.functional_aids.SaleList;
 import funcionabilities.functional_aids.calendar.PointCalendar;
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.transactions.IMethodsPayments;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Employee implements Cloneable{
     private String adress;
@@ -16,8 +15,7 @@ public abstract class Employee implements Cloneable{
     private IMethodsPayments methodPayment;
     private PaymentBills personalIPayment;
     PointCalendar worker;
-
-
+    Debts debts;
 
     Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
              IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
@@ -28,11 +26,10 @@ public abstract class Employee implements Cloneable{
         this.methodPayment = methodPayment;
         this.personalIPayment = personalIPayment;
         this.worker = worker;
+        this.debts = new Debts();
     }
 
-    public abstract void attMoney();
-
-
+    public abstract double attMoney();
 
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -82,11 +79,11 @@ public abstract class Employee implements Cloneable{
         return  worker;
     }
 
-    public String getAdress() {
-        return adress;
+    public Debts getDebts() {
+        return debts;
     }
 
-    public Syndicate getSyndicate() {
+    Syndicate getSyndicate() {
         return personalSyndicate;
     }
 }

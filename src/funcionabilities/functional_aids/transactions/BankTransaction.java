@@ -1,7 +1,7 @@
 package funcionabilities.functional_aids.transactions;
 
 class BankTransaction extends BankAcount {
-    final double value;
+    double value;
 
     BankTransaction(BankAcount bank, double value) {
         super(bank);
@@ -10,5 +10,9 @@ class BankTransaction extends BankAcount {
 
     public String toString() {
         return super.toString() + "\nBank Transaction: \n\t" + "\tValue: " + value + "\n";
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 }

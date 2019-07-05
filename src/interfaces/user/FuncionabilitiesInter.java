@@ -19,6 +19,7 @@ class FuncionabilitiesInter {
         int j = 0;
         for (Method method : methods) {
             if (method.getName().equals("att")) continue;
+            System.out.println(method.getName());
             funcionabilities.put(j, method);
             j++;
         }
@@ -27,13 +28,11 @@ class FuncionabilitiesInter {
     private static Payroll pay = null;
     private static int type_id = -1;
     private static int id = -1;
-    private static String name = null;
 
-    static void att(int tp_id, int identifi, String nam) {
+    static void att(int type_id, int id) {
         pay = Payroll.getDefault();
-        type_id = tp_id;
-        id = identifi;
-        name = nam;
+        type_id = type_id;
+        id = id;
     }
 
     static Employee addEmployee() {
@@ -57,11 +56,11 @@ class FuncionabilitiesInter {
 
     static Employee removeEmployee() {
         System.out.println("\nRemove Employee!\n");
-        Employee emp_aux;
-        if(type_id == 0) emp_aux = pay.removeEmployee(id);
-        else emp_aux = pay.removeEmployee(name);
+        Employee emp_aux = emp_aux = pay.removeEmployee(id);
 
-        if(emp_aux == null) return null;
+        if(emp_aux == null) {
+            return null;
+        }
         else {
             System.out.println("Removed: \n\t" + emp_aux.toString());
             return emp_aux;
@@ -77,8 +76,7 @@ class FuncionabilitiesInter {
 
         System.out.println("End of turn: ");
         Calendar end = UtilsMain.getDate();
-        if(type_id == 0)  pay.processPointCard(id, start, start);
-        else  pay.processPointCard(name, start, start);
+        pay.processPointCard(id, start, start);
     }
 
     static void processSale() {
@@ -90,23 +88,14 @@ class FuncionabilitiesInter {
         System.out.println("\n\tValue of product: ");
         do value_product = (Double) UtilsMain.readEntries(Double.class); while (value_product == null);
 
-        if(type_id == 0) {
-            try {
-                pay.processSaleResult(id, name_product, value_product);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            try {
-                pay.processSaleResult(name, name_product, value_product);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            pay.processSaleResult(id, name_product, value_product);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    static void processServiceChage() {
+    static void processServiceChange() {
         System.out.println("You desire retire or add services: \n" +
                 "\t0: Add\n" +
                 "\t1: Remove");
@@ -116,15 +105,16 @@ class FuncionabilitiesInter {
 
         String name_product = UtilsMain.takeString();
         Double value_product = (Double) UtilsMain.readEntries(Double.class);
-        assert(value_product != null);
-        if(type_id == 0) pay.processServiceChange(type, id, name_product, value_product);
-        else pay.processServiceChange(type, name, name_product, value_product);
+        if(value_product == null) {
+            throw new Error();
+        }
+
+        pay.processServiceChange(type, id, name_product, value_product);
     }
 
     static void processEmployeeDetail(){
         System.out.println("Changes of employee: ");
-        if(type_id == 0) pay.changeEmployee(id, addEmployee());
-        else pay.changeEmployee(name, addEmployee());
+        pay.changeEmployee(id, addEmployee());
     }
 
     static boolean undoRedo() {
