@@ -1,11 +1,13 @@
 package interfaces.user;
 
 import funcionabilities.functional_aids.calendar.Calendar;
+import interfaces.system.Payroll;
 
 import javax.naming.directory.InvalidAttributesException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
-class UtilsMain {
+public class UtilsMain {
     private final static String start = "\n\nNew interation!\n" +
             "\t0: addEmployee\n"+
             "\t1: createPersonalPayment\n"+
@@ -25,6 +27,39 @@ class UtilsMain {
             + "\n\tYour answer: ";
 
     private static final Scanner scan = new Scanner(System.in);
+
+    static boolean processEntries(int input) {
+        System.out.println("\nStarting the operation ...\n");
+        Payroll pay = Payroll.getDefault();
+        int type_id = -1;
+        int id = -1;
+        String name = null;
+
+        if(input != 2 && input != 10) {
+            pay.backup(true);
+
+            if(input != 0 && input != 1) {
+                UtilsMain.printIdentification();
+                type_id = readEntries(0,1);
+                if(type_id == 0) id = readEntries(0, Integer.MAX_VALUE);
+                else name = UtilsMain.takeString();
+            }
+        }
+
+        FuncionabilitiesInter.att(type_id, id, name);
+        Object ret = null;
+        try {
+            ret = FuncionabilitiesInter.funcionabilities.get(input).invoke(null);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        if(ret != null) {
+            if(ret instanceof Boolean) return (boolean) ret;
+            else return true;
+        }
+        else return true;
+    }
 
     static Object readEntries(Class type) {
         if(type.equals(Integer.class)) {
@@ -51,7 +86,7 @@ class UtilsMain {
         else return null;
     }
 
-    static int readEntries(int i, int i1) {
+    public static int readEntries(int i, int i1) {
         int read = (int) readEntries(Integer.class);
 
         if(read < i || read > i1) {

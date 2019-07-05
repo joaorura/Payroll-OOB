@@ -1,6 +1,6 @@
 package funcionabilities.auxiliary_entities;
 
-public class Syndicate implements ISyndicates {
+public class Syndicate {
     private final String indetificationSyndicate;
     private final double monthlyFee;
 
@@ -9,15 +9,15 @@ public class Syndicate implements ISyndicates {
         this.monthlyFee = monthlyFee;
     }
 
-    public ISyndicates clone() throws CloneNotSupportedException{
+    public Syndicate clone() throws CloneNotSupportedException{
         return (Syndicate) super.clone();
     }
 
-    public double costSyndicate() {
-        return monthlyFee;
+    public String getIndetification() {
+        return indetificationSyndicate;
     }
 
-    public String getIndetificationSyndicate() {
-        return indetificationSyndicate;
+    public Double getMonthlyFee() {
+        return monthlyFee;
     }
 }

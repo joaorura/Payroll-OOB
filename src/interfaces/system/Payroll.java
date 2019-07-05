@@ -1,24 +1,23 @@
 package interfaces.system;
 
 import funcionabilities.*;
-import funcionabilities.auxiliary_entities.ISyndicates;
 import funcionabilities.auxiliary_entities.Syndicate;
 import funcionabilities.functional_aids.calendar.Calendar;
-import funcionabilities.functional_aids.calendar.IPointCalendar;
 import funcionabilities.functional_aids.calendar.PointCalendar;
-import funcionabilities.functional_aids.payments.ITypePayments;
-import funcionabilities.functional_aids.payments.PaymentBills;
+import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.transactions.*;
 import interfaces.SystemSettings;
+import interfaces.user.CreateElements;
+import interfaces.user.UtilsMain;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.*;
 
 public class Payroll implements Cloneable{
     private ArrayList<Employee> employees;
-    private static final IMemento<Payroll> backup = new Restore();
+    private static final Restore backup = new Restore();
     private ArrayList<IMethodsPayments> methodsPayments;
-    private ArrayList<ITypePayments> typesPayments;
+    private ArrayList<PaymentBills> typesPayments;
     private Calendar actualCalendar;
 
     private static Payroll pay_default = new Payroll();
@@ -34,11 +33,10 @@ public class Payroll implements Cloneable{
         return pay_default;
     }
 
-    private int search(String name) {
+    int searchEmployee(String name) {
         Iterator<Employee> iterable = employees.iterator();
 
         int i = 0;
-        Employee aux;
         while(iterable.hasNext()) {
             if(iterable.next().getName().equals(name)) break;
             i++;
@@ -60,11 +58,11 @@ public class Payroll implements Cloneable{
         return employees.get(id);
     }
 
-    public ITypePayments createTypePayment(ArrayList<Object> paramater) throws CloneNotSupportedException, InvalidAttributesException {
-        ITypePayments type = null;
+    public PaymentBills createTypePayment(ArrayList<Object> paramater) throws CloneNotSupportedException, InvalidAttributesException {
+        PaymentBills type = null;
         switch (SystemSettings.TYPE_PAYMENTS.get(paramater.get(0))[0]) {
             case -1:
-                type = (ITypePayments) paramater.get(1);
+                type = (PaymentBills) paramater.get(1);
                 break;
 
             case 0: type = new PaymentBills((Calendar) paramater.get(1), (int) paramater.get(2),
@@ -76,10 +74,7 @@ public class Payroll implements Cloneable{
     }
 
     public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) throws InvalidAttributesException, CloneNotSupportedException {
-        boolean aux = false;
-        int id = employees.size() + 1;
-
-        ISyndicates synd = null;
+        Syndicate synd = null;
         if (SystemSettings.TYPE_SYNDICATES.get(paramater.get(1).get(0))[0] == 0) {
             synd = new Syndicate((String) paramater.get(1).get(1), (double) paramater.get(1).get(2));
         }
@@ -103,11 +98,11 @@ public class Payroll implements Cloneable{
 
         }
 
-        ITypePayments type = createTypePayment(paramater.get(3));
+        PaymentBills type = createTypePayment(paramater.get(3));
 
-        IPointCalendar point = null;
+        PointCalendar point = null;
         if (SystemSettings.TYPE_POINTS.get(paramater.get(4).get(0))[0] == 0) {
-            point = new PointCalendar((int) paramater.get(4).get(1));
+            point = new PointCalendar();
         }
 
         if(meth == null || type == null || point == null) {
@@ -150,7 +145,7 @@ public class Payroll implements Cloneable{
     }
 
     public Employee removeEmployee(String name) {
-        return removeEmployee(search(name));
+        return removeEmployee(searchEmployee(name));
     }
 
     public void processPointCard(int id, Calendar start, Calendar end) {
@@ -159,7 +154,7 @@ public class Payroll implements Cloneable{
     }
 
     public void processPointCard(String name, Calendar start, Calendar end) {
-        processPointCard(search(name), start, end);
+        processPointCard(searchEmployee(name), start, end);
     }
 
     public boolean undo() {
@@ -206,7 +201,7 @@ public class Payroll implements Cloneable{
     }
 
     public void processSaleResult(String func_name, String name, double value) throws Exception {
-        processSaleResult(search(func_name), name, value);
+        processSaleResult(searchEmployee(func_name), name, value);
     }
 
     public void processServiceChange(boolean type, int id, String name_product, double value) {
@@ -222,7 +217,7 @@ public class Payroll implements Cloneable{
     }
 
     public void processServiceChange(boolean type, String name, String name_product, double value) {
-        processServiceChange(type, search(name), name_product, value);
+        processServiceChange(type, searchEmployee(name), name_product, value);
     }
 
     public void runPayrollToday() {
@@ -235,34 +230,57 @@ public class Payroll implements Cloneable{
         }
     }
 
-    boolean createEmployeePaymentSchedule() {
-        return false;
+    public void createEmployeePaymentSchedule() {
+        ArrayList<Object> param = new ArrayList<>();
+        CreateElements.typeProcess(param);
+        PaymentBills type_aux = null;
+        try {
+            type_aux = createTypePayment(param);
+        } catch (CloneNotSupportedException | InvalidAttributesException e) {
+            e.printStackTrace();
+        }
     }
 
     public void backup(boolean type) {
-        backup.backup(this, true);
+        backup.backup(this, type);
     }
 
     public Calendar getActualCalendar() {
         return actualCalendar;
     }
 
+    @SuppressWarnings("unchecked")
     public Payroll clone() throws CloneNotSupportedException {
         Payroll p = (Payroll) super.clone();
         Object aux =  employees.clone();
         
         p.employees = (ArrayList<Employee>) employees.clone();
         p.methodsPayments = (ArrayList<IMethodsPayments>) methodsPayments.clone();
-        p.typesPayments = (ArrayList<ITypePayments>) typesPayments.clone();
+        p.typesPayments = (ArrayList<PaymentBills>) typesPayments.clone();
         p.actualCalendar = (Calendar) actualCalendar.clone();
         return p;
     }
 
     public void changeEmployee(int id, Employee change) {
+        change.setId(id);
         employees.set(id, change);
     }
 
     public void changeEmployee(String name, Employee change) {
-        changeEmployee(search(name), change);
+        changeEmployee(searchEmployee(name), change);
+    }
+
+    public void setEmployeeSchedule(int id) throws CloneNotSupportedException {
+        int i =0;
+        for (PaymentBills aux: SystemSettings.DEFAULT_TYPESPAYMENTS) {
+            System.out.println(i + ": " + aux.toString());
+            i++;
+        }
+
+        int aux = UtilsMain.readEntries(0, i-1);
+        System.out.println("\n");
+
+        PaymentBills type = SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone();
+        searchEmployee(id).setPersonalIPayment(type);
     }
 }

@@ -3,24 +3,14 @@ package funcionabilities.functional_aids.calendar;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class PointCalendar implements IPointCalendar {
+public class PointCalendar  {
     private ArrayList<Double> pcalendar = new ArrayList<>();
-    private int type;
 
     private static final int HOURLY = 0;
     private static final int DAILY = 1;
     private static final int MONTHLY = 2;
 
-    public PointCalendar(int type) {
-        if(type != HOURLY && type != DAILY & type != MONTHLY) {
-            throw new RuntimeException("Type in PointCalendar Constructor, it's wrong, this is can be 'H' or 'D'\n");
-        }
-
-        this.type = type;
-    }
-
-
-    public IPointCalendar clone() throws CloneNotSupportedException {
+    public PointCalendar clone() throws CloneNotSupportedException {
         PointCalendar new_item = (PointCalendar) super.clone();
         new_item.pcalendar = new ArrayList<>();
         new_item.pcalendar.addAll(this.pcalendar);

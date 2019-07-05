@@ -1,11 +1,10 @@
 package interfaces.user;
 
 import funcionabilities.Employee;
-import funcionabilities.functional_aids.payments.ITypePayments;
+import funcionabilities.functional_aids.calendar.Calendar;
 import interfaces.system.Payroll;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
+import javax.naming.directory.InvalidAttributesException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -15,17 +14,12 @@ class FuncionabilitiesInter {
     public static final Map<Integer, Method> funcionabilities = new HashMap<>();
     static {
         Method[] methods = FuncionabilitiesInter.class.getDeclaredMethods();
-        Arrays.sort(methods, new Comparator<Method>() {
-            @Override
-            public int compare(Method o1, Method o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        Arrays.sort(methods, Comparator.comparing(Method::getName));
 
         int j = 0;
-        for(int i = 0; i < methods.length; i++) {
-            if(methods[i].getName().equals("att")) continue;
-            funcionabilities.put(j, methods[i]);
+        for (Method method : methods) {
+            if (method.getName().equals("att")) continue;
+            funcionabilities.put(j, method);
             j++;
         }
     }
@@ -42,19 +36,23 @@ class FuncionabilitiesInter {
         name = nam;
     }
 
-    static Employee addEmployee(Employee emp) {
+    static Employee addEmployee() {
         System.out.println("Add employee!\n");
         ArrayList<ArrayList<Object>> param = new ArrayList<>();
 
         for(int i = 0; i < 5; i ++) {param.add(new ArrayList<>());}
 
-        CreateElements.identificatonProcess(emp, param.get(0));
-        CreateElements.syndicateProcess(emp, param.get(1));
+        CreateElements.identificatonProcess(param.get(0));
+        CreateElements.syndicateProcess(param.get(1));
         CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
         CreateElements.typeProcess(param.get(3));
-        CreateElements.pointsProcess(param.get(4));
 
-        return pay.addEmployee(param);
+        try {
+            return pay.addEmployee(param);
+        } catch (InvalidAttributesException | CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     static Employee removeEmployee() {
@@ -75,10 +73,10 @@ class FuncionabilitiesInter {
         System.out.println("\nProcess Point Card!\n");
 
         System.out.print("Start of turn: ");
-        GregorianCalendar start = UtilsMain.getDate();
+        Calendar start = UtilsMain.getDate();
 
         System.out.println("End of turn: ");
-        GregorianCalendar end = UtilsMain.getDate();
+        Calendar end = UtilsMain.getDate();
         if(type_id == 0)  pay.processPointCard(id, start, start);
         else  pay.processPointCard(name, start, start);
     }
@@ -125,8 +123,8 @@ class FuncionabilitiesInter {
 
     static void processEmployeeDetail(){
         System.out.println("Changes of employee: ");
-        if(type_id == 0) pay.changeEmployee(id, addEmployee(pay.searchEmployee(id)));
-        else pay.changeEmployee(name, addEmployee(pay.searchEmployee(id)));
+        if(type_id == 0) pay.changeEmployee(id, addEmployee());
+        else pay.changeEmployee(name, addEmployee());
     }
 
     static boolean undoRedo() {
@@ -138,14 +136,18 @@ class FuncionabilitiesInter {
     }
 
     static void setPersonalPayment() {
-        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule");
-        ArrayList<Class> p_class = new ArrayList<>();
-        ArrayList<Object> param = new ArrayList<>();
-        CreateElements.typeProcess(param);
-        ITypePayments type_aux = null;
-        type_aux = pay.createTypePayment(param);
+        System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule\n" +
+                "\t0: Create a employee schedule" +
+                "\t1: Set a employee schedule");
 
-        pay.searchEmployee(id).setPersonalIPayment(type_aux);
+        if(UtilsMain.readEntries(0,1) == 0) pay.createEmployeePaymentSchedule();
+        else {
+            try {
+                pay.setEmployeeSchedule(id);
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     static void printState() {
@@ -153,10 +155,6 @@ class FuncionabilitiesInter {
     }
 
     static void runPayroll() {
-
-    }
-
-    static void createPersonalPayment (){
-
+        pay.runPayrollToday();
     }
 }

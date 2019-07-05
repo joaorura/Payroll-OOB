@@ -4,7 +4,7 @@ import funcionabilities.Commisioned;
 import funcionabilities.Employee;
 import funcionabilities.Hourly;
 import funcionabilities.Salaried;
-import funcionabilities.functional_aids.payments.ITypePayments;
+import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.transactions.BankAcount;
 import interfaces.system.Payroll;
 import interfaces.SystemSettings;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-class CreateElements {
-    private static Object apresentType(Map<Class, Integer[]> aMap) {
+public class CreateElements {
+    static Object apresentType(Map<Class, Integer[]> aMap) {
         System.out.println("\n\tChose the type: \n");
         for (Map.Entry<Class, Integer[]> entry : aMap.entrySet()) {
             Class key = entry.getKey();
@@ -43,28 +43,18 @@ class CreateElements {
         return UtilsMain.readEntries(0,1) == 1;
     }
 
-    static void identificatonProcess(Employee emp, ArrayList<Object> param) {
+    static void identificatonProcess(ArrayList<Object> param) {
         /* param[0] são os atributos primitivos das possiveis classes de empregados*/
-        boolean check = emp != null;
 
         param.add(null);
-
-        if(check && readEvery("name")) {
             System.out.print("\tName: ");
             UtilsMain.takeString();
             param.add(UtilsMain.takeString());
-        }
-        else param.add(emp.getName());
 
-        if(check && readEvery("adress")) {
             System.out.print("\tAdress: ");
             param.add(UtilsMain.takeString());
-        }
-        else param.add(emp.getAdress());
 
-        if(check) param.add(Payroll.getDefault().nextId());
 
-        if(check && readEvery("type of employee")) {
             System.out.println("\nType: \n" +
                     "\t0: Hourly\n" +
                     "\t1: Salaried\n" +
@@ -106,41 +96,14 @@ class CreateElements {
 
                     break;
             }
-        }
-        else {
-            if(emp instanceof Hourly) {
-                param.set(0, Hourly.class);
-                Hourly h = (Hourly) emp;
-                param.add(h.getMaxWorkHours());
-                param.add(h.getOverWork());
-                param.add(h.geRatioWork());
-
-            } else if(emp instanceof Salaried) {
-                param.set(0, Salaried.class);
-                Salaried h = (Salaried) emp;
-                param.add(h.getSalary());
-            }
-            else {
-                param.set(0, Commisioned.class);
-                Commisioned c = (Commisioned) emp;
-                param.add(c.getRatioSales());
-            }
-        }
-
     }
 
-    static void syndicateProcess(Employee emp, List<Object> param) {
-        boolean check = emp != null;
+    static void syndicateProcess(List<Object> param) {
 
-        if(!(check && readEvery("Syndicate"))) {
             System.out.println("\nSyndicate: \n" +
                     "\tIt has: \n" +
                     "\t\t0: No\n" +
                     "\t\t1: Yes\n");
-        }
-        else {
-            System.out.println("Change");
-        }
 
         int aux= UtilsMain.readEntries(0,1);
 
@@ -152,22 +115,11 @@ class CreateElements {
             param.add(apresentType(SystemSettings.TYPE_SYNDICATES));
 
             if (SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0] == 0) {
-                if(check && readEvery("identification of syndicate")) {
                     System.out.print("\nIdentification of syndicate: ");
                     UtilsMain.takeString();
                     param.add(UtilsMain.takeString());
-                }
-                else {
-                    param.add(emp.getSyndicate().getIndetification());
-                }
-
-                if(check && readEvery("month fee of syndicate")) {
                     System.out.print("Monthly fee of syndicate: ");
                     param.add(UtilsMain.readEntries(Double.class));
-                }
-                else {
-                    param.add(emp.getSyndicate().getMonthlyFee());
-                }
             }
             else {
                 throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0]);
@@ -223,7 +175,7 @@ class CreateElements {
     }
 
 
-    static void typeProcess(List<Object> param) {
+    public static void typeProcess(List<Object> param) {
         System.out.println("\n\nType Payment: \n" +
                 "\tYou want use predefintion: \n" +
                 "\t\t0: No\n" +
@@ -234,7 +186,12 @@ class CreateElements {
             param.add(apresentType(SystemSettings.TYPE_PAYMENTS));
 
             if (SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0] == 0) {
-                param.add(Payroll.getDefault().getActualCalendar().clone());
+                try {
+                    param.add(Payroll.getDefault().getActualCalendar().clone());
+                } catch (CloneNotSupportedException e) {
+                    param.add(Payroll.getDefault().getActualCalendar());
+                }
+
                 System.out.print("Day of week to payment [1 to 7 and -1, this represent a day of finaly of month: ");
                 param.add(UtilsMain.readEntries(-1,7));
 
@@ -253,30 +210,20 @@ class CreateElements {
         else {
             System.out.println("\n\t\tPredefinitions: \n");
 
-            aux = SystemSettings.DEFAULT_TYPESPAYMENTS.length;
+            aux = SystemSettings.DEFAULT_TYPESPAYMENTS.size();
             for(int i = 0; i < aux; i ++) {
-                System.out.println("\t\t" + i + ": " + SystemSettings.DEFAULT_TYPESPAYMENTS[i].toString());
+                System.out.println("\t\t" + i + ": " + SystemSettings.DEFAULT_TYPESPAYMENTS.get(i).toString());
             }
 
             aux = UtilsMain.readEntries(0, aux - 1);
-            param.add(ITypePayments.class);
-            param.add(SystemSettings.DEFAULT_TYPESPAYMENTS[aux].clone());
-
-            ((ITypePayments) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
+            param.add(Class.class);
+            try {
+                param.add(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
+                ((PaymentBills) param.get(1)).setLastPayment(Payroll.getDefault().getActualCalendar().clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
 
-    }
-
-    static void pointsProcess(List<Object> param) {
-        System.out.println("Points: ");
-        param.add(apresentType(SystemSettings.TYPE_POINTS));
-
-        if (SystemSettings.TYPE_POINTS.get(param.get(0))[0] == 0) {
-            System.out.println("Entre com um caractere que escolherá a administração do tempo" +
-                    "\n\t(0: Hourly | 1: Month | 2: Daily\n\t");
-            param.add(UtilsMain.readEntries(Integer.class));
-        } else {
-            throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_POINTS.get(param.get(0))[0]);
-        }
     }
 }

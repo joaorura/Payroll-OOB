@@ -3,7 +3,7 @@ package interfaces.system;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-public class Restore implements IMemento<Payroll> {
+public class Restore {
     private Stack<Payroll> restoreUndo;
     private Stack<Payroll> restoreRedo;
 
@@ -13,34 +13,29 @@ public class Restore implements IMemento<Payroll> {
     }
 
     public Payroll undo() {
-        try {
-            restoreRedo.push(Payroll.getDefault().clone());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-
-        Payroll item;
-        try {
-            item = restoreUndo.pop();
-        }catch (EmptyStackException e) {
-            System.out.println("It's not possible, stack it's empty");
-            return null;
-        }
-
-        return item;
+        return getPayroll(restoreRedo, restoreUndo);
     }
 
     public Payroll redo() {
+        return getPayroll(restoreUndo, restoreRedo);
+    }
+
+    private Payroll getPayroll(Stack<Payroll> restoreUndo, Stack<Payroll> restoreRedo) {
         try {
             restoreUndo.push(Payroll.getDefault().clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
 
-        Payroll item = restoreRedo.pop();
-        if(item == null) throw new Error("It's not possible, stack it's empty");
+        Payroll redo;
+        try {
+            redo = restoreRedo.pop();
+        }catch (EmptyStackException e) {
+            System.out.println("It's not possible, stack it's empty");
+            return null;
+        }
 
-        return item;
+        return redo;
     }
 
     public void backup(Payroll rest, boolean type) {

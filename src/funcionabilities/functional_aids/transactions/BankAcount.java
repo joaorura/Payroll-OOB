@@ -1,7 +1,7 @@
 package funcionabilities.functional_aids.transactions;
 
 public  class BankAcount {
-    final String name;
+    private final String name;
     private final String sourceAcount;
     private final String identification;
 

@@ -1,26 +1,26 @@
 package funcionabilities;
 
-import funcionabilities.auxiliary_entities.ISyndicates;
-import funcionabilities.functional_aids.calendar.IPointCalendar;
-import funcionabilities.functional_aids.payments.ITypePayments;
+import funcionabilities.auxiliary_entities.Syndicate;
+import funcionabilities.functional_aids.calendar.PointCalendar;
+import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.transactions.IMethodsPayments;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Employee implements Cloneable{
-    private final String adress;
-    private final String name;
-    private final int personal_id;
-    private ISyndicates personalSyndicate;
+public abstract class Employee implements Cloneable{
+    private String adress;
+    private String name;
+    private int personal_id;
+    private Syndicate personalSyndicate;
     private IMethodsPayments methodPayment;
-    private ITypePayments personalIPayment;
-    IPointCalendar worker;
+    private PaymentBills personalIPayment;
+    PointCalendar worker;
     private final Map<String, Double> debit;
 
 
-    Employee(String adress, String name, int personal_id, ISyndicates personalSyndicate,
-             IMethodsPayments methodPayment, ITypePayments personalIPayment, IPointCalendar worker) {
+    Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
+             IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
         this.adress = adress;
         this.name = name;
         this.personal_id = personal_id;
@@ -55,7 +55,7 @@ public class Employee implements Cloneable{
 
     public Employee clone() throws CloneNotSupportedException{
         Employee item = (Employee) super.clone();
-        item.personalSyndicate = this.personalSyndicate.clone();
+        item.personalSyndicate =  this.personalSyndicate.clone();
         item.methodPayment = this.methodPayment.clone();
         item.personalIPayment = this.personalIPayment.clone();
         item.worker = this.worker.clone();
@@ -63,11 +63,15 @@ public class Employee implements Cloneable{
         return item;
     }
 
-    public void setPersonalIPayment(ITypePayments personalIPayment) {
+    public void setId(int id) {
+        this.personal_id = id;
+    }
+
+    public void setPersonalIPayment(PaymentBills personalIPayment) {
         this.personalIPayment = personalIPayment;
     }
 
-    public ITypePayments getPersonalIPayment() {
+    public PaymentBills getPersonalIPayment() {
         return personalIPayment;
     }
 
@@ -79,7 +83,7 @@ public class Employee implements Cloneable{
         return name;
     }
 
-    public IPointCalendar getWorker() {
+    public PointCalendar getWorker() {
         return  worker;
     }
 
@@ -87,7 +91,7 @@ public class Employee implements Cloneable{
         return adress;
     }
 
-    public ISyndicates getSyndicate() {
+    public Syndicate getSyndicate() {
         return personalSyndicate;
     }
 }

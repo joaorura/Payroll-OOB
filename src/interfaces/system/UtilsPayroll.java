@@ -1,23 +1,28 @@
 package interfaces.system;
 
 import funcionabilities.Employee;
-import funcionabilities.functional_aids.payments.ITypePayments;
-import funcionabilities.functional_aids.payments.PaymentBills;
+import funcionabilities.functional_aids.calendar.Calendar;
+import funcionabilities.functional_aids.PaymentBills;
 import interfaces.SystemSettings;
 
-import java.util.GregorianCalendar;
+import javax.naming.directory.InvalidAttributesException;
 import java.util.List;
 
 public class UtilsPayroll {
-    public static ITypePayments createTypePayment(List<Object> paramater) {
-        ITypePayments type = null;
+    private static PaymentBills createTypePayment(List<Object> paramater) {
+        PaymentBills type = null;
         switch (SystemSettings.TYPE_PAYMENTS.get(paramater.get(0))[0]) {
             case -1:
-                type = (ITypePayments) paramater.get(1);
+                type = (PaymentBills) paramater.get(1);
                 break;
 
-            case 0: type = new PaymentBills((GregorianCalendar) paramater.get(1), (int) paramater.get(2),
-                    (int) paramater.get(3), (int) paramater.get(4));
+            case 0:
+                try {
+                    type = new PaymentBills((Calendar) paramater.get(1), (int) paramater.get(2),
+                            (int) paramater.get(3), (int) paramater.get(4));
+                } catch (InvalidAttributesException | CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
 
@@ -25,13 +30,17 @@ public class UtilsPayroll {
     }
 
     public static void createPaymentSchedule(List<Object> param) {
-        ITypePayments type_aux = createTypePayment(param);
+        PaymentBills type_aux = createTypePayment(param);
         SystemSettings.DEFAULT_TYPESPAYMENTS.add(type_aux);
     }
 
-    public static void setPaymentSchedule(int id, int aux) {
+    private static void setPaymentSchedule(int id, int aux) {
         Employee emp = Payroll.getDefault().searchEmployee(id);
-        emp.setPersonalIPayment(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
+        try {
+            emp.setPersonalIPayment(SystemSettings.DEFAULT_TYPESPAYMENTS.get(aux).clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void setPaymentSchedule(String name, int aux) {

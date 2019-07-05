@@ -162,9 +162,8 @@ public class Calendar implements Cloneable{
     }
 
     public int getMaximum(int type) {
-        switch(type) {
-            case DAY_OF_MONTH:
-                return limitDays[month];
+        if (type == DAY_OF_MONTH) {
+            return limitDays[month];
         }
 
         return -1;
