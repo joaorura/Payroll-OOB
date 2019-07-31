@@ -7,10 +7,14 @@
 #### The reference taken for the creation of the project is found in priciples.pdf within this repository.
 
 Some considerations were taken in the creation of the project, are listed below:
+
  - All employees can make sales.
- - Salaried and commissioned employees, receive their monthly salary consistent with the work days (Marked via dot).
- - Commissioners can receive their bandages normally.
- - All debts of the employee will be debited in the next sheet, with the proviso that they can not receive "negative" wages; so if you keep this debit will be placed on the next sheet.
+
+ - Salaried and commissioned employees, receive their monthly salary consistent with the work days (Marked via dot).
+
+ - Commissioners can receive their bandages normally.
+
+ - All debts of the employee will be debited in the next sheet, with the proviso that they can not receive "negative" wages; so    if you keep this debit will be placed on the next sheet.
 
 #### University info:
  - Name: João Messias Lima Pereira
