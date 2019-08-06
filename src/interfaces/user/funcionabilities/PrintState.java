@@ -1,10 +1,10 @@
 package interfaces.user.funcionabilities;
 
-import interfaces.system.Payroll;
+import interfaces.system.controlers.EmployeeController;
 
-public class PrintState implements Execute{
+public class PrintState implements ExecuteEmp {
     @Override
-    public void execute(Payroll payroll) {
+    public void execute(EmployeeController payroll) {
             System.out.println("State: \n\t" + payroll.toString());
     }
 }

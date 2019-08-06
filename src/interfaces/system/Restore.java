@@ -3,16 +3,17 @@ package interfaces.system;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-class Restore {
+public class Restore {
     private final Stack<Payroll> restoreUndo;
     private final Stack<Payroll> restoreRedo;
 
-    Restore() {
+    public Restore() {
         restoreRedo = new Stack<>();
         restoreUndo = new Stack<>();
     }
 
-    private Payroll unReDo(Stack<Payroll> restore1, Stack<Payroll> restore2) {
+    private Payroll unReDo(Payroll pay, Stack<Payroll> restore1,
+                                    Stack<Payroll> restore2) {
         Payroll item;
         try {
             item = restore2.pop();
@@ -22,7 +23,7 @@ class Restore {
         }
 
         try {
-            restore1.push(Payroll.getDefault().clone());
+            restore1.push(pay.clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -30,15 +31,15 @@ class Restore {
         return item;
     }
 
-    Payroll undo() {
-        return unReDo(restoreRedo, restoreUndo);
+    public Payroll undo(Payroll pay) {
+        return unReDo(pay, restoreRedo, restoreUndo);
     }
 
-    Payroll redo() {
-        return unReDo(restoreUndo, restoreRedo);
+    public Payroll redo(Payroll pay) {
+        return unReDo(pay, restoreUndo, restoreRedo);
     }
 
-    void backup(Payroll item, boolean type) {
+    public void backup(Payroll item, boolean type) {
         try {
             item = item.clone();
         } catch (CloneNotSupportedException e) {

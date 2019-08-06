@@ -4,7 +4,7 @@ import funcionabilities.Employee;
 import funcionabilities.auxiliary_entities.Syndicate;
 import funcionabilities.functional_aids.calendar.Calendar;
 import funcionabilities.functional_aids.calendar.PointCalendar;
-import interfaces.system.Payroll;
+import interfaces.system.controlers.EmployeeController;
 import interfaces.user.problematics.UtilsProblematicCreate;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -32,9 +32,8 @@ public class UtilsMain {
 
     private static final Scanner scan = new Scanner(System.in);
 
-    public static int identification() {
+    public static int identification(EmployeeController payroll) {
         UtilsMain.printIdentification();
-        Payroll payroll = Payroll.getDefault();
 
         int type_id = readEntries(0, 1);
         int id;
@@ -78,7 +77,7 @@ public class UtilsMain {
         } else return null;
     }
 
-    public static ArrayList<ArrayList<Object>> getDatas(Employee emp) throws InvalidAttributesException {
+    public static ArrayList<ArrayList<Object>> getDatas(EmployeeController pay, Employee emp) throws InvalidAttributesException {
         ArrayList<ArrayList<Object>> param = new ArrayList<>();
         ArrayList<Object> auxOb;
 
@@ -87,7 +86,7 @@ public class UtilsMain {
         }
 
         boolean check = emp != null;
-        UtilsCreate.identificatonProcess(emp, param.get(0));
+        UtilsCreate.identificatonProcess(pay, emp, param.get(0));
 
         if (UtilsProblematicCreate.canChange(check, "Syndicate")) {
             UtilsProblematicCreate.syndicateProcess(param.get(1));

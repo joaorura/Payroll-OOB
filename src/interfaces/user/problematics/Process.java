@@ -1,12 +1,16 @@
 package interfaces.user.problematics;
 
 import interfaces.system.Payroll;
+import interfaces.system.controlers.EmployeeController;
+import interfaces.system.controlers.SystemController;
 import interfaces.user.UtilsMain;
 import interfaces.user.funcionabilities.*;
 import interfaces.user.funcionabilities.problematics.*;
 
+import java.util.Objects;
+
 public class Process {
-    private static Execute processExecution(int input) {
+    private static ExecuteEmp processExecution(int input) {
         switch (input) {
             case 0:
                 return new AddEmployee();
@@ -28,28 +32,17 @@ public class Process {
 
             case 6:
                 return new PrintState();
-
-            case 7:
-                return new RunPay();
-
-            case 8:
-                return new ChangePayment();
-
-            case 9:
-                return new Restore();
         }
 
-        throw new RuntimeException("Input integer take over a value out of domain (0 to 9).");
+        return null;
     }
 
-    public static boolean processEntries(int input) {
+    public static boolean processEntries(Payroll pay, SystemController sysControll, EmployeeController empControll, int input) {
         System.out.println("\nStarting the operation ...\n");
-        Payroll pay = Payroll.getDefault();
         int id;
-
         if (input != 9 && input  != 1) {
             if (input != 0 && input != 7 && input != 8) {
-                id = UtilsMain.identification();
+                id = UtilsMain.identification(empControll);
                 if(id == -1) {
                     System.out.println("Employee not founded");
                 }
@@ -57,19 +50,18 @@ public class Process {
             pay.backup(true);
         }
 
-        Execute exec;
 
-        try {
-           exec = processExecution(input);
+        switch (input) {
+            case 7:
+                RunPay.execute(sysControll);
+
+            case 8:
+                ChangePayment.execute(empControll, sysControll);
+
+            default:
+                Objects.requireNonNull(processExecution(input)).execute(empControll);
         }
-        catch (RuntimeException e) {
-            System.out.println("Error in system: " + e.getMessage() + "\n" +
-                    "The system will be close.");
 
-            return false;
-        }
-
-        exec.execute(pay);
         return true;
     }
 }

@@ -4,14 +4,14 @@ import funcionabilities.Commisioned;
 import funcionabilities.Employee;
 import funcionabilities.Hourly;
 import funcionabilities.Salaried;
-import interfaces.system.Payroll;
+import interfaces.system.controlers.EmployeeController;
 
 import java.util.ArrayList;
 
 import static interfaces.user.problematics.UtilsProblematicCreate.canChange;
 
 class UtilsCreate {
-    static void identificatonProcess(Employee emp, ArrayList<Object> param) {
+    static void identificatonProcess(EmployeeController pay, Employee emp, ArrayList<Object> param) {
         boolean check = emp != null;
         param.add(null);
 
@@ -36,7 +36,7 @@ class UtilsCreate {
 
         int aux;
         if (!check) {
-            param.add(Payroll.getDefault().nextId());
+            param.add(pay.nextId());
 
             System.out.println("\nType:\n" +
                     "\t0: Hourly\n" +

@@ -1,21 +1,21 @@
 package interfaces.user.funcionabilities;
 
 import interfaces.system.Payroll;
+import interfaces.system.controlers.SystemController;
 
 import static interfaces.user.UtilsMain.readEntries;
 
-public class Restore implements Execute {
-    @Override
-    public void execute(Payroll payroll) {
+public class Restore {
+    public static Payroll execute(SystemController pay) {
         System.out.println("Você deseja:");
         System.out.println("\t0: Desfazer");
         System.out.println("\t1: Refazer");
 
         if (readEntries(0, 1) == 0) {
-            payroll.undo();
+            return pay.undo();
         }
         else {
-            payroll.redo();
+            return pay.redo();
         }
     }
 }

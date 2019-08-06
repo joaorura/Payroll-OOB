@@ -1,11 +1,11 @@
 package interfaces.user.funcionabilities;
 
-import interfaces.system.Payroll;
+import interfaces.system.controlers.EmployeeController;
 import interfaces.user.UtilsMain;
 
-public class ChangeService implements Execute {
+public class ChangeService implements ExecuteEmp {
     @Override
-    public void execute(Payroll payroll) {
+    public void execute(EmployeeController payroll) {
         System.out.println("You desire retire or add services: \n" +
                 "\t0: Add\n" +
                 "\t1: Remove");
@@ -23,7 +23,7 @@ public class ChangeService implements Execute {
             throw new Error();
         }
 
-        payroll.processServiceChange(type, UtilsMain.identification(),
+        payroll.processServiceChange(type, UtilsMain.identification(payroll),
                 name_product, value_product);
     }
 }

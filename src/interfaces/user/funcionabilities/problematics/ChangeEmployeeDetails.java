@@ -1,21 +1,21 @@
 package interfaces.user.funcionabilities.problematics;
 
-import interfaces.system.Payroll;
+import interfaces.system.controlers.EmployeeController;
 import interfaces.user.UtilsMain;
-import interfaces.user.funcionabilities.Execute;
+import interfaces.user.funcionabilities.ExecuteEmp;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
-public class ChangeEmployeeDetails implements Execute {
+public class ChangeEmployeeDetails implements ExecuteEmp {
     @Override
-    public void execute(Payroll payroll) {
-        int id = UtilsMain.identification();
+    public void execute(EmployeeController payroll) {
+        int id = UtilsMain.identification(payroll);
 
-        System.out.println("Execute changes of employee");
+        System.out.println("ExecuteEmp changes of employee");
 
         try {
-            ArrayList<ArrayList<Object>> param = UtilsMain.getDatas(payroll.searchEmployee(id));
+            ArrayList<ArrayList<Object>> param = UtilsMain.getDatas(payroll, payroll.searchEmployee(id));
             payroll.changeEmployee(id, param);
 
         } catch (CloneNotSupportedException | InvalidAttributesException e) {
