@@ -5,6 +5,8 @@ import funcionabilities.auxiliary_entities.Syndicate;
 import funcionabilities.functional_aids.calendar.Calendar;
 import funcionabilities.functional_aids.calendar.PointCalendar;
 import interfaces.system.Payroll;
+import interfaces.user.funcionabilities.*;
+import interfaces.user.funcionabilities.problematics.*;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.lang.reflect.InvocationTargetException;
@@ -14,12 +16,12 @@ import java.util.Scanner;
 public class UtilsMain {
     private final static String start = "\n\nNew interation!\n" +
             "\t0: addEmployee\n" +
-            "\t1: printState\n" +
+            "\t1: removeEmployee\n" +
             "\t2: processEmployeeDetail\n" +
             "\t3: processPointCard\n" +
             "\t4: processSale\n" +
             "\t5: processServiceChange\n" +
-            "\t6: removeEmployee\n" +
+            "\t6: printState\n" +
             "\t7: runPayroll\n" +
             "\t8: setPersonalPayment\n" +
             "\t9: undoRedo\n" +
@@ -31,49 +33,31 @@ public class UtilsMain {
 
     private static final Scanner scan = new Scanner(System.in);
 
-    static boolean processEntries(int input) {
-        System.out.println("\nStarting the operation ...\n");
-        Payroll pay = Payroll.getDefault();
-        int type_id;
-        int id = -1;
+    public static int identification() {
+        UtilsMain.printIdentification();
+        Payroll payroll = Payroll.getDefault();
 
-        if (input != 9 && input != 1) {
-            if (input != 0 && input != 7 && input != 8) {
-                UtilsMain.printIdentification();
-                type_id = readEntries(0, 1);
+        int type_id = readEntries(0, 1);
+        int id;
 
-                if (type_id == 0) {
-                    System.out.print("Identifcation: ");
-                    id = readEntries(0, Integer.MAX_VALUE);
-                } else {
-                    System.out.print("Name: ");
-                    id = pay.searchEmployee(UtilsMain.takeString());
-                }
-
-                if (pay.searchEmployee(id) == null) {
-                    System.out.println("Employee not founded");
-                    return false;
-                }
-            }
-
-            pay.backup(true);
+        if (type_id == 0) {
+            System.out.print("Identifcation: ");
+            id = readEntries(0, Integer.MAX_VALUE);
+        } else {
+            System.out.print("Name: ");
+            id = payroll.searchEmployee(UtilsMain.takeString());
         }
 
-        FuncionabilitiesInter.att(id);
-        Object ret = null;
-        try {
-            ret = FuncionabilitiesInter.funcionabilities.get(input).invoke(null);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+        if (payroll.searchEmployee(id) == null) {
+            System.out.println("Employee not founded");
+            return -1;
         }
-
-        if (ret != null) {
-            if (ret instanceof Boolean) return (boolean) ret;
-            else return true;
-        } else return true;
+        else {
+            return id;
+        }
     }
 
-    static Object readEntries(Class type) {
+    public static Object readEntries(Class type) {
         if (type.equals(Integer.class)) {
             while (true) {
                 System.out.print("\n\t\tYour answer: ");
@@ -95,7 +79,7 @@ public class UtilsMain {
         } else return null;
     }
 
-    static ArrayList<ArrayList<Object>> getDatas(Employee emp) throws InvalidAttributesException {
+    public static ArrayList<ArrayList<Object>> getDatas(Employee emp) throws InvalidAttributesException {
         ArrayList<ArrayList<Object>> param = new ArrayList<>();
         ArrayList<Object> auxOb;
 
@@ -139,7 +123,7 @@ public class UtilsMain {
         }
     }
 
-    static Calendar getDate() {
+    public static Calendar getDate() {
 
         System.out.print("\nEnter with data(Only in numbers):");
 
@@ -169,15 +153,15 @@ public class UtilsMain {
         }
     }
 
-    static void printIntro() {
+    public static void printIntro() {
         System.out.println(start);
     }
 
-    static void printIdentification() {
+    public static void printIdentification() {
         System.out.println(identificaton);
     }
 
-    static String takeString() {
+    public static String takeString() {
         String str = scan.nextLine();
 
         while(str.equals("") || str.equals("\n")) {
