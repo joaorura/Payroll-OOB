@@ -5,8 +5,8 @@ import funcionabilities.Employee;
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.calendar.Calendar;
 import interfaces.SystemSettings;
-import interfaces.user.CreateElements;
 import interfaces.user.UtilsMain;
+import interfaces.user.problematics.UtilsProblematicCreate;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
@@ -166,7 +166,8 @@ public class Payroll implements Cloneable {
     public void createEmployeePaymentSchedule() {
         ArrayList<Object> param = new ArrayList<>();
         try {
-            CreateElements.typeProcess(true, param);
+            //Modularizar
+            UtilsProblematicCreate.typeProcess(true, param);
         } catch (InvalidAttributesException e) {
             e.printStackTrace();
         }

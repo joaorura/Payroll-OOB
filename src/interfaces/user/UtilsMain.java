@@ -5,13 +5,12 @@ import funcionabilities.auxiliary_entities.Syndicate;
 import funcionabilities.functional_aids.calendar.Calendar;
 import funcionabilities.functional_aids.calendar.PointCalendar;
 import interfaces.system.Payroll;
-import interfaces.user.funcionabilities.*;
-import interfaces.user.funcionabilities.problematics.*;
+import interfaces.user.problematics.UtilsProblematicCreate;
 
 import javax.naming.directory.InvalidAttributesException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class UtilsMain {
     private final static String start = "\n\nNew interation!\n" +
@@ -88,10 +87,10 @@ public class UtilsMain {
         }
 
         boolean check = emp != null;
-        CreateElements.identificatonProcess(emp, param.get(0));
+        UtilsCreate.identificatonProcess(emp, param.get(0));
 
-        if (CreateElements.canChange(check, "Syndicate")) {
-            CreateElements.syndicateProcess(param.get(1));
+        if (UtilsProblematicCreate.canChange(check, "Syndicate")) {
+            UtilsProblematicCreate.syndicateProcess(param.get(1));
         } else {
             Syndicate synd = emp.getSyndicate();
             auxOb = param.get(1);
@@ -104,9 +103,9 @@ public class UtilsMain {
             }
         }
 
-        CreateElements.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
+        UtilsProblematicCreate.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
 
-        CreateElements.typeProcess(false, param.get(3));
+        UtilsProblematicCreate.typeProcess(false, param.get(3));
 
         param.get(4).add(PointCalendar.class);
 

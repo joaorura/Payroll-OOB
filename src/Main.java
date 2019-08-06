@@ -2,7 +2,7 @@ import interfaces.system.Payroll;
 import interfaces.user.UtilsMain;
 
 import static interfaces.user.UtilsMain.readEntries;
-import static interfaces.user.Process.processEntries;
+import static interfaces.user.problematics.Process.processEntries;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Booting the system!\n" +

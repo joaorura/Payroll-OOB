@@ -1,6 +1,7 @@
-package interfaces.user;
+package interfaces.user.problematics;
 
 import interfaces.system.Payroll;
+import interfaces.user.UtilsMain;
 import interfaces.user.funcionabilities.*;
 import interfaces.user.funcionabilities.problematics.*;
 
