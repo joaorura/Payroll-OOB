@@ -4,10 +4,9 @@ import funcionabilities.Commisioned;
 import funcionabilities.Employee;
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.calendar.Calendar;
-import interfaces.SystemSettings;
 import interfaces.system.Payroll;
 import interfaces.system.utils.UtilsPayroll;
-import interfaces.user.UtilsMain;
+import interfaces.user.utils.UtilsSystem;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
@@ -53,10 +52,10 @@ public class EmployeeController {
         return i;
     }
 
-    public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) throws Error {
+    public Employee addEmployee(Payroll payroll, ArrayList<ArrayList<Object>> paramater) throws Error {
         Employee item;
         try {
-            item = UtilsPayroll.processEmployee(paramater);
+            item = UtilsPayroll.processEmployee(payroll, paramater);
         } catch (InvalidAttributesException | CloneNotSupportedException e) {
             throw new Error("Error in add new employee");
         }
@@ -108,7 +107,7 @@ public class EmployeeController {
     public void changeEmployee(int id, ArrayList<ArrayList<Object>> change) throws Error{
         Employee item;
         try {
-            item = UtilsPayroll.processEmployee(change);
+            item = UtilsPayroll.processEmployee(payroll, change);
         } catch (InvalidAttributesException | CloneNotSupportedException e) {
             throw new Error("Error in make change os employee data.");
         }
@@ -118,17 +117,17 @@ public class EmployeeController {
 
     public void setEmployeeSchedule(int id) throws Error {
         int i = 0;
-        for (PaymentBills aux : SystemSettings.DEFAULT_TYPE_PAYMENTS) {
+        for (PaymentBills aux : payroll.getDefaultTypePayments()) {
             System.out.println(i + ": " + aux.toString());
             i++;
         }
 
-        int aux = UtilsMain.readEntries(0, i - 1);
+        int aux = UtilsSystem.readEntries(0, i - 1);
         System.out.println("\n");
 
         PaymentBills type;
         try {
-            type = SystemSettings.DEFAULT_TYPE_PAYMENTS.get(aux).clone();
+            type = payroll.getDefaultTypePayments().get(aux).clone();
         } catch (CloneNotSupportedException e) {
             throw new Error("Error in change employee schedule.");
         }

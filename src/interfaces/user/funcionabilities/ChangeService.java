@@ -1,7 +1,8 @@
 package interfaces.user.funcionabilities;
 
 import interfaces.system.controlers.EmployeeController;
-import interfaces.user.UtilsMain;
+import interfaces.user.utils.UtilsEmployee;
+import interfaces.user.utils.UtilsSystem;
 
 public class ChangeService implements ExecuteEmp {
     @Override
@@ -10,20 +11,20 @@ public class ChangeService implements ExecuteEmp {
                 "\t0: Add\n" +
                 "\t1: Remove");
 
-        int aux = UtilsMain.readEntries(0, 1);
+        int aux = UtilsSystem.readEntries(0, 1);
         boolean type = (aux == 0);
 
         System.out.print("Name of product: ");
-        UtilsMain.takeString();
-        String name_product = UtilsMain.takeString();
+        UtilsSystem.takeString();
+        String name_product = UtilsSystem.takeString();
 
         System.out.println("Value of product: ");
-        Double value_product = (Double) UtilsMain.readEntries(Double.class);
+        Double value_product = (Double) UtilsSystem.readEntries(Double.class);
         if (value_product == null) {
             throw new Error();
         }
 
-        payroll.processServiceChange(type, UtilsMain.identification(payroll),
+        payroll.processServiceChange(type, UtilsEmployee.identifier(payroll),
                 name_product, value_product);
     }
 }

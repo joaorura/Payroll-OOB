@@ -3,10 +3,8 @@ package interfaces.system.controlers;
 import funcionabilities.Employee;
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.calendar.Calendar;
-import interfaces.SystemSettings;
 import interfaces.system.Payroll;
 import interfaces.system.utils.UtilsPayroll;
-import interfaces.user.problematics.UtilsProblematicCreate;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
@@ -54,10 +52,10 @@ public class SystemController {
         }
     }
 
-    public void createEmployeePaymentSchedule(ArrayList<Object> param) throws Error{
+    public void createEmployeePaymentSchedule(Payroll pay, ArrayList<Object> param) throws Error{
         try {
             PaymentBills pb = UtilsPayroll.createTypePayment(param);
-            SystemSettings.DEFAULT_TYPE_PAYMENTS.add(pb);
+            pay.addEmployeeSchedule(pb);
 
         } catch (CloneNotSupportedException | InvalidAttributesException e) {
             throw new Error("Error in create a employee schedule.");

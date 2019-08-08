@@ -3,7 +3,7 @@ package interfaces.user.funcionabilities;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.SystemController;
 
-import static interfaces.user.UtilsMain.readEntries;
+import static interfaces.user.utils.UtilsSystem.readEntries;
 
 public class Restore {
     public static Payroll execute(SystemController pay) {

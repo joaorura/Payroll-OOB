@@ -2,38 +2,18 @@ package interfaces.user.problematics;
 
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.transactions.BankAccount;
-import interfaces.SystemSettings;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
-import interfaces.user.UtilsMain;
+import interfaces.user.utils.UtilsSystem;
 
 import javax.naming.directory.InvalidAttributesException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static interfaces.user.utils.UtilsSystem.readEntries;
+
 public class UtilsProblematicCreate {
-    private static Object apresentType(Map<Class, Integer[]> aMap) {
-        System.out.println("\n\tChose the type: \n");
-        for (Map.Entry<Class, Integer[]> entry : aMap.entrySet()) {
-            Class key = entry.getKey();
-            Integer[] value = entry.getValue();
-
-            if (value[0] < 0) continue;
-            System.out.println("\t\t" + value[0] + ": " + key.descriptorString() + " ; " + value[1] + "\n");
-        }
-
-        System.out.println("\n\n\tYour Answer: ");
-        int aux = UtilsMain.readEntries(0, aMap.size() - 1);
-
-        for (Map.Entry<Class, Integer[]> entry : aMap.entrySet()) {
-            Class key = entry.getKey();
-            Integer[] value = entry.getValue();
-            if (value[0] == aux) return key;
-        }
-
-        throw new Error();
-    }
-
     public static boolean canChange(boolean check, String camp) {
         if (camp == null) throw new Error();
         if (!check) return true;
@@ -42,65 +22,71 @@ public class UtilsProblematicCreate {
                 "\t0: No\n" +
                 "\t1: Yes");
 
-        return UtilsMain.readEntries(0, 1) == 1;
+        return readEntries(0, 1) == 1;
     }
 
     public static void syndicateProcess(List<Object> param) {
-
         System.out.println("\nSyndicate: \n" +
                 "\tIt has: \n" +
                 "\t\t0: No\n" +
                 "\t\t1: Yes\n");
 
-        int aux = UtilsMain.readEntries(0, 1);
+        int aux = readEntries(0, 1);
 
         /*param[1] é a lista que contem os parametros referidos ao Sindicato*/
         if (aux == 0) {
-            param.add(Class.class);
+            param.add(-1);
         } else {
-            param.add(apresentType(SystemSettings.TYPE_SYNDICATES));
-
-            if (SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0] == 0) {
-                System.out.print("\nIdentification of syndicate: ");
-                param.add(UtilsMain.takeString());
-                System.out.print("Monthly fee of syndicate: ");
-                param.add(UtilsMain.readEntries(Double.class));
-            } else {
-                throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_SYNDICATES.get(param.get(0))[0]);
-            }
+            param.add(0);
+            System.out.print("\nIdentification of syndicate: ");
+            param.add(UtilsSystem.takeString());
+            System.out.print("Monthly fee of syndicate: ");
+            param.add(readEntries(Double.class));
         }
     }
 
+    private static int apresentMethods() {
+        System.out.println("Escolha o método de pagamento: ");
+        System.out.println("\t0: Deposito bancário.\n" +
+                "\t1: Check entregue em mãoes.\n" +
+                "\t2: Check enviado via correios.\n");
+
+        return readEntries(0,2);
+    }
+
     public static void methodProcess(EmployeeController employeeControll, String name,
-                                     String adress, List<Object> param) {
+                                     String address, List<Object> param) {
 
         System.out.println("\nMethods Payment: ");
-        param.add(apresentType(SystemSettings.TYPE_METHODS_PAYMENTS));
+        param.add(apresentMethods());
 
         System.out.println("\nBank of source:\n" +
                 "\t0: Bank of Company\n" +
                 "\t1: New Bank");
-        int aux = UtilsMain.readEntries(0, 1);
+        int aux = readEntries(0, 1);
 
-        if (aux == 0) {
-            param.add(SystemSettings.ACOUNT);
-        } else {
+        if(aux == 0) {
+            param.add(null);
+        }
+        else {
             System.out.println("\tSource acount:");
-            String acount = UtilsMain.takeString();
+            String acount = UtilsSystem.takeString();
 
             System.out.println("\tIdentification (CPF or CNPJ): ");
-            String identification = UtilsMain.takeString();
+            String identification = UtilsSystem.takeString();
 
             assert name != null;
             param.add(new BankAccount(name.concat(""), acount, identification));
         }
 
         param.add(0.0);
-        switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]) {
+
+        aux = (int) param.get(0);
+        switch (aux) {
             case 0:
-                System.out.print("\nAcount number to transactions: ");
-                UtilsMain.takeString();
-                param.add(UtilsMain.takeString());
+                System.out.print("\nAccount number to transactions: ");
+                UtilsSystem.takeString();
+                param.add(UtilsSystem.takeString());
 
                 break;
             case 1:
@@ -109,12 +95,13 @@ public class UtilsProblematicCreate {
                 param.add(employeeControll.nextId());
                 break;
             case 2:
-                assert adress != null;
+                assert address != null;
                 param.add(name.concat(""));
-                param.add(adress.concat(""));
+                param.add(address.concat(""));
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_METHODS_PAYMENTS.get(param.get(0))[0]);
+                throw new IllegalStateException("Unexpected value: " + aux + " when collecting payment method data " +
+                        "from an employee");
         }
     }
 
@@ -123,12 +110,12 @@ public class UtilsProblematicCreate {
                 "\tYou want use predefintion: \n" +
                 "\t\t0: No\n" +
                 "\t\t1: Yes\n");
-        int aux = UtilsMain.readEntries(0, 1);
+        int aux = readEntries(0, 1);
+        param.add(aux);
 
         if (type || aux == 0) {
-            param.add(apresentType(SystemSettings.TYPE_PAYMENTS));
-
-            if (SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0] == 0) {
+            aux = (int) param.get(0);
+            if (aux == 0) {
                 try {
                     param.add(pay.getActualCalendar().clone());
                 } catch (CloneNotSupportedException e) {
@@ -136,30 +123,30 @@ public class UtilsProblematicCreate {
                 }
 
                 System.out.print("Day of week to payment [1 to 7 and -1, this represent a day of finaly of month: ");
-                param.add(UtilsMain.readEntries(-1, 7));
+                param.add(readEntries(-1, 7));
 
                 if ((int) param.get(2) != -1) {
                     System.out.print("Amount of weeks of interval: ");
-                    param.add(UtilsMain.readEntries(0, Integer.MAX_VALUE));
+                    param.add(readEntries(0, Integer.MAX_VALUE));
                 } else param.add(0);
 
                 System.out.println("Amount of months of interval: ");
-                param.add(UtilsMain.readEntries(0, Integer.MAX_VALUE));
+                param.add(readEntries(0, Integer.MAX_VALUE));
             } else {
-                throw new IllegalStateException("Unexpected value: " + SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0]);
+                throw new IllegalStateException("Unexpected value: " + aux);
             }
         } else {
             System.out.println("\n\t\tPredefinitions: \n");
 
-            aux = SystemSettings.DEFAULT_TYPE_PAYMENTS.size();
-            for (int i = 0; i < aux; i++) {
-                System.out.println("\t\t" + i + ": " + SystemSettings.DEFAULT_TYPE_PAYMENTS.get(i).toString());
+            ArrayList<PaymentBills> paymentBills = pay.getDefaultTypePayments();
+            aux = paymentBills.size();
+            for(int i = 0; i < aux; i++) {
+                System.out.println("\t\t" + i + ": " + paymentBills.get(i).toString());
             }
 
-            aux = UtilsMain.readEntries(0, aux - 1);
-            param.add(Class.class);
+            aux = readEntries(0, aux - 1);
             try {
-                PaymentBills paux = SystemSettings.DEFAULT_TYPE_PAYMENTS.get(aux).clone();
+                PaymentBills paux = paymentBills.get(aux);
                 param.add(paux);
                 paux.setLastPayment(pay.getActualCalendar().clone());
             } catch (CloneNotSupportedException e) {

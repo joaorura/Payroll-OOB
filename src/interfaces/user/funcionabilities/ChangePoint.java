@@ -2,7 +2,11 @@ package interfaces.user.funcionabilities;
 
 import funcionabilities.functional_aids.calendar.Calendar;
 import interfaces.system.controlers.EmployeeController;
-import interfaces.user.UtilsMain;
+import interfaces.user.utils.UtilsCalendar;
+import interfaces.user.utils.UtilsEmployee;
+import interfaces.user.utils.UtilsSystem;
+
+import static interfaces.user.utils.UtilsCalendar.getDate;
 
 public class ChangePoint implements ExecuteEmp {
 
@@ -11,12 +15,12 @@ public class ChangePoint implements ExecuteEmp {
         System.out.println("\nProcess Point Card!\n");
 
         System.out.print("Start of turn: ");
-        Calendar start = UtilsMain.getDate();
+        Calendar start = getDate();
 
         System.out.println("End of turn: ");
-        Calendar end = UtilsMain.getDate();
+        Calendar end = getDate();
 
-        int id = UtilsMain.identification(payroll);
+        int id = UtilsEmployee.identifier(payroll);
         payroll.processPointCard(id, start, end);
     }
 }

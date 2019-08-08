@@ -3,7 +3,7 @@ package interfaces.user.problematics;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.system.controlers.SystemController;
-import interfaces.user.UtilsMain;
+import interfaces.user.utils.UtilsEmployee;
 import interfaces.user.funcionabilities.*;
 import interfaces.user.funcionabilities.problematics.*;
 
@@ -42,7 +42,7 @@ public class Process {
         int id;
         if (input != 9 && input  != 1) {
             if (input != 0 && input != 7 && input != 8) {
-                id = UtilsMain.identification(empControll);
+                id = UtilsEmployee.identifier(empControll);
                 if(id == -1) {
                     System.out.println("Employee not founded");
                 }
