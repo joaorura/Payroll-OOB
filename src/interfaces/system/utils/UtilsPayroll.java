@@ -31,17 +31,17 @@ public class UtilsPayroll {
 
         switch (SystemSettings.TYPE_METHODS_PAYMENTS.get(paramater.get(0))[0]) {
             case 0:
-                meth = new Deposit((BankAcount) paramater.get(1), (Double) paramater.get(2),
+                meth = new Deposit((BankAccount) paramater.get(1), (Double) paramater.get(2),
                         (String) paramater.get(3));
                 break;
 
             case 1:
-                meth = new CheckHands((BankAcount) paramater.get(1), (Double) paramater.get(2),
+                meth = new CheckHands((BankAccount) paramater.get(1), (Double) paramater.get(2),
                         (String) paramater.get(3), (int) paramater.get(4));
                 break;
 
             case 2:
-                meth = new CheckPostOffices((BankAcount) paramater.get(1), (Double) paramater.get(2),
+                meth = new CheckPostOffices((BankAccount) paramater.get(1), (Double) paramater.get(2),
                         (String) paramater.get(3), (String) paramater.get(4));
                 break;
 

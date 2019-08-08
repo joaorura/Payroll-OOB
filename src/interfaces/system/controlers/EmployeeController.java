@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class EmployeeController {
-    ArrayList<Employee> employees;
+    private Payroll payroll;
+    private ArrayList<Employee> employees;
 
     public EmployeeController(Payroll pay) {
-        this.employees = pay.employees;
+        this.payroll = pay;
+        this.employees = pay.getEmployees();
     }
 
     public Employee searchEmployee(int id) {
@@ -51,8 +53,13 @@ public class EmployeeController {
         return i;
     }
 
-    public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) throws InvalidAttributesException, CloneNotSupportedException {
-        Employee item = UtilsPayroll.processEmployee(paramater);
+    public Employee addEmployee(ArrayList<ArrayList<Object>> paramater) throws Error {
+        Employee item;
+        try {
+            item = UtilsPayroll.processEmployee(paramater);
+        } catch (InvalidAttributesException | CloneNotSupportedException e) {
+            throw new Error("Error in add new employee");
+        }
 
         if (item.getId() == employees.size()) {
             employees.add(item);
@@ -84,7 +91,7 @@ public class EmployeeController {
         else if (item instanceof Commisioned) {
             ((Commisioned) item).getSales().addProduct(name, value);
         } else {
-            throw new Error("The eploye must a be a Comissioned");
+            throw new Error("The eployee must a be a Comissioned");
         }
     }
 
@@ -98,12 +105,18 @@ public class EmployeeController {
         }
     }
 
-    public void changeEmployee(int id, ArrayList<ArrayList<Object>> change) throws CloneNotSupportedException, InvalidAttributesException {
-        Employee item = UtilsPayroll.processEmployee(change);
+    public void changeEmployee(int id, ArrayList<ArrayList<Object>> change) throws Error{
+        Employee item;
+        try {
+            item = UtilsPayroll.processEmployee(change);
+        } catch (InvalidAttributesException | CloneNotSupportedException e) {
+            throw new Error("Error in make change os employee data.");
+        }
+
         employees.set(id, item);
     }
 
-    public void setEmployeeSchedule(int id) throws CloneNotSupportedException {
+    public void setEmployeeSchedule(int id) throws Error {
         int i = 0;
         for (PaymentBills aux : SystemSettings.DEFAULT_TYPE_PAYMENTS) {
             System.out.println(i + ": " + aux.toString());
@@ -113,7 +126,17 @@ public class EmployeeController {
         int aux = UtilsMain.readEntries(0, i - 1);
         System.out.println("\n");
 
-        PaymentBills type = SystemSettings.DEFAULT_TYPE_PAYMENTS.get(aux).clone();
+        PaymentBills type;
+        try {
+            type = SystemSettings.DEFAULT_TYPE_PAYMENTS.get(aux).clone();
+        } catch (CloneNotSupportedException e) {
+            throw new Error("Error in change employee schedule.");
+        }
+
         searchEmployee(id).setPersonalIPayment(type);
+    }
+
+    public Payroll getPayroll() {
+        return payroll;
     }
 }

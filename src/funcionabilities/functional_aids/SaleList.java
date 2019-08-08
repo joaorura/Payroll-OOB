@@ -9,8 +9,8 @@ public class SaleList implements Cloneable {
         this.list = new Hashtable<>();
     }
 
-    public void addProduct(String identificator, Double price) {
-        list.put(identificator, price);
+    public void addProduct(String identifier, Double price) {
+        list.put(identifier, price);
     }
 
     public double getAllValues() {
@@ -22,7 +22,6 @@ public class SaleList implements Cloneable {
     public void clearList() {
         list.clear();
     }
-
 
     public SaleList clone() throws CloneNotSupportedException {
         SaleList item = (SaleList) super.clone();

@@ -1,16 +1,19 @@
 package funcionabilities.auxiliary_entities;
 
 public class Syndicate implements Cloneable {
-    private final String indetificationSyndicate;
+    private final String identifierSynd;
     private final double monthlyFee;
 
-    public Syndicate(String indetificationSyndicate, double monthlyFee) {
-        this.indetificationSyndicate = indetificationSyndicate;
+    private String stringIndentifier;
+
+    public Syndicate(String identifierSynd, double monthlyFee) {
+        this.identifierSynd = identifierSynd;
         this.monthlyFee = monthlyFee;
+        this.stringIndentifier = "\n\tIdentification of Syndicate: " + identifierSynd  + "\n\tMonthly fee: " + monthlyFee + "\n";
     }
 
     public String getIndetification() {
-        return indetificationSyndicate;
+        return identifierSynd;
     }
 
     public Double getMonthlyFee() {
@@ -22,6 +25,6 @@ public class Syndicate implements Cloneable {
     }
 
     public String toString() {
-        return "\n\tIdentification of Syndicate: " + indetificationSyndicate  + "\n\tMonthly fee: " + monthlyFee + "\n";
+        return stringIndentifier;
     }
 }

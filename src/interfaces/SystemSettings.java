@@ -6,7 +6,7 @@ import funcionabilities.Salaried;
 import funcionabilities.auxiliary_entities.Syndicate;
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.calendar.PointCalendar;
-import funcionabilities.functional_aids.transactions.BankAcount;
+import funcionabilities.functional_aids.transactions.BankAccount;
 import funcionabilities.functional_aids.transactions.CheckHands;
 import funcionabilities.functional_aids.transactions.CheckPostOffices;
 import funcionabilities.functional_aids.transactions.Deposit;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public final class SystemSettings {
-    public static final BankAcount ACOUNT = new BankAcount("ComapayName", "00000000-1", "00.000000/0000-00");
+    public static final BankAccount ACOUNT = new BankAccount("ComapayName", "00000000-1", "00.000000/0000-00");
 
     public static final Map<Class, Integer[]> TYPE_SYNDICATES = Map.of(Class.class, new Integer[]{-1, 0},
             Syndicate.class, new Integer[]{0, 2});

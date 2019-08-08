@@ -13,6 +13,8 @@ public class PaymentBills implements Cloneable {
     private Calendar lastPayment;
     private Calendar nextDayPayment;
 
+    private String identifier;
+
     public PaymentBills(Calendar lastPayment, int day, int weekInterval, int monthInterval) throws InvalidAttributesException, CloneNotSupportedException {
         if ((day == -1 || day > 0) && weekInterval >= 0 && monthInterval >= 0) {
             this.day = day;
@@ -32,10 +34,17 @@ public class PaymentBills implements Cloneable {
         } else {
             throw new Error("Todos os parametros devem ser positivos");
         }
+
+        this.identifier = constructString();
     }
 
     public PaymentBills(int day, int weekInterval, int monthInterval) throws CloneNotSupportedException, InvalidAttributesException {
         this(null, day, weekInterval, monthInterval);
+    }
+
+    private String constructString() {
+        return "\tDay of week: " + day + "  |  Week Interval: " + weekInterval +
+                "  |  Month Interval: " + monthInterval + "\n";
     }
 
     private void checkLastPaymet() {
@@ -75,11 +84,6 @@ public class PaymentBills implements Cloneable {
         }
     }
 
-    public String toString() {
-        return "\tDay of week: " + day + "  |  Week Interval: " + weekInterval +
-                "  |  Month Interval: " + monthInterval + "\n";
-    }
-
     public void setLastPayment(Object item) throws InvalidAttributesException, CloneNotSupportedException {
         assert item instanceof Calendar;
         this.lastPayment = (Calendar) item;
@@ -100,6 +104,11 @@ public class PaymentBills implements Cloneable {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return identifier;
     }
 
     @Override

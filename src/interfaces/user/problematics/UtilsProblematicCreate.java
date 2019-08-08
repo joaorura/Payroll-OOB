@@ -1,9 +1,10 @@
 package interfaces.user.problematics;
 
 import funcionabilities.functional_aids.PaymentBills;
-import funcionabilities.functional_aids.transactions.BankAcount;
+import funcionabilities.functional_aids.transactions.BankAccount;
 import interfaces.SystemSettings;
 import interfaces.system.Payroll;
+import interfaces.system.controlers.EmployeeController;
 import interfaces.user.UtilsMain;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -70,7 +71,8 @@ public class UtilsProblematicCreate {
         }
     }
 
-    public static void methodProcess(String name, String adress, List<Object> param) {
+    public static void methodProcess(EmployeeController employeeControll, String name,
+                                     String adress, List<Object> param) {
 
         System.out.println("\nMethods Payment: ");
         param.add(apresentType(SystemSettings.TYPE_METHODS_PAYMENTS));
@@ -90,7 +92,7 @@ public class UtilsProblematicCreate {
             String identification = UtilsMain.takeString();
 
             assert name != null;
-            param.add(new BankAcount(name.concat(""), acount, identification));
+            param.add(new BankAccount(name.concat(""), acount, identification));
         }
 
         param.add(0.0);
@@ -104,7 +106,7 @@ public class UtilsProblematicCreate {
             case 1:
                 assert name != null;
                 param.add(name.concat(""));
-                param.add(Payroll.getDefault().nextId());
+                param.add(employeeControll.nextId());
                 break;
             case 2:
                 assert adress != null;
@@ -116,7 +118,7 @@ public class UtilsProblematicCreate {
         }
     }
 
-    public static void typeProcess(boolean type, List<Object> param) throws InvalidAttributesException {
+    public static void typeProcess(Payroll pay, boolean type, List<Object> param) throws InvalidAttributesException {
         System.out.println("\n\nType Payment: \n" +
                 "\tYou want use predefintion: \n" +
                 "\t\t0: No\n" +
@@ -128,7 +130,7 @@ public class UtilsProblematicCreate {
 
             if (SystemSettings.TYPE_PAYMENTS.get(param.get(0))[0] == 0) {
                 try {
-                    param.add(Payroll.getDefault().getActualCalendar().clone());
+                    param.add(pay.getActualCalendar().clone());
                 } catch (CloneNotSupportedException e) {
                     throw new RuntimeException();
                 }
@@ -159,7 +161,7 @@ public class UtilsProblematicCreate {
             try {
                 PaymentBills paux = SystemSettings.DEFAULT_TYPE_PAYMENTS.get(aux).clone();
                 param.add(paux);
-                paux.setLastPayment(Payroll.getDefault().getActualCalendar().clone());
+                paux.setLastPayment(pay.getActualCalendar().clone());
             } catch (CloneNotSupportedException e) {
                 throw new RuntimeException();
             }

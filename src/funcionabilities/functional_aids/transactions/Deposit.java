@@ -3,14 +3,17 @@ package funcionabilities.functional_aids.transactions;
 public class Deposit extends BankTransaction implements IMethodsPayments {
     private final String acountSend;
 
-    public Deposit(BankAcount bank, double value, String send) {
+    private String identifier;
+
+    public Deposit(BankAccount bank, double value, String send) {
         super(bank, value);
         this.acountSend = send;
+        this.identifier = super.toString() + "Acount destiny: " + acountSend;
     }
 
     @Override
     public String toString() {
-        return super.toString() + "Acount destiny: " + acountSend;
+        return identifier;
     }
 
     @Override

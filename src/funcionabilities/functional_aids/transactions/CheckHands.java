@@ -4,9 +4,12 @@ package funcionabilities.functional_aids.transactions;
 public class CheckHands extends Check implements IMethodsPayments {
     private int id_to_send;
 
-    public CheckHands(BankAcount bank, double value, String name, int ids) {
+    private String identifier;
+
+    public CheckHands(BankAccount bank, double value, String name, int ids) {
         super(bank, value, name);
         this.id_to_send = ids;
+        this.identifier = super.toString() + "\nId to employeer: " + id_to_send + "\n\t";
     }
 
     public IMethodsPayments clone() throws CloneNotSupportedException {
@@ -19,6 +22,6 @@ public class CheckHands extends Check implements IMethodsPayments {
     }
 
     public String toString() {
-        return super.toString() + "\nId to employeer: " + id_to_send + "\n\t";
+        return identifier;
     }
 }

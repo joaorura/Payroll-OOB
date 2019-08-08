@@ -77,7 +77,8 @@ public class UtilsMain {
         } else return null;
     }
 
-    public static ArrayList<ArrayList<Object>> getDatas(EmployeeController pay, Employee emp) throws InvalidAttributesException {
+    public static ArrayList<ArrayList<Object>> getDatas(EmployeeController empControll, Employee emp)
+            throws InvalidAttributesException {
         ArrayList<ArrayList<Object>> param = new ArrayList<>();
         ArrayList<Object> auxOb;
 
@@ -86,7 +87,7 @@ public class UtilsMain {
         }
 
         boolean check = emp != null;
-        UtilsCreate.identificatonProcess(pay, emp, param.get(0));
+        UtilsCreate.identificatonProcess(empControll, emp, param.get(0));
 
         if (UtilsProblematicCreate.canChange(check, "Syndicate")) {
             UtilsProblematicCreate.syndicateProcess(param.get(1));
@@ -102,9 +103,9 @@ public class UtilsMain {
             }
         }
 
-        UtilsProblematicCreate.methodProcess((String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
+        UtilsProblematicCreate.methodProcess(empControll, (String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
 
-        UtilsProblematicCreate.typeProcess(false, param.get(3));
+        UtilsProblematicCreate.typeProcess(empControll.getPayroll(), false, param.get(3));
 
         param.get(4).add(PointCalendar.class);
 

@@ -12,28 +12,29 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class SystemController {
-    Payroll pay;
+    private Payroll pay;
+    private String errorRunPay = "Error in run payroll";
 
     public SystemController(Payroll pay) {
         this.pay =  pay;
     }
 
     public Payroll undo() {
-        return pay.backup.undo(pay);
+        return pay.getBackup().undo(pay);
     }
 
     public Payroll redo() {
-        return pay.backup.redo(pay);
+        return pay.getBackup().redo(pay);
     }
 
-    public void runPayrollToday() throws InvalidAttributesException {
-        System.out.println(pay.actualCalendar.toString());
+    public void runPayrollToday() throws Error{
+        System.out.println(pay.getActualCalendar().toString());
 
         for (int i = 0; i < 1440; i++) {
 
             try {
-                for (Employee employee : pay.employees) {
-                    if (employee.getPersonalIPayment().checkItsDay(pay.actualCalendar)) {
+                for (Employee employee : pay.getEmployees()) {
+                    if (employee.getPersonalIPayment().checkItsDay(pay.getActualCalendar())) {
                         employee.attMoney();
                         System.out.println(employee.getName() + "\n" + employee.getMethodPayment().toString());
                     }
@@ -41,30 +42,25 @@ public class SystemController {
             }
             catch (NullPointerException e) {
                 System.out.println("Without employees\n");
-                return;
+                throw new Error(errorRunPay);
             }
 
 
-            pay.actualCalendar.add(Calendar.MINUTE, 1);
+            try {
+                pay.getActualCalendar().add(Calendar.MINUTE, 1);
+            } catch (InvalidAttributesException e) {
+                throw new Error(errorRunPay);
+            }
         }
     }
 
-    public void createEmployeePaymentSchedule() {
-        ArrayList<Object> param = new ArrayList<>();
-        try {
-            //Modularizar
-            UtilsProblematicCreate.typeProcess(true, param);
-        } catch (InvalidAttributesException e) {
-            e.printStackTrace();
-        }
-
+    public void createEmployeePaymentSchedule(ArrayList<Object> param) throws Error{
         try {
             PaymentBills pb = UtilsPayroll.createTypePayment(param);
             SystemSettings.DEFAULT_TYPE_PAYMENTS.add(pb);
 
         } catch (CloneNotSupportedException | InvalidAttributesException e) {
-            throw new RuntimeException();
+            throw new Error("Error in create a employee schedule.");
         }
-
     }
 }

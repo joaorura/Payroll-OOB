@@ -8,6 +8,7 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class ChangeEmployeeDetails implements ExecuteEmp {
+    private static final String ERROR = "Error in add employee.";
     @Override
     public void execute(EmployeeController payroll) {
         int id = UtilsMain.identification(payroll);
@@ -18,8 +19,10 @@ public class ChangeEmployeeDetails implements ExecuteEmp {
             ArrayList<ArrayList<Object>> param = UtilsMain.getDatas(payroll, payroll.searchEmployee(id));
             payroll.changeEmployee(id, param);
 
-        } catch (CloneNotSupportedException | InvalidAttributesException e) {
-            System.out.println("Error in add employee.");
+        } catch (Error e) {
+            System.out.println(e.getMessage() + "\n" + ERROR);
+        } catch (InvalidAttributesException e) {
+            System.out.println(ERROR);
         }
     }
 }

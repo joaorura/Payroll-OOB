@@ -7,11 +7,13 @@ import funcionabilities.functional_aids.transactions.IMethodsPayments;
 
 public class Salaried extends Employee {
     private final Double salary;
+    private String identifier;
 
     public Salaried(String adress, String name, int personal_id, Syndicate personalSyndicate,
                     IMethodsPayments typePayment, PaymentBills personalIPayment, PointCalendar worker, Double salary) {
         super(adress, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker);
         this.salary = salary;
+        this.identifier = super.toString() + "\n Salary: " + salary + "\n";
     }
 
     public double getSalary() {
@@ -33,7 +35,7 @@ public class Salaried extends Employee {
 
     @Override
     public String toString() {
-        return super.toString() + "\n Salary: " + salary + "\n";
+        return identifier;
     }
 
     public Salaried clone() throws CloneNotSupportedException {

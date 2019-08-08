@@ -7,9 +7,9 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class Payroll implements Cloneable{
-    public Restore backup = new Restore();
-    public ArrayList<Employee> employees = new ArrayList<>();
-    public Calendar actualCalendar;
+    private Restore backup = new Restore();
+    private ArrayList<Employee> employees = new ArrayList<>();
+    private Calendar actualCalendar;
 
     public Payroll(Calendar calendar) {
         actualCalendar = calendar;
@@ -45,5 +45,17 @@ public class Payroll implements Cloneable{
         }
 
         return str.toString();
+    }
+
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
+    public Restore getBackup() {
+        return backup;
+    }
+
+    public Calendar getActualCalendar() {
+        return actualCalendar;
     }
 }

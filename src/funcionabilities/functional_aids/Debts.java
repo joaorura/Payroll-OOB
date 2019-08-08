@@ -4,9 +4,11 @@ import java.util.Hashtable;
 
 public class Debts implements Cloneable {
     private Hashtable<String, Double> debt;
+    private String identifier;
 
     public Debts() {
         debt = new Hashtable<>();
+        identifier = "\nDebt it is of: " + getValueDebt() + "\n";
     }
 
     public double calculate(double tempSalary) {
@@ -43,7 +45,7 @@ public class Debts implements Cloneable {
     }
 
     public String toString() {
-        return "\nDebt it is of: " + getValueDebt() + "\n";
+        return identifier;
     }
 
     public Debts clone() throws CloneNotSupportedException {

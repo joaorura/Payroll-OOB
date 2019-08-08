@@ -16,6 +16,7 @@ public abstract class Employee implements Cloneable {
     private Syndicate personalSyndicate;
     private IMethodsPayments methodPayment;
     private PaymentBills personalIPayment;
+    private String identifier;
 
     Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
              IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
@@ -27,11 +28,11 @@ public abstract class Employee implements Cloneable {
         this.personalIPayment = personalIPayment;
         this.worker = worker;
         this.debts = new Debts();
+
+        identifier = constructString();
     }
 
-    public abstract double attMoney();
-
-    public String toString() {
+    private String constructString() {
         StringBuilder str = new StringBuilder();
         str.append("Information of employee:" + "\n\tName: ").append(name).append("\n\tAdress:  ")
                 .append(adress).append("\n\tId: ").append(personal_id).append("\n\n\tSyndicate: ");
@@ -78,7 +79,14 @@ public abstract class Employee implements Cloneable {
         return personal_id;
     }
 
+    public abstract double attMoney();
 
+    @Override
+    public String toString() {
+        return identifier;
+    }
+
+    @Override
     public Employee clone() throws CloneNotSupportedException {
         Employee item = (Employee) super.clone();
 

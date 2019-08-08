@@ -9,6 +9,7 @@ import funcionabilities.functional_aids.transactions.IMethodsPayments;
 public class Commisioned extends Salaried {
     private final SaleList sales;
     private final double ratioSales;
+    private String identifier;
 
     public Commisioned(String adress, String name, int personal_id, Syndicate personalSyndicate,
                        IMethodsPayments typePayment, PaymentBills personalIPayment, PointCalendar worker,
@@ -16,6 +17,7 @@ public class Commisioned extends Salaried {
         super(adress, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker, salary);
         this.sales = new SaleList();
         this.ratioSales = ratioSales;
+        this.identifier = super.toString() + "Ratio Sales: " + ratioSales + "\nValues of Sales: " + sales.getAllValues() + "\n";
     }
 
     public SaleList getSales() {
@@ -26,6 +28,7 @@ public class Commisioned extends Salaried {
         return ratioSales;
     }
 
+    @Override
     public double attMoney() {
         double tempSalary = super.attMoney();
         tempSalary += sales.getAllValues();
@@ -35,9 +38,10 @@ public class Commisioned extends Salaried {
 
     @Override
     public String toString() {
-        return super.toString() + "Ratio Sales: " + ratioSales + "\nValues of Sales: " + sales.getAllValues() + "\n";
+        return identifier;
     }
 
+    @Override
     public Commisioned clone() throws CloneNotSupportedException {
         return (Commisioned) super.clone();
     }

@@ -11,8 +11,8 @@ public class RunPay {
 
         try {
             for (int i = 0; i < amount; i++) payroll.runPayrollToday();
-        } catch (InvalidAttributesException e) {
-            e.printStackTrace();
+        } catch (Error e) {
+            System.out.println(e.getMessage());
         }
     }
 }

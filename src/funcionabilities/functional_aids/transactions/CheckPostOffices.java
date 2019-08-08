@@ -1,22 +1,24 @@
 package funcionabilities.functional_aids.transactions;
 
 public class CheckPostOffices extends Check implements IMethodsPayments {
-    private final String adress;
+    private String identifier;
 
-    public CheckPostOffices(BankAcount bank, double value, String name, String adress) {
+    public CheckPostOffices(BankAccount bank, double value, String name, String address) {
         super(bank, value, name);
-        this.adress = adress;
-    }
-
-    public String toString() {
-        return super.toString() + "\n\tSend to adress: " + adress + "\n";
+        this.identifier = super.toString() + "\n\tSend to address: " + address + "\n";
     }
 
     public double doPayment() {
-        System.out.println(getInfo());
+        System.out.println(super.toString());
         return super.value;
     }
 
+    @Override
+    public String toString() {
+        return identifier;
+    }
+
+    @Override
     public IMethodsPayments clone() throws CloneNotSupportedException {
         return (CheckPostOffices) super.clone();
     }
