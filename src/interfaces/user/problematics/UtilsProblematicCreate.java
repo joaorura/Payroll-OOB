@@ -1,7 +1,7 @@
 package interfaces.user.problematics;
 
-import funcionabilities.functional_aids.PaymentBills;
-import funcionabilities.functional_aids.transactions.BankAccount;
+import model.PaymentBills;
+import model.BankAccount;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.utils.UtilsSystem;

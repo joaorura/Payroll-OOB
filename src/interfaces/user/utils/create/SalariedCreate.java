@@ -1,7 +1,7 @@
 package interfaces.user.utils.create;
 
-import funcionabilities.Employee;
-import funcionabilities.Salaried;
+import model.Employee;
+import model.Salaried;
 import interfaces.user.utils.UtilsSystem;
 
 import java.util.ArrayList;

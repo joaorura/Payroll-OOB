@@ -29,6 +29,8 @@ public class Main {
 
             if(input == 9) {
                 Payroll.setMainPayroll(Restore.execute());
+                EmployeeController.getMainEmpControl().reconfigure();
+                SystemController.getSysControl().reconfigure();
             }
             else if(input == 10) {
                 System.out.println("The system is gonna be closed.");

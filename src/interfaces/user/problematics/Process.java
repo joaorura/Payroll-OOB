@@ -1,13 +1,9 @@
 package interfaces.user.problematics;
 
 import interfaces.system.Payroll;
-import interfaces.system.controlers.EmployeeController;
-import interfaces.system.controlers.SystemController;
 import interfaces.user.utils.UtilsEmployee;
 import interfaces.user.funcionabilities.*;
 import interfaces.user.funcionabilities.problematics.*;
-
-import java.util.Objects;
 
 public class Process {
     private static Execute processExecution(int input) throws  Error {

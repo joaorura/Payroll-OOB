@@ -1,8 +1,8 @@
 package interfaces.user.utils;
 
-import funcionabilities.Employee;
-import funcionabilities.auxiliary_entities.Syndicate;
-import funcionabilities.functional_aids.calendar.PointCalendar;
+import model.Employee;
+import model.Syndicate;
+import model.PointCalendar;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.problematics.UtilsProblematicCreate;

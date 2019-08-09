@@ -1,10 +1,4 @@
-package funcionabilities;
-
-import funcionabilities.auxiliary_entities.Syndicate;
-import funcionabilities.functional_aids.PaymentBills;
-import funcionabilities.functional_aids.SaleList;
-import funcionabilities.functional_aids.calendar.PointCalendar;
-import funcionabilities.functional_aids.transactions.IMethodsPayments;
+package model;
 
 public class Commissioned extends Salaried {
     private final SaleList sales;

@@ -1,9 +1,9 @@
 package interfaces.system;
 
-import funcionabilities.Employee;
-import funcionabilities.functional_aids.PaymentBills;
-import funcionabilities.functional_aids.calendar.Calendar;
-import funcionabilities.functional_aids.transactions.BankAccount;
+import model.Employee;
+import model.PaymentBills;
+import model.Calendar;
+import model.BankAccount;
 import interfaces.system.memento.Restore;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -14,7 +14,7 @@ public class Payroll implements Cloneable{
 
     static {
         try {
-            mainPayroll = new Payroll(null, null);
+            mainPayroll = new Payroll();
         } catch (InstantiationException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Error attempting to boot the system, please contact the developer.");
@@ -28,10 +28,10 @@ public class Payroll implements Cloneable{
     private ArrayList<Employee> employees = new ArrayList<>();
     private final ArrayList<PaymentBills> defaultTypePayments = new ArrayList<>();
 
-    private Payroll(BankAccount accountCompany, Calendar calendar) throws InstantiationException {
+    private Payroll() throws InstantiationException {
         try {
-            this.accountCompany = accountCompany;
-            this.actualCalendar = calendar;
+            this.accountCompany = null;
+            this.actualCalendar = null;
             initializeDefaults();
         } catch(RuntimeException e) {
             System.out.println(e.getMessage());

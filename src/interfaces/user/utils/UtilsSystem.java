@@ -1,6 +1,6 @@
 package interfaces.user.utils;
 
-import funcionabilities.functional_aids.transactions.BankAccount;
+import model.BankAccount;
 
 import java.util.Scanner;
 

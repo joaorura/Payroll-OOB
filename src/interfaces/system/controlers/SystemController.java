@@ -1,8 +1,8 @@
 package interfaces.system.controlers;
 
-import funcionabilities.Employee;
-import funcionabilities.functional_aids.PaymentBills;
-import funcionabilities.functional_aids.calendar.Calendar;
+import model.Employee;
+import model.PaymentBills;
+import model.Calendar;
 import interfaces.system.Payroll;
 import interfaces.system.utils.UtilsPayroll;
 
@@ -10,9 +10,9 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class SystemController {
-    private static SystemController sysControl = new SystemController(Payroll.getMainPayroll());
+    private static final SystemController sysControl = new SystemController(Payroll.getMainPayroll());
 
-    private final Payroll pay;
+    private Payroll pay;
 
     private static final String errorRunPay = "Error in run payroll";
 
@@ -67,5 +67,10 @@ public class SystemController {
 
     public static SystemController getSysControl() {
         return sysControl;
+    }
+
+    public void reconfigure() {
+        this.pay = Payroll.getMainPayroll();
+
     }
 }

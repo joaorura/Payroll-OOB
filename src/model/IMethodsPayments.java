@@ -1,4 +1,4 @@
-package funcionabilities.functional_aids.transactions;
+package model;
 
 public interface IMethodsPayments {
     String toString();

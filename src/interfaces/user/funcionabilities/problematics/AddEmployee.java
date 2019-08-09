@@ -1,6 +1,5 @@
 package interfaces.user.funcionabilities.problematics;
 
-import funcionabilities.Employee;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.utils.UtilsEmployee;

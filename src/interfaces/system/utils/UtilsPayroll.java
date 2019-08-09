@@ -1,14 +1,6 @@
 package interfaces.system.utils;
 
-import funcionabilities.Commissioned;
-import funcionabilities.Employee;
-import funcionabilities.Hourly;
-import funcionabilities.Salaried;
-import funcionabilities.auxiliary_entities.Syndicate;
-import funcionabilities.functional_aids.PaymentBills;
-import funcionabilities.functional_aids.calendar.Calendar;
-import funcionabilities.functional_aids.calendar.PointCalendar;
-import funcionabilities.functional_aids.transactions.*;
+import model.*;
 import interfaces.system.Payroll;
 
 import javax.naming.directory.InvalidAttributesException;

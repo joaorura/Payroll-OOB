@@ -1,9 +1,9 @@
 package interfaces.system.controlers;
 
-import funcionabilities.Commissioned;
-import funcionabilities.Employee;
-import funcionabilities.functional_aids.PaymentBills;
-import funcionabilities.functional_aids.calendar.Calendar;
+import model.Commissioned;
+import model.Employee;
+import model.PaymentBills;
+import model.Calendar;
 import interfaces.system.Payroll;
 import interfaces.system.utils.UtilsPayroll;
 import interfaces.user.utils.UtilsSystem;
@@ -13,12 +13,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class EmployeeController {
-    private static EmployeeController mainEmpControl = new EmployeeController(Payroll.getMainPayroll());
+    private static final EmployeeController mainEmpControl = new EmployeeController(Payroll.getMainPayroll());
 
-    private final Payroll payroll;
-    private final ArrayList<Employee> employees;
+    private Payroll payroll;
+    private ArrayList<Employee> employees;
 
     private EmployeeController(Payroll pay) {
+        this.payroll = pay;
+        this.employees = pay.getEmployees();
+    }
+
+    public  void reconfigure() {
+        Payroll pay = Payroll.getMainPayroll();
         this.payroll = pay;
         this.employees = pay.getEmployees();
     }
