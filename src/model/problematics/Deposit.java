@@ -22,9 +22,4 @@ public class Deposit extends BankTransaction implements IMethodsPayments {
     public IMethodsPayments clone() throws CloneNotSupportedException {
         return (Deposit) super.clone();
     }
-
-    @Override
-    public void setValue(double value) {
-        super.value = value;
-    }
 }
