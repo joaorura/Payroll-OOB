@@ -1,7 +1,6 @@
 package interfaces.user.utils;
 
 import funcionabilities.functional_aids.calendar.Calendar;
-import funcionabilities.functional_aids.transactions.BankAccount;
 
 import javax.naming.directory.InvalidAttributesException;
 
@@ -33,7 +32,7 @@ public class UtilsCalendar {
         return readEntries(0, 24);
     }
 
-    public static int getMinutes() {
+    private static int getMinutes() {
         System.out.print("\t\tMinute: ");
         return readEntries(0, 60);
     }
@@ -54,16 +53,5 @@ public class UtilsCalendar {
             System.out.println("Error in your date, please enter that again!\n");
             return getDate();
         }
-    }
-
-    public static BankAccount getBank() {
-        System.out.println("Por favor entre com a conta bancária da empresa:");
-        System.out.print("Name of Company: ");
-        //Lembrar de continuar
-        String name = null;
-        String sourceAcount = null;
-        String identifier = null;
-
-        return new BankAccount(name, sourceAcount, identifier);
     }
 }

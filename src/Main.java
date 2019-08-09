@@ -1,15 +1,11 @@
-import funcionabilities.functional_aids.transactions.BankAccount;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.system.controlers.SystemController;
-import interfaces.user.utils.UtilsSystem;
 import interfaces.user.funcionabilities.Restore;
 
-import static interfaces.user.utils.UtilsCalendar.getBank;
 import static interfaces.user.utils.UtilsCalendar.getDate;
-import static interfaces.user.utils.UtilsSystem.printIntro;
-import static interfaces.user.utils.UtilsSystem.readEntries;
 import static interfaces.user.problematics.Process.processEntries;
+import static interfaces.user.utils.UtilsSystem.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,6 +16,7 @@ public class Main {
         EmployeeController empControll = new EmployeeController(payroll);
 
         int input;
+        //noinspection InfiniteLoopStatement
         while (true) {
             printIntro();
             input = readEntries(0, 10);

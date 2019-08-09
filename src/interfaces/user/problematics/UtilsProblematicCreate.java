@@ -9,7 +9,6 @@ import interfaces.user.utils.UtilsSystem;
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static interfaces.user.utils.UtilsSystem.readEntries;
 
@@ -73,10 +72,10 @@ public class UtilsProblematicCreate {
             String acount = UtilsSystem.takeString();
 
             System.out.println("\tIdentification (CPF or CNPJ): ");
-            String identification = UtilsSystem.takeString();
+            String identifier = UtilsSystem.takeString();
 
             assert name != null;
-            param.add(new BankAccount(name.concat(""), acount, identification));
+            param.add(new BankAccount(name.concat(""), acount, identifier));
         }
 
         param.add(0.0);

@@ -1,22 +1,24 @@
 package funcionabilities.functional_aids.transactions;
 
-@SuppressWarnings("CanBeFinal")
 public class BankAccount implements Cloneable {
-    private String name;
-    private String sourceAcount;
-    private String identification;
+    private final String name;
+    private final String sourceAccount;
+    private final String identifier;
 
-    private String stringIdentifier;
+    private final String stringIdentifier;
 
-    public BankAccount(String name, String sourceAcount, String identification) {
+    public BankAccount(String name, String sourceAccount, String identifier) {
         this.name = name;
-        this.sourceAcount = sourceAcount;
-        this.identification = identification;
-        this.stringIdentifier = "Source Acount: " + sourceAcount + "\n";
+        this.sourceAccount = sourceAccount;
+        this.identifier = identifier;
+        this.stringIdentifier = "Name: " + name + "\n" +
+                "Source Account: " + sourceAccount + "\n" +
+                "Identifier: " + identifier + "\n";
     }
 
-    public BankAccount(BankAccount bk) {
-        this(bk.name, bk.sourceAcount, bk.identification);
+    @SuppressWarnings("CopyConstructorMissesField")
+    BankAccount(BankAccount bk) {
+        this(bk.name, bk.sourceAccount, bk.identifier);
     }
 
     @Override

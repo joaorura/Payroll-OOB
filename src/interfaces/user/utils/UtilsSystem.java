@@ -1,14 +1,7 @@
 package interfaces.user.utils;
 
-import funcionabilities.Employee;
-import funcionabilities.auxiliary_entities.Syndicate;
-import funcionabilities.functional_aids.calendar.Calendar;
-import funcionabilities.functional_aids.calendar.PointCalendar;
-import interfaces.system.controlers.EmployeeController;
-import interfaces.user.problematics.UtilsProblematicCreate;
+import funcionabilities.functional_aids.transactions.BankAccount;
 
-import javax.naming.directory.InvalidAttributesException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -81,5 +74,23 @@ public class UtilsSystem {
         }
 
         return str;
+    }
+
+
+    public static BankAccount getBank() {
+        System.out.println("\n\nPor favor entre com a conta bancária da empresa:");
+
+        System.out.print("Name of Company: ");
+        String name = takeString();
+
+        System.out.print("Account of Company: ");
+        String sourceAcount = takeString();
+
+        System.out.print("Identifier: ");
+        String identifier = takeString();
+
+        System.out.println("\n");
+
+        return new BankAccount(name, sourceAcount, identifier);
     }
 }

@@ -1,6 +1,6 @@
 package interfaces.user.utils.create;
 
-import funcionabilities.Commisioned;
+import funcionabilities.Commissioned;
 import funcionabilities.Employee;
 import interfaces.user.utils.UtilsSystem;
 
@@ -8,19 +8,19 @@ import java.util.ArrayList;
 
 import static interfaces.user.problematics.UtilsProblematicCreate.canChange;
 
-public class CommisionedCreate implements ExecuteCreate {
-    private static final String SALA = "Salary";
+public class CommissionedCreate implements ExecuteCreate {
+    private static final String SALARY = "Salary";
     private static final String RATIO = "Ratio sales";
 
     @Override
     public void execute(boolean check, Employee emp, ArrayList<Object> param) {
-        Commisioned cAux = null;
-        if (check) cAux = (Commisioned) emp;
+        Commissioned cAux = null;
+        if (check) cAux = (Commissioned) emp;
 
-        param.set(0, Commisioned.class);
+        param.set(0, Commissioned.class);
 
-        if (canChange(check, SALA)) {
-            System.out.println("\n\n" + SALA + ": ");
+        if (canChange(check, SALARY)) {
+            System.out.println("\n\n" + SALARY + ": ");
             param.add(UtilsSystem.readEntries(Double.class));
         } else {
             param.add(cAux.getSalary());

@@ -1,6 +1,6 @@
 package interfaces.system.controlers;
 
-import funcionabilities.Commisioned;
+import funcionabilities.Commissioned;
 import funcionabilities.Employee;
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.calendar.Calendar;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class EmployeeController {
-    private Payroll payroll;
-    private ArrayList<Employee> employees;
+    private final Payroll payroll;
+    private final ArrayList<Employee> employees;
 
     public EmployeeController(Payroll pay) {
         this.payroll = pay;
@@ -87,8 +87,8 @@ public class EmployeeController {
         Employee item = employees.get(id);
 
         if (item == null) throw new Error("Employee can't find");
-        else if (item instanceof Commisioned) {
-            ((Commisioned) item).getSales().addProduct(name, value);
+        else if (item instanceof Commissioned) {
+            ((Commissioned) item).getSales().addProduct(name, value);
         } else {
             throw new Error("The eployee must a be a Comissioned");
         }

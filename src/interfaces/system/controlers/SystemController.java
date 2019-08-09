@@ -10,8 +10,9 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class SystemController {
-    private Payroll pay;
-    private String errorRunPay = "Error in run payroll";
+    private final Payroll pay;
+
+    private static final String errorRunPay = "Error in run payroll";
 
     public SystemController(Payroll pay) {
         this.pay =  pay;

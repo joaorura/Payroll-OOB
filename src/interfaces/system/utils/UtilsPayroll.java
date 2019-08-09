@@ -1,6 +1,6 @@
 package interfaces.system.utils;
 
-import funcionabilities.Commisioned;
+import funcionabilities.Commissioned;
 import funcionabilities.Employee;
 import funcionabilities.Hourly;
 import funcionabilities.Salaried;
@@ -104,7 +104,7 @@ public class UtilsPayroll {
                 break;
 
             case 2:
-                item = new Commisioned((String) paramater.get(1), (String) paramater.get(2),
+                item = new Commissioned((String) paramater.get(1), (String) paramater.get(2),
                         (int) paramater.get(3), synd, meth, type, point, (Double) paramater.get(4), (Double) paramater.get(5));
                 break;
 

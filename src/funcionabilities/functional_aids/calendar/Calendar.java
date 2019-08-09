@@ -27,7 +27,7 @@ public class Calendar implements Cloneable {
             throw new InvalidAttributesException("Error in date values\n");
         }
 
-        if (itsBissext(year)) {
+        if (itsLeap(year)) {
             limitDays[1] = 29;
         } else {
             limitDays[1] = 28;
@@ -45,7 +45,7 @@ public class Calendar implements Cloneable {
         this.minute = minute;
     }
 
-    private static boolean itsBissext(int year) {
+    private static boolean itsLeap(int year) {
         return ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
     }
 

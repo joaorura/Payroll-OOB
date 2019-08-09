@@ -2,11 +2,9 @@ package interfaces.user.utils.create;
 
 import funcionabilities.Employee;
 import funcionabilities.Hourly;
-import interfaces.system.Payroll;
 import interfaces.user.utils.UtilsSystem;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static interfaces.user.problematics.UtilsProblematicCreate.canChange;
 

@@ -9,12 +9,12 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class Payroll implements Cloneable{
-    private Restore backup = new Restore();
+    private final Restore backup = new Restore();
     private Calendar actualCalendar;
-    private BankAccount accountCompany;
+    private final BankAccount accountCompany;
 
     private ArrayList<Employee> employees = new ArrayList<>();
-    private  ArrayList<PaymentBills> defaultTypePayments = new ArrayList<>();
+    private final ArrayList<PaymentBills> defaultTypePayments = new ArrayList<>();
 
     public Payroll(BankAccount accountCompany, Calendar calendar) throws RuntimeException {
         this.accountCompany = accountCompany;
@@ -83,12 +83,7 @@ public class Payroll implements Cloneable{
     }
 
     public ArrayList<PaymentBills> getDefaultTypePayments() {
-        ArrayList<PaymentBills> aux = new ArrayList<>();
-        for (PaymentBills a: defaultTypePayments) {
-            aux.add(a);
-        }
-
-        return aux;
+        return new ArrayList<>(defaultTypePayments);
     }
 
     public BankAccount getAccountCompany() {

@@ -9,7 +9,7 @@ public class Hourly extends Employee {
     private final int max_work_hours;
     private final double tax_over_work;
     private final double ratioHour;
-    private String identifier;
+    private final String identifier;
 
     public Hourly(String address, String name, int personal_id, Syndicate personalSyndicate,
                   IMethodsPayments typePayment, PaymentBills personalIPayment, PointCalendar worker, int max_work_hours,

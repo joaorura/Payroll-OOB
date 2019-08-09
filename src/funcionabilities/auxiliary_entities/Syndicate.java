@@ -4,7 +4,7 @@ public class Syndicate implements Cloneable {
     private final String identifierSynd;
     private final double monthlyFee;
 
-    private String stringIndentifier;
+    private final String stringIndentifier;
 
     public Syndicate(String identifierSynd, double monthlyFee) {
         this.identifierSynd = identifierSynd;

@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 public class Debts implements Cloneable {
     private Hashtable<String, Double> debt;
-    private String identifier;
+    private final String identifier;
 
     public Debts() {
         debt = new Hashtable<>();

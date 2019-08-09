@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PointCalendar implements Cloneable {
     private ArrayList<Double> pcalendar = new ArrayList<>();
 
-    private String identifier = "\n\tThis employeer work: " + amountWork(-1) + "hours" + "\n";
+    private final String identifier = "\n\tThis employeer work: " + amountWork(-1) + "hours" + "\n";
 
     public int workedDays() {
         try {

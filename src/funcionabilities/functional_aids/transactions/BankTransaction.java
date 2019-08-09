@@ -4,7 +4,7 @@ class BankTransaction extends BankAccount {
     @SuppressWarnings("CanBeFinal")
     double value;
 
-    private String identifier;
+    private final String identifier;
 
     BankTransaction(BankAccount bank, double value) {
         super(bank);

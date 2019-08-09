@@ -45,6 +45,7 @@ public class Process {
                 id = UtilsEmployee.identifier(empControll);
                 if(id == -1) {
                     System.out.println("Employee not founded");
+                    return false;
                 }
             }
             pay.backup(true);

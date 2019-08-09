@@ -13,7 +13,7 @@ import static interfaces.user.utils.UtilsSystem.readEntries;
 public class ChangePayment {
     private static final String error = "Error in create employee scheduler or in set schedule.";
 
-    public static void execute(EmployeeController empControll, SystemController sysControll) throws Error {
+    public static void execute(EmployeeController empControl, SystemController sysControl) throws Error {
         System.out.println("Create Employee Payment Schedule / Set Employee Payment Schedule\n" +
                 "\t0: Create a employee schedule\n" +
                 "\t1: Set a employee schedule\n");
@@ -21,12 +21,12 @@ public class ChangePayment {
         if (UtilsSystem.readEntries(0, 1) == 0) {
             ArrayList<Object> param = new ArrayList<>();
             try {
-                UtilsProblematicCreate.typeProcess(empControll.getPayroll(),true, param);
+                UtilsProblematicCreate.typeProcess(empControl.getPayroll(),true, param);
             } catch (InvalidAttributesException e) {
                 throw new Error(error);
             }
 
-            sysControll.createEmployeePaymentSchedule(empControll.getPayroll(), param);
+            sysControl.createEmployeePaymentSchedule(empControl.getPayroll(), param);
         }
         else {
             int id;
@@ -36,14 +36,14 @@ public class ChangePayment {
                     id = (int) UtilsSystem.readEntries(Integer.class);
                 } else {
                     String name = UtilsSystem.takeString();
-                    id = empControll.searchEmployee(name);
+                    id = empControl.searchEmployee(name);
                 }
 
-                if (empControll.searchEmployee(id) == null) {
+                if (empControl.searchEmployee(id) == null) {
                     throw new Error(error);
                 }
 
-                empControll.setEmployeeSchedule(id);
+                empControl.setEmployeeSchedule(id);
         }
     }
 }

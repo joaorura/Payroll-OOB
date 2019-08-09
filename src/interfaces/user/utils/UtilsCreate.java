@@ -1,12 +1,10 @@
 package interfaces.user.utils;
 
-import funcionabilities.Commisioned;
+import funcionabilities.Commissioned;
 import funcionabilities.Employee;
 import funcionabilities.Hourly;
-import funcionabilities.Salaried;
-import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
-import interfaces.user.utils.create.CommisionedCreate;
+import interfaces.user.utils.create.CommissionedCreate;
 import interfaces.user.utils.create.ExecuteCreate;
 import interfaces.user.utils.create.HourlyCreate;
 import interfaces.user.utils.create.SalariedCreate;
@@ -53,7 +51,7 @@ class UtilsCreate {
             param.add(emp.getId());
 
             if (emp instanceof Hourly) aux = 0;
-            else if (emp instanceof Commisioned) aux = 2;
+            else if (emp instanceof Commissioned) aux = 2;
             else aux = 1;
         }
 
@@ -72,7 +70,7 @@ class UtilsCreate {
                 break;
 
             case 2:
-                exec = new CommisionedCreate();
+                exec = new CommissionedCreate();
                 break;
         }
 
