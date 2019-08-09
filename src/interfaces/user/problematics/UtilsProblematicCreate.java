@@ -1,6 +1,6 @@
 package interfaces.user.problematics;
 
-import model.PaymentBills;
+import model.problematics.PaymentBills;
 import model.BankAccount;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;

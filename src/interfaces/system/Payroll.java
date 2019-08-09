@@ -1,8 +1,8 @@
 package interfaces.system;
 
-import model.Employee;
-import model.PaymentBills;
-import model.Calendar;
+import model.problematics.Employee;
+import model.problematics.PaymentBills;
+import model.problematics.Calendar;
 import model.BankAccount;
 import interfaces.system.memento.Restore;
 

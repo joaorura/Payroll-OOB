@@ -2,6 +2,7 @@ package interfaces.system.utils;
 
 import model.*;
 import interfaces.system.Payroll;
+import model.problematics.*;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;

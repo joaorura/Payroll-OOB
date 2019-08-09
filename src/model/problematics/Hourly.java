@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 public class Hourly extends Employee {
     private final int max_work_hours;

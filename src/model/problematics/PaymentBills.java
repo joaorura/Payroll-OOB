@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 
 import javax.naming.directory.InvalidAttributesException;
@@ -13,7 +13,8 @@ public class PaymentBills implements Cloneable {
 
     private String identifier;
 
-    public PaymentBills(Calendar lastPayment, int day, int weekInterval, int monthInterval) throws InvalidAttributesException, CloneNotSupportedException {
+    public PaymentBills(Calendar lastPayment, int day, int weekInterval, int monthInterval)
+            throws InvalidAttributesException, CloneNotSupportedException {
         if ((day == -1 || day > 0) && weekInterval >= 0 && monthInterval >= 0) {
             this.day = day;
             this.weekInterval = weekInterval;
@@ -36,7 +37,8 @@ public class PaymentBills implements Cloneable {
         this.identifier = constructString();
     }
 
-    public PaymentBills(int day, int weekInterval, int monthInterval) throws CloneNotSupportedException, InvalidAttributesException {
+    public PaymentBills(int day, int weekInterval, int monthInterval)
+            throws CloneNotSupportedException, InvalidAttributesException {
         this(null, day, weekInterval, monthInterval);
     }
 

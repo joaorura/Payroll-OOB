@@ -1,6 +1,6 @@
 package interfaces.user.funcionabilities;
 
-import model.Calendar;
+import model.problematics.Calendar;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.utils.UtilsEmployee;
 

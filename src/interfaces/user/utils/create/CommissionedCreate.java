@@ -1,7 +1,7 @@
 package interfaces.user.utils.create;
 
-import model.Commissioned;
-import model.Employee;
+import model.problematics.Commissioned;
+import model.problematics.Employee;
 import interfaces.user.utils.UtilsSystem;
 
 import java.util.ArrayList;

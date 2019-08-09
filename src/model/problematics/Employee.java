@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 @SuppressWarnings("CanBeFinal")
 public abstract class Employee implements Cloneable {
@@ -12,8 +12,8 @@ public abstract class Employee implements Cloneable {
     private PaymentBills personalIPayment;
     private String identifier;
 
-    Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
-             IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
+    protected Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
+                       IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
         this.adress = adress;
         this.name = name;
         this.personal_id = personal_id;

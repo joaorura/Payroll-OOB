@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 public class Syndicate implements Cloneable {
     private final String identifierSynd;
@@ -12,7 +12,7 @@ public class Syndicate implements Cloneable {
         this.stringIndentifier = "\n\tIdentification of Syndicate: " + identifierSynd  + "\n\tMonthly fee: " + monthlyFee + "\n";
     }
 
-    public String getIndetification() {
+    public String getIdentifier() {
         return identifierSynd;
     }
 

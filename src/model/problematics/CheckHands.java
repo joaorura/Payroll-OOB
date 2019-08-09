@@ -1,4 +1,7 @@
-package model;
+package model.problematics;
+
+import model.BankAccount;
+import model.Check;
 
 @SuppressWarnings("CanBeFinal")
 public class CheckHands extends Check implements IMethodsPayments {

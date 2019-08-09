@@ -1,8 +1,8 @@
 package interfaces.user.utils;
 
-import model.Commissioned;
-import model.Employee;
-import model.Hourly;
+import model.problematics.Commissioned;
+import model.problematics.Employee;
+import model.problematics.Hourly;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.utils.create.CommissionedCreate;
 import interfaces.user.utils.create.ExecuteCreate;

@@ -1,8 +1,8 @@
 package interfaces.user.utils;
 
-import model.Employee;
-import model.Syndicate;
-import model.PointCalendar;
+import model.problematics.Employee;
+import model.problematics.Syndicate;
+import model.problematics.PointCalendar;
 import interfaces.system.Payroll;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.problematics.UtilsProblematicCreate;
@@ -59,7 +59,7 @@ public class UtilsEmployee {
             if (synd == null) {
                 auxOb.add(Class.class);
             } else {
-                auxOb.add(synd.getIndetification());
+                auxOb.add(synd.getIdentifier());
                 auxOb.add(synd.getMonthlyFee());
             }
         }

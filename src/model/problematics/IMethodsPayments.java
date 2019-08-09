@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 public interface IMethodsPayments {
     String toString();

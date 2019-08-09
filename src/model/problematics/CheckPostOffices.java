@@ -1,4 +1,7 @@
-package model;
+package model.problematics;
+
+import model.BankAccount;
+import model.Check;
 
 public class CheckPostOffices extends Check implements IMethodsPayments {
     private final String identifier;

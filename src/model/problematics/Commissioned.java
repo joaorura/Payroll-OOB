@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 public class Commissioned extends Salaried {
     private final SaleList sales;
@@ -6,8 +6,8 @@ public class Commissioned extends Salaried {
     private final String identifier;
 
     public Commissioned(String address, String name, int personal_id, Syndicate personalSyndicate,
-                       IMethodsPayments typePayment, PaymentBills personalIPayment, PointCalendar worker,
-                       Double salary, Double ratioSales) {
+                        IMethodsPayments typePayment, PaymentBills personalIPayment, PointCalendar worker,
+                        Double salary, Double ratioSales) {
         super(address, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker, salary);
         this.sales = new SaleList();
         this.ratioSales = ratioSales;

@@ -1,6 +1,6 @@
 package interfaces.user.funcionabilities;
 
-import model.Employee;
+import model.problematics.Employee;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.utils.UtilsEmployee;
 

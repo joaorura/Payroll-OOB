@@ -1,6 +1,6 @@
 package interfaces.user.utils;
 
-import model.Calendar;
+import model.problematics.Calendar;
 
 import javax.naming.directory.InvalidAttributesException;
 

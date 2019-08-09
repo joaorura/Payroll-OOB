@@ -1,4 +1,7 @@
-package model;
+package model.problematics;
+
+import model.BankAccount;
+import model.BankTransaction;
 
 public class Deposit extends BankTransaction implements IMethodsPayments {
 

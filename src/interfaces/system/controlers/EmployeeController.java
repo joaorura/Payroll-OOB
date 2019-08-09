@@ -1,9 +1,9 @@
 package interfaces.system.controlers;
 
-import model.Commissioned;
-import model.Employee;
-import model.PaymentBills;
-import model.Calendar;
+import model.problematics.Commissioned;
+import model.problematics.Employee;
+import model.problematics.PaymentBills;
+import model.problematics.Calendar;
 import interfaces.system.Payroll;
 import interfaces.system.utils.UtilsPayroll;
 import interfaces.user.utils.UtilsSystem;

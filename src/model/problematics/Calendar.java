@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 import javax.naming.directory.InvalidAttributesException;
 
@@ -174,7 +174,8 @@ public class Calendar implements Cloneable {
     }
 
     public String toString() {
-        return "Date: " + nameOfDays[dayOfWeek - 1] + " " + day + " / " + nameOfMonth[month] + " / " + year + "\n\t" + hour + ":" + minute + "\n";
+        return "Date: " + nameOfDays[dayOfWeek - 1] + " " + day + " / " +
+                nameOfMonth[month] + " / " + year + "\n\t" + hour + ":" + minute + "\n";
     }
 
     int getMaximum(int type) {

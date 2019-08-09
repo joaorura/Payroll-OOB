@@ -1,4 +1,4 @@
-package model;
+package model.problematics;
 
 public class Salaried extends Employee {
     private final Double salary;
