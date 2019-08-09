@@ -25,7 +25,7 @@ public class UtilsSystem {
 
     private static final Scanner scan = new Scanner(System.in);
 
-    public static Object readEntries(Class type) {
+	public static Object readEntries(Class type) {
         if (type.equals(Integer.class)) {
             while (true) {
                 System.out.print("\n\t\tYour answer: ");

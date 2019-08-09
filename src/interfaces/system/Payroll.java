@@ -4,22 +4,39 @@ import funcionabilities.Employee;
 import funcionabilities.functional_aids.PaymentBills;
 import funcionabilities.functional_aids.calendar.Calendar;
 import funcionabilities.functional_aids.transactions.BankAccount;
+import interfaces.system.memento.Restore;
 
 import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class Payroll implements Cloneable{
+    private static Payroll mainPayroll;
+
+    static {
+        try {
+            mainPayroll = new Payroll(null, null);
+        } catch (InstantiationException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Error attempting to boot the system, please contact the developer.");
+        }
+    }
+
     private final Restore backup = new Restore();
     private Calendar actualCalendar;
-    private final BankAccount accountCompany;
+    private BankAccount accountCompany;
 
     private ArrayList<Employee> employees = new ArrayList<>();
     private final ArrayList<PaymentBills> defaultTypePayments = new ArrayList<>();
 
-    public Payroll(BankAccount accountCompany, Calendar calendar) throws RuntimeException {
-        this.accountCompany = accountCompany;
-        this.actualCalendar = calendar;
-        initializeDefaults();
+    private Payroll(BankAccount accountCompany, Calendar calendar) throws InstantiationException {
+        try {
+            this.accountCompany = accountCompany;
+            this.actualCalendar = calendar;
+            initializeDefaults();
+        } catch(RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new InstantiationException("Error instantiating payroll.");
+        }
     }
 
     private void initializeDefaults() {
@@ -30,6 +47,11 @@ public class Payroll implements Cloneable{
         } catch (CloneNotSupportedException | InvalidAttributesException e) {
             throw new RuntimeException("Error in create elements defaults of default type payments.");
         }
+    }
+
+    public void reconfigure(BankAccount accountCompany, Calendar calendar) throws RuntimeException {
+            this.accountCompany = accountCompany;
+            this.actualCalendar = calendar;
     }
 
     public void backup(boolean type) {
@@ -88,5 +110,13 @@ public class Payroll implements Cloneable{
 
     public BankAccount getAccountCompany() {
         return accountCompany;
+    }
+
+    public static Payroll getMainPayroll() {
+        return mainPayroll;
+    }
+
+    public static void setMainPayroll(Payroll mainPayroll) {
+        Payroll.mainPayroll = mainPayroll;
     }
 }

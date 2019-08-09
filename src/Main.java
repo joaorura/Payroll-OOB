@@ -11,9 +11,15 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Booting the system!\n" +
                 "\tInitializing settings!\n");
-        Payroll payroll = new Payroll(getBank(), getDate());
-        SystemController sysControll = new SystemController(payroll);
-        EmployeeController empControll = new EmployeeController(payroll);
+
+        try {
+            Payroll.getMainPayroll().reconfigure(getBank(), getDate());
+        }
+        catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
 
         int input;
         //noinspection InfiniteLoopStatement
@@ -22,14 +28,12 @@ public class Main {
             input = readEntries(0, 10);
 
             if(input == 9) {
-                payroll = Restore.execute(sysControll);
-                sysControll = new SystemController(payroll);
-                empControll = new EmployeeController(payroll);
+                Payroll.setMainPayroll(Restore.execute());
             }
             else if(input == 10) {
                 System.out.println("The system is gonna be closed.");
             }
-            else if(!processEntries(payroll, sysControll, empControll, input)){
+            else if(!processEntries(input)){
                 System.out.println("Your operation failed, the system does not complete its action. Please" +
                         "do it again!");
             }

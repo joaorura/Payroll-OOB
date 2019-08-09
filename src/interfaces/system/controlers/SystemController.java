@@ -10,11 +10,13 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 
 public class SystemController {
+    private static SystemController sysControl = new SystemController(Payroll.getMainPayroll());
+
     private final Payroll pay;
 
     private static final String errorRunPay = "Error in run payroll";
 
-    public SystemController(Payroll pay) {
+    private SystemController(Payroll pay) {
         this.pay =  pay;
     }
 
@@ -61,5 +63,9 @@ public class SystemController {
         } catch (CloneNotSupportedException | InvalidAttributesException e) {
             throw new Error("Error in create a employee schedule.");
         }
+    }
+
+    public static SystemController getSysControl() {
+        return sysControl;
     }
 }

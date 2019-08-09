@@ -2,9 +2,9 @@ package interfaces.user.funcionabilities;
 
 import interfaces.system.controlers.EmployeeController;
 
-public class PrintState implements ExecuteEmp {
+public class PrintState implements Execute {
     @Override
-    public void execute(EmployeeController payroll) {
-            System.out.println("State: \n\t" + payroll.toString());
+    public void execute() {
+        System.out.println("State: \n\t" + EmployeeController.getMainEmpControl().toString());
     }
 }

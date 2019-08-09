@@ -10,7 +10,7 @@ import interfaces.user.funcionabilities.problematics.*;
 import java.util.Objects;
 
 public class Process {
-    private static ExecuteEmp processExecution(int input) {
+    private static Execute processExecution(int input) throws  Error {
         switch (input) {
             case 0:
                 return new AddEmployee();
@@ -32,35 +32,37 @@ public class Process {
 
             case 6:
                 return new PrintState();
+
+            case 7:
+                return new RunPay();
+
+            case 8:
+                return new ChangePayment();
         }
 
-        return null;
+        throw new Error("Error in process entries. Wrong input.");
     }
 
-    public static boolean processEntries(Payroll pay, SystemController sysControll, EmployeeController empControll, int input) {
+    public static boolean processEntries(int input) {
         System.out.println("\nStarting the operation ...\n");
         int id;
         if (input != 9 && input  != 1) {
             if (input != 0 && input != 7 && input != 8) {
-                id = UtilsEmployee.identifier(empControll);
+                id = UtilsEmployee.identifier();
                 if(id == -1) {
                     System.out.println("Employee not founded");
                     return false;
                 }
             }
-            pay.backup(true);
+            Payroll.getMainPayroll().backup(true);
         }
 
-
-        switch (input) {
-            case 7:
-                RunPay.execute(sysControll);
-
-            case 8:
-                ChangePayment.execute(empControll, sysControll);
-
-            default:
-                Objects.requireNonNull(processExecution(input)).execute(empControll);
+        try {
+            processExecution(input).execute();
+        }
+        catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
 
         return true;

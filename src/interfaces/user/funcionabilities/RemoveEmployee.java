@@ -4,11 +4,13 @@ import funcionabilities.Employee;
 import interfaces.system.controlers.EmployeeController;
 import interfaces.user.utils.UtilsEmployee;
 
-public class RemoveEmployee implements ExecuteEmp {
+public class RemoveEmployee implements Execute {
     @Override
-    public void execute(EmployeeController payroll) {
+    public void execute() {
+        EmployeeController empControl = EmployeeController.getMainEmpControl();
+
         System.out.println("\nRemove Employee!\n");
-        Employee empAux = payroll.removeEmployee(UtilsEmployee.identifier(payroll));
+        Employee empAux = empControl.removeEmployee(UtilsEmployee.identifier());
 
         if (empAux == null) {
             System.out.println("Error in remove employee.");

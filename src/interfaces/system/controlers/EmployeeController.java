@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class EmployeeController {
+    private static EmployeeController mainEmpControl = new EmployeeController(Payroll.getMainPayroll());
+
     private final Payroll payroll;
     private final ArrayList<Employee> employees;
 
-    public EmployeeController(Payroll pay) {
+    private EmployeeController(Payroll pay) {
         this.payroll = pay;
         this.employees = pay.getEmployees();
     }
@@ -134,8 +136,8 @@ public class EmployeeController {
 
         searchEmployee(id).setPersonalIPayment(type);
     }
-
-    public Payroll getPayroll() {
-        return payroll;
+    
+    public static EmployeeController getMainEmpControl() {
+        return mainEmpControl;
     }
 }

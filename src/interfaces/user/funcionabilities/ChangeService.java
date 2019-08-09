@@ -4,9 +4,10 @@ import interfaces.system.controlers.EmployeeController;
 import interfaces.user.utils.UtilsEmployee;
 import interfaces.user.utils.UtilsSystem;
 
-public class ChangeService implements ExecuteEmp {
+public class ChangeService implements Execute {
     @Override
-    public void execute(EmployeeController payroll) {
+    public void execute() {
+        EmployeeController empControl = EmployeeController.getMainEmpControl();
         System.out.println("You desire retire or add services: \n" +
                 "\t0: Add\n" +
                 "\t1: Remove");
@@ -24,7 +25,7 @@ public class ChangeService implements ExecuteEmp {
             throw new Error();
         }
 
-        payroll.processServiceChange(type, UtilsEmployee.identifier(payroll),
+        empControl.processServiceChange(type, UtilsEmployee.identifier(),
                 name_product, value_product);
     }
 }

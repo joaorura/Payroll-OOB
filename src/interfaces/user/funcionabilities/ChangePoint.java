@@ -6,10 +6,12 @@ import interfaces.user.utils.UtilsEmployee;
 
 import static interfaces.user.utils.UtilsCalendar.getDate;
 
-public class ChangePoint implements ExecuteEmp {
+public class ChangePoint implements Execute {
 
     @Override
-    public void execute(EmployeeController payroll) {
+    public void execute() {
+        EmployeeController payroll = EmployeeController.getMainEmpControl();
+
         System.out.println("\nProcess Point Card!\n");
 
         System.out.print("Start of turn: ");
@@ -18,7 +20,7 @@ public class ChangePoint implements ExecuteEmp {
         System.out.println("End of turn: ");
         Calendar end = getDate();
 
-        int id = UtilsEmployee.identifier(payroll);
+        int id = UtilsEmployee.identifier();
         payroll.processPointCard(id, start, end);
     }
 }
