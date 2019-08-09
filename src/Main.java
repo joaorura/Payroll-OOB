@@ -1,11 +1,11 @@
-import interfaces.system.Payroll;
-import interfaces.system.controlers.EmployeeController;
-import interfaces.system.controlers.SystemController;
-import interfaces.user.funcionabilities.Restore;
+import controller.Payroll;
+import controller.EmployeeController;
+import controller.SystemController;
+import view.Restore;
 
-import static interfaces.user.utils.UtilsCalendar.getDate;
-import static interfaces.user.problematics.Process.processEntries;
-import static interfaces.user.utils.UtilsSystem.*;
+import static view.utils.UtilsCalendar.getDate;
+import static view.problematics.Process.processEntries;
+import static view.utils.UtilsSystem.*;
 
 public class Main {
     public static void main(String[] args) {

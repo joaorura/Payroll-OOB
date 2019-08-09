@@ -64,7 +64,7 @@ public class PaymentBills implements Cloneable {
 
         if (day == -1) {
             nextDayPayment.add(Calendar.DAY_OF_MONTH,
-                    nextDayPayment.getMaximum(Calendar.DAY_OF_MONTH) % nextDayPayment.get(Calendar.DAY_OF_MONTH));
+                    nextDayPayment.getMaximumMonthDays() % nextDayPayment.get(Calendar.DAY_OF_MONTH));
 
             int day_of_week = nextDayPayment.get(Calendar.DAY_OF_WEEK);
             if (day_of_week == 1) {

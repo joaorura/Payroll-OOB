@@ -12,8 +12,8 @@ public abstract class Employee implements Cloneable {
     private PaymentBills personalIPayment;
     private String identifier;
 
-    protected Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
-                       IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
+    Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
+             IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
         this.adress = adress;
         this.name = name;
         this.personal_id = personal_id;

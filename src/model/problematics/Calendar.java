@@ -178,12 +178,8 @@ public class Calendar implements Cloneable {
                 nameOfMonth[month] + " / " + year + "\n\t" + hour + ":" + minute + "\n";
     }
 
-    int getMaximum(int type) {
-        if (type == DAY_OF_MONTH) {
-            return limitDays[month];
-        }
-
-        return -1;
+    int getMaximumMonthDays() {
+        return limitDays[month];
     }
 
     boolean equals(Calendar other) {
