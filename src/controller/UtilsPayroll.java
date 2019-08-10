@@ -1,7 +1,6 @@
 package controller;
 
 import model.*;
-import controller.Payroll;
 import model.problematics.*;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -13,92 +12,92 @@ class UtilsPayroll {
         throw new Error("Error in instantiate a employee");
     }
 
-    private static Syndicate crateSindicate(List<Object> paramater) throws Error {
-        Syndicate synd = null;
-        int checker = (int) paramater.get(0);
+    private static Syndicate crateSyndicate(List<Object> parameters) throws Error {
+        Syndicate syndicate = null;
+        int checker = (int) parameters.get(0);
         if(checker == -1) {
             errorCreate();
         }
         else if (checker == 0) {
-            synd = new Syndicate((String) paramater.get(1), (double) paramater.get(2));
+            syndicate = new Syndicate((String) parameters.get(1), (double) parameters.get(2));
         }
 
-        return synd;
+        return syndicate;
     }
 
-    private static IMethodsPayments createMethods(Payroll payroll, List<Object> paramater) {
-        IMethodsPayments meth = null;
-        BankAccount bank = (BankAccount) paramater.get(1);
+    private static IMethodsPayments createMethods(Payroll payroll, List<Object> parameters) {
+        IMethodsPayments methodPayments = null;
+        BankAccount bank = (BankAccount) parameters.get(1);
         if(bank == null) {
             bank = payroll.getAccountCompany();
         }
 
-        switch ((int) paramater.get(0)) {
+        switch ((int) parameters.get(0)) {
             case 0:
-                meth = new Deposit(bank, (Double) paramater.get(3),
-                        (String) paramater.get(4));
+                methodPayments = new Deposit(bank, (Double) parameters.get(3),
+                        (String) parameters.get(4));
                 break;
 
             case 1:
-                meth = new CheckHands(bank, (Double) paramater.get(3),
-                        (String) paramater.get(4), (int) paramater.get(5));
+                methodPayments = new CheckHands(bank, (Double) parameters.get(3),
+                        (String) parameters.get(4), (int) parameters.get(5));
                 break;
 
             case 2:
-                meth = new CheckPostOffices(bank, (Double) paramater.get(3),
-                        (String) paramater.get(4), (String) paramater.get(5));
+                methodPayments = new CheckPostOffices(bank, (Double) parameters.get(3),
+                        (String) parameters.get(4), (String) parameters.get(5));
                 break;
 
         }
 
-        return meth;
+        return methodPayments;
     }
 
-    static PaymentBills createTypePayment(List<Object> paramater) throws CloneNotSupportedException, InvalidAttributesException {
+    static PaymentBills createTypePayment(List<Object> parameters) throws CloneNotSupportedException, InvalidAttributesException {
         PaymentBills type = null;
-        switch ((int) paramater.get(0)) {
+        switch ((int) parameters.get(0)) {
             case 0:
-                type = new PaymentBills((Calendar) paramater.get(1), (int) paramater.get(2),
-                        (int) paramater.get(3), (int) paramater.get(4));
+                type = new PaymentBills((Calendar) parameters.get(1), (int) parameters.get(2),
+                        (int) parameters.get(3), (int) parameters.get(4));
                 break;
 
             case 1:
-                type = (PaymentBills) paramater.get(1);
+                type = (PaymentBills) parameters.get(1);
                 break;
         }
 
         return type;
     }
 
-    private static PointCalendar createPoint(List<Object> paramater) {
+    private static PointCalendar createPoint(List<Object> parameters) {
         PointCalendar point = null;
-        if ((int) paramater.get(0) == 0) {
+        if ((int) parameters.get(0) == 0) {
             point = new PointCalendar();
         }
 
         return point;
     }
 
-    private static Employee createEmployee(List<Object> paramater, Syndicate synd, IMethodsPayments meth,
+    private static Employee createEmployee(List<Object> parameters, Syndicate syndicate, IMethodsPayments methodsPayments,
                                            PaymentBills type, PointCalendar point) throws Error {
-        if (meth == null || type == null || point == null) throw new Error();
+        if (methodsPayments == null || type == null || point == null) throw new Error();
         Employee item;
-        switch ((int) paramater.get(0)) {
+        switch ((int) parameters.get(0)) {
             case 0:
-                item = new Hourly((String) paramater.get(1), (String) paramater.get(2), (int) paramater.get(3),
-                        synd, meth, type, point, (int) paramater.get(4), (Double) paramater.get(5),
-                        (Double) paramater.get(6));
+                item = new Hourly((String) parameters.get(1), (String) parameters.get(2), (int) parameters.get(3),
+                        syndicate, methodsPayments, type, point, (int) parameters.get(4), (Double) parameters.get(5),
+                        (Double) parameters.get(6));
                 break;
 
             case 1:
-                item = new Salaried((String) paramater.get(1), (String) paramater.get(2),
-                        (int) paramater.get(3), synd, meth, type, point, (Double) paramater.get(4));
+                item = new Salaried((String) parameters.get(1), (String) parameters.get(2),
+                        (int) parameters.get(3), syndicate, methodsPayments, type, point, (Double) parameters.get(4));
 
                 break;
 
             case 2:
-                item = new Commissioned((String) paramater.get(1), (String) paramater.get(2),
-                        (int) paramater.get(3), synd, meth, type, point, (Double) paramater.get(4), (Double) paramater.get(5));
+                item = new Commissioned((String) parameters.get(1), (String) parameters.get(2),
+                        (int) parameters.get(3), syndicate, methodsPayments, type, point, (Double) parameters.get(4), (Double) parameters.get(5));
                 break;
 
             default:
@@ -108,14 +107,16 @@ class UtilsPayroll {
         return item;
     }
 
-    static Employee processEmployee(Payroll payroll, ArrayList<ArrayList<Object>> paramater) throws InvalidAttributesException, CloneNotSupportedException {
-        if (paramater.size() > 5) throw new Error();
+    static Employee processEmployee(ArrayList<ArrayList<Object>> parameters) throws InvalidAttributesException, CloneNotSupportedException {
+        Payroll payroll = Payroll.getMainPayroll();
 
-        Syndicate synd = crateSindicate(paramater.get(1));
-        IMethodsPayments meth = createMethods(payroll, paramater.get(2));
-        PaymentBills type = createTypePayment(paramater.get(3));
-        PointCalendar point = createPoint(paramater.get(4));
+        if (parameters.size() > 5) throw new Error();
 
-        return createEmployee(paramater.get(0), synd, meth, type, point);
+        Syndicate syndicate = crateSyndicate(parameters.get(1));
+        IMethodsPayments methods = createMethods(payroll, parameters.get(2));
+        PaymentBills type = createTypePayment(parameters.get(3));
+        PointCalendar point = createPoint(parameters.get(4));
+
+        return createEmployee(parameters.get(0), syndicate, methods, type, point);
     }
 }

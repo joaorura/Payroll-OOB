@@ -19,7 +19,7 @@ public class ChangeEmployeeDetails implements Execute {
         System.out.println("Execute changes of employee");
 
         try {
-            ArrayList<ArrayList<Object>> param = UtilsEmployee.getDatas(empControl.searchEmployee(id));
+            ArrayList<ArrayList<Object>> param = UtilsEmployee.getData(empControl.searchEmployee(id));
             empControl.changeEmployee(id, param);
 
         } catch (Error e) {

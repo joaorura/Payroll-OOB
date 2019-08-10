@@ -80,8 +80,7 @@ public class Payroll implements Cloneable{
         return p;
     }
 
-    @Override
-    public String toString() {
+    public String getInformations() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < employees.size(); i++) {
             if (employees.get(i) != null)

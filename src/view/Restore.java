@@ -8,9 +8,9 @@ import static view.utils.UtilsSystem.readEntries;
 public class Restore {
     public static Payroll execute() {
         SystemController sysControl = SystemController.getSysControl();
-        System.out.println("Você deseja:");
-        System.out.println("\t0: Desfazer");
-        System.out.println("\t1: Refazer");
+        System.out.println("You wish: ");
+        System.out.println("\t0: Undo");
+        System.out.println("\t1: Redo");
 
         if (readEntries(0, 1) == 0) {
             return sysControl.undo();

@@ -20,4 +20,9 @@ public class CheckPostOffices extends Check implements IMethodsPayments {
     public IMethodsPayments clone() throws CloneNotSupportedException {
         return (CheckPostOffices) super.clone();
     }
+
+    @Override
+    public void setValue(double value) {
+        super.setValue(value);
+    }
 }

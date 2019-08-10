@@ -9,7 +9,7 @@ class Memento {
         try {
             this.savedState = savedState.clone();
         } catch (CloneNotSupportedException e) {
-            throw new InstantiationException("Error in instatiate Memento because due to failed Payroll clone attempt.");
+            throw new InstantiationException("Error in instantiate Memento because due to failed Payroll clone attempt.");
         }
     }
 

@@ -41,7 +41,7 @@ public class Process {
     public static boolean processEntries(int input) {
         System.out.println("\nStarting the operation ...\n");
         int id;
-        if (input != 9 && input  != 1) {
+        if (input != 6 && input  != 9) {
             if (input != 0 && input != 7 && input != 8) {
                 id = UtilsEmployee.identifier();
                 if(id == -1) {

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 public class UtilsSystem {
-    private final static String start = "\n\nNew interation!\n" +
+    private final static String start = "\n\nNew interaction!\n" +
             "\t0: addEmployee\n" +
             "\t1: removeEmployee\n" +
             "\t2: processEmployeeDetail\n" +
@@ -19,7 +19,7 @@ public class UtilsSystem {
             "\t9: undoRedo\n" +
             "\t10: exit\n";
 
-    private final static String identificaton = "\t0: ID\n"
+    private final static String identifier = "\t0: ID\n"
             + "\t1: Name\n"
             + "\n\tYour answer: ";
 
@@ -62,7 +62,7 @@ public class UtilsSystem {
     }
 
     public static void printIdentification() {
-        System.out.println(identificaton);
+        System.out.println(identifier);
     }
 
     public static String takeString() {
@@ -78,19 +78,19 @@ public class UtilsSystem {
 
 
     public static BankAccount getBank() {
-        System.out.println("\n\nPor favor entre com a conta bancária da empresa:");
+        System.out.println("\n\nPlease sign in with company bank account:");
 
         System.out.print("Name of Company: ");
         String name = takeString();
 
         System.out.print("Account of Company: ");
-        String sourceAcount = takeString();
+        String sourceAccount = takeString();
 
         System.out.print("Identifier: ");
         String identifier = takeString();
 
         System.out.println("\n");
 
-        return new BankAccount(name, sourceAcount, identifier);
+        return new BankAccount(name, sourceAccount, identifier);
     }
 }

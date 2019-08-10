@@ -17,6 +17,11 @@ public class CheckHands extends Check implements IMethodsPayments {
         return (CheckHands) super.clone();
     }
 
+    @Override
+    public void setValue(double value) {
+        super.setValue(value);
+    }
+
     public String toString() {
         return identifier;
     }

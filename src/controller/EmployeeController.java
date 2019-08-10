@@ -58,22 +58,23 @@ public class EmployeeController {
         return i;
     }
 
-    public Employee addEmployee(Payroll payroll, ArrayList<ArrayList<Object>> paramater) throws Error {
-        Employee item;
+    public Employee addEmployee(ArrayList<ArrayList<Object>> parameters) throws Error {
+        Employee employee;
+
         try {
-            item = UtilsPayroll.processEmployee(payroll, paramater);
+            employee = UtilsPayroll.processEmployee(parameters);
         } catch (InvalidAttributesException | CloneNotSupportedException e) {
             throw new Error("Error in add new employee");
         }
 
-        if (item.getId() == employees.size()) {
-            employees.add(item);
+        if (employee.getId() == employees.size()) {
+            employees.add(employee);
         } else {
-            employees.set(item.getId(), item);
+            employees.set(employee.getId(), employee);
         }
 
 
-        return item;
+        return employee;
     }
 
     public Employee removeEmployee(int id) {
@@ -96,7 +97,7 @@ public class EmployeeController {
         else if (item instanceof Commissioned) {
             ((Commissioned) item).getSales().addProduct(name, value);
         } else {
-            throw new Error("The eployee must a be a Comissioned");
+            throw new Error("The employee must a be a Commissioned");
         }
     }
 
@@ -113,7 +114,7 @@ public class EmployeeController {
     public void changeEmployee(int id, ArrayList<ArrayList<Object>> change) throws Error{
         Employee item;
         try {
-            item = UtilsPayroll.processEmployee(payroll, change);
+            item = UtilsPayroll.processEmployee(change);
         } catch (InvalidAttributesException | CloneNotSupportedException e) {
             throw new Error("Error in make change os employee data.");
         }

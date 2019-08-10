@@ -4,9 +4,9 @@ public class Salaried extends Employee {
     private final Double salary;
     private final String identifier;
 
-    public Salaried(String adress, String name, int personal_id, Syndicate personalSyndicate,
+    public Salaried(String address, String name, int personal_id, Syndicate personalSyndicate,
                     IMethodsPayments typePayment, PaymentBills personalIPayment, PointCalendar worker, Double salary) {
-        super(adress, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker);
+        super(address, name, personal_id, personalSyndicate, typePayment, personalIPayment, worker);
         this.salary = salary;
         this.identifier = super.toString() + "\n Salary: " + salary + "\n";
     }

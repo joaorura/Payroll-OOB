@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 class UtilsCreate {
 
-    private static int getDafaultEntries(boolean check, EmployeeController pay, Employee emp, ArrayList<Object> param) {
+    private static int getDefaultEntries(boolean check, EmployeeController pay, Employee emp, ArrayList<Object> param) {
         param.add(null);
 
         if (UtilsProblematicCreate.canChange(check, "name")) {
@@ -79,7 +79,7 @@ class UtilsCreate {
 
     static void identifierProcess(EmployeeController pay, Employee emp, ArrayList<Object> param) {
         boolean check = emp != null;
-        int aux = getDafaultEntries(check, pay, emp, param);
+        int aux = getDefaultEntries(check, pay, emp, param);
         try {
             getMutableEntries(aux, check, emp, param);
         }

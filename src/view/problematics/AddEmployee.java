@@ -2,6 +2,7 @@ package view.problematics;
 
 import controller.Payroll;
 import controller.EmployeeController;
+import model.problematics.Employee;
 import view.utils.UtilsEmployee;
 import view.Execute;
 
@@ -19,13 +20,14 @@ public class AddEmployee implements Execute {
         ArrayList<ArrayList<Object>> param = null;
 
         try {
-            param = UtilsEmployee.getDatas(null);
+            param = UtilsEmployee.getData(null);
         } catch (InvalidAttributesException e) {
             System.out.println(error);
         }
 
         try {
-            System.out.println(empControl.addEmployee(Payroll.getMainPayroll(), param).toString());
+            Employee employee = empControl.addEmployee(param);
+            System.out.println(employee.toString());
         } catch (Error e) {
             System.out.println(e.getMessage() + "\n" + error);
         }

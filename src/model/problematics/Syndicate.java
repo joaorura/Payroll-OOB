@@ -1,19 +1,19 @@
 package model.problematics;
 
 public class Syndicate implements Cloneable {
-    private final String identifierSynd;
+    private final String identifierSyndicate;
     private final double monthlyFee;
 
-    private final String stringIndentifier;
+    private final String stringIdentifier;
 
-    public Syndicate(String identifierSynd, double monthlyFee) {
-        this.identifierSynd = identifierSynd;
+    public Syndicate(String identifierSyndicate, double monthlyFee) {
+        this.identifierSyndicate = identifierSyndicate;
         this.monthlyFee = monthlyFee;
-        this.stringIndentifier = "\n\tIdentification of Syndicate: " + identifierSynd  + "\n\tMonthly fee: " + monthlyFee + "\n";
+        this.stringIdentifier = "\n\tIdentification of Syndicate: " + identifierSyndicate  + "\n\tMonthly fee: " + monthlyFee + "\n";
     }
 
     public String getIdentifier() {
-        return identifierSynd;
+        return identifierSyndicate;
     }
 
     public Double getMonthlyFee() {
@@ -25,6 +25,6 @@ public class Syndicate implements Cloneable {
     }
 
     public String toString() {
-        return stringIndentifier;
+        return stringIdentifier;
     }
 }

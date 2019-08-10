@@ -37,7 +37,7 @@ public class UtilsEmployee {
         }
     }
 
-    public static ArrayList<ArrayList<Object>> getDatas(Employee emp)
+    public static ArrayList<ArrayList<Object>> getData(Employee emp)
             throws InvalidAttributesException {
         EmployeeController empControl = EmployeeController.getMainEmpControl();
         ArrayList<ArrayList<Object>> param = new ArrayList<>();
@@ -53,19 +53,19 @@ public class UtilsEmployee {
         if (UtilsProblematicCreate.canChange(check, "Syndicate")) {
             UtilsProblematicCreate.syndicateProcess(param.get(1));
         } else {
-            Syndicate synd = emp.getSyndicate();
+            Syndicate syndicate = emp.getSyndicate();
             auxOb = param.get(1);
 
-            if (synd == null) {
-                auxOb.add(Class.class);
+            if (syndicate == null) {
+                auxOb.add(-1);
             } else {
-                auxOb.add(synd.getIdentifier());
-                auxOb.add(synd.getMonthlyFee());
+                auxOb.add(syndicate.getIdentifier());
+                auxOb.add(syndicate.getMonthlyFee());
             }
         }
 
-        UtilsProblematicCreate.methodProcess(empControl, (String) param.get(0).get(1), (String) param.get(0).get(2), param.get(2));
-
+        UtilsProblematicCreate.methodProcess(empControl, (String) param.get(0).get(1),
+                (String) param.get(0).get(2), param.get(2));
         UtilsProblematicCreate.typeProcess(Payroll.getMainPayroll(), false, param.get(3));
 
         param.get(4).add(PointCalendar.class);

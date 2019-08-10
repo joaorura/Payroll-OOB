@@ -31,7 +31,7 @@ public class PaymentBills implements Cloneable {
                 this.lastPayment = null;
             }
         } else {
-            throw new Error("Todos os parametros devem ser positivos");
+            throw new Error("All parameters must be positive.");
         }
 
         this.identifier = constructString();
@@ -47,14 +47,14 @@ public class PaymentBills implements Cloneable {
                 "  |  Month Interval: " + monthInterval + "\n";
     }
 
-    private void checkLastPaymet() {
+    private void checkLastPayment() {
         if (lastPayment == null) {
             throw new Error("The last payments cant be a null please call setLastPayment()");
         }
     }
 
     private void att() throws CloneNotSupportedException, InvalidAttributesException {
-        checkLastPaymet();
+        checkLastPayment();
 
         if (nextDayPayment != null)
             this.lastPayment = nextDayPayment;
@@ -91,7 +91,7 @@ public class PaymentBills implements Cloneable {
     }
 
     public boolean checkItsDay(Calendar calendar) {
-        checkLastPaymet();
+        checkLastPayment();
 
         if (calendar.equals(nextDayPayment)) {
             try {

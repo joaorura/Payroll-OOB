@@ -9,7 +9,7 @@ public class BankTransaction extends BankAccount {
         this.identifier = super.toString() + "\nBank Transaction: \n\t" + "\tValue: " + value + "\n";
     }
 
-    public void setValue(double value) {
+    protected void setValue(double value) {
         this.identifier =super.toString() + "\nBank Transaction: \n\t" + "\tValue: " + value + "\n";
     }
 

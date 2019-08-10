@@ -4,7 +4,7 @@ package model.problematics;
 public abstract class Employee implements Cloneable {
     PointCalendar worker;
     Debts debts;
-    private String adress;
+    private String address;
     private String name;
     private int personal_id;
     private Syndicate personalSyndicate;
@@ -12,9 +12,9 @@ public abstract class Employee implements Cloneable {
     private PaymentBills personalIPayment;
     private String identifier;
 
-    Employee(String adress, String name, int personal_id, Syndicate personalSyndicate,
+    Employee(String address, String name, int personal_id, Syndicate personalSyndicate,
              IMethodsPayments methodPayment, PaymentBills personalIPayment, PointCalendar worker) {
-        this.adress = adress;
+        this.address = address;
         this.name = name;
         this.personal_id = personal_id;
         this.personalSyndicate = personalSyndicate;
@@ -28,13 +28,13 @@ public abstract class Employee implements Cloneable {
 
     private String constructString() {
         StringBuilder str = new StringBuilder();
-        str.append("Information of employee:" + "\n\tName: ").append(name).append("\n\tAdress:  ")
-                .append(adress).append("\n\tId: ").append(personal_id).append("\n\n\tSyndicate: ");
+        str.append("Information of employee:" + "\n\tName: ").append(name).append("\n\tAddress:  ")
+                .append(address).append("\n\tId: ").append(personal_id).append("\n\n\tSyndicate: ");
         if (personalSyndicate != null) str.append(personalSyndicate.toString());
         else str.append("None");
 
         str.append("\n\n\tMethod of payment: ").append(methodPayment.toString()).
-                append("\n\n\tAgend of payment: ").append(personalIPayment.toString()).
+                append("\n\n\tSchedule of payment: ").append(personalIPayment.toString()).
                 append("\n\n\tPoint of employee: ").append(worker.toString()).
                 append("\n\n\tDebts: ").append(debts.toString());
 
